@@ -1,0 +1,95 @@
+.fieldContainer {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.underField {
+  height: 2px;
+  position: relative;
+  top: -1px;
+  transition: 0.5s ease;
+  width: 0;
+}
+
+.text {
+  pointer-events: none;
+  position: absolute;
+  top: 15px;
+  left: 17px;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  background-color: transparent;
+  color: #626161;
+  transition: 0.5s ease;
+}
+
+
+.field:focus {
+  border-radius: 0;
+  box-shadow: none !important;
+  border: 1px solid #31383d;
+  outline: none;
+}
+
+.input {
+  line-height: 1.5;
+  font-weight: 400;
+  width: 100%;
+  background-color: transparent;
+  height: 50px;
+  color: #F0F0F0;
+  border: 1px solid #31383d;
+  transition: all 0.5s;
+  padding: 0.9em 1em;
+  box-shadow: none !important;
+  font-size: 1em;
+  font-family: "Open Sans", sans-serif;
+}
+
+.field:focus + .underField {
+  background-color: #f07f81;
+  width: 100%;
+}
+
+.field:focus + .underField + .text {
+  color: #f07f81;
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  background-color: #252b2f;
+  padding: 0 5px;
+}
+
+.focusedDiv {
+  background-color: #f07f81;
+  width: 100%;
+}
+
+.focusedText {
+  color: #f07f81;
+  position: absolute;
+  top: -8px;
+  left: 8px;
+  background-color: #252b2f;
+  padding: 0 5px;
+}
+
+.textarea {
+  overflow: auto;
+  height: 215px;
+  position: relative;
+  resize: none;
+}
+
+.textarea::-webkit-scrollbar {
+  width: 2px;
+}
+
+.textarea::-webkit-scrollbar-thumb {
+  background-color: #f07f81;
+  border-radius: 3px;
+}

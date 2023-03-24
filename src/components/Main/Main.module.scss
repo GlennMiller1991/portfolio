@@ -1,0 +1,100 @@
+@import './../../common/styles/Variables.module';
+$squareSize: 16px;
+
+.main {
+    /*position: relative;
+    top: 85px;*/
+    color: $textColor;
+    height: 100vh;
+    background-color: $mainColor;
+    padding-bottom: 100px;
+    background: url('./../../../src/assets/pic/dark_ava_zipped.png');
+    background-position: center;
+    background-size: cover;
+    .container {
+        gap: 60px;
+        justify-content: space-between;
+        .greeting {
+            width: 550px;
+            font-family: $secondaryFont;
+            @media (max-width: 700px) {
+                width: 400px;
+            }
+            @media (max-width: 700px) {
+                width: 300px;
+            }
+            .rest {
+                color: $secondaryTextColor;
+                font-size: 32px;
+                margin: 5px 15px 15px 0;
+            }
+            .name {
+                text-align: center;
+                font-family: $primaryFont;
+                letter-spacing: 0.1em;
+                font-weight: 100;
+                position: relative;
+                font-size: 45px;
+                @include flexCenter(center);
+                border: 1px solid $textColor;
+                margin: 0;
+                padding: 15px 0;
+                &::before {
+                    content: '';
+                    display: block;
+                    background-color: $themeColor;
+                    width: $squareSize;
+                    height: $squareSize;
+                    position: absolute;
+                    bottom: -($squareSize / 2);
+                    right: -($squareSize / 2);
+                }
+
+            }
+            p {
+                font-size: 26px;
+                span {
+                    color: $secondaryTextColor;
+                }
+                .keyboardSpan {
+                    color: $themeColor;
+                    animation: hideShow;
+                    animation-iteration-count: infinite;
+                    animation-duration: .7s;
+                    animation-timing-function: steps(2, jump-none);
+                }
+            }
+
+        }
+        .photo {
+            position: relative;
+            width: 300px;
+            height: 600px;
+            background-color: rgba($mainColor, .4);
+            @media (max-width: 1140px) {
+                display: none;
+            }
+            &:after {
+                content: '';
+                display: block;
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                background-color: rgba($mainColor, .3);
+                transform: translate(10%, 10%);
+            }
+        }
+    }
+}
+
+@keyframes hideShow {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+

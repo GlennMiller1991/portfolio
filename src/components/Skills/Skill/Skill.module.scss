@@ -1,0 +1,51 @@
+@import './../../../common/styles/Variables.module';
+$skillIconSize: 70px;
+
+.skill {
+        width: 320px;
+        @include flexCenter();
+  align-items: flex-start;
+        flex-direction: column;
+        padding: 32px;
+        /*border: 1px solid $borderColor;*/
+        @media screen and (max-width: 1280px) {
+          width: 290px;
+        }
+        @media screen and (max-width: 1150px) {
+          width: 250px;
+        }
+        @media screen and (max-width: 1020px) {
+          width: 320px;
+        }
+        @media screen and (max-width: 840px) {
+          width: 510px;
+        }
+        .skillContainer {
+            font-family: $primaryFont;
+            @include flexCenter;
+            flex-direction: column;
+            align-items: flex-start;
+            .icon {
+                width: $skillIconSize;
+                height: $skillIconSize;
+                @include flexCenter();
+                * {
+                    color: $themeColor;
+                    font-size: 70px;
+                }
+            }
+            h3 {
+                font-size: 1.5em;
+                font-weight: 450;
+                margin: 18px 0;
+            }
+            p {
+                font-weight: 200;
+                color: $secondaryFont;
+                margin: 0;
+            }
+    }
+}
+
+
+

@@ -1,0 +1,21 @@
+@import './../../../common/styles/Variables.module';
+$iconSquare: 50px;
+
+.icon {
+    width: $iconSquare;
+    height: $iconSquare;
+    border: 1px solid #31383d;
+    @include flexCenter(center);
+    font-size: 30px;
+    transition: 0.5s;
+    cursor: pointer;
+    &:hover {
+        color: black;
+        background-color: $textColor;
+        border: 1px solid $textColor;
+    }
+    a, a:visited {
+        text-decoration: none;
+        color: $textColor;
+    }
+}
