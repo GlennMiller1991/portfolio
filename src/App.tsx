@@ -11,7 +11,7 @@ import {Up} from './components/Up/Up';
 import {Footer} from './components/Footer/Footer';
 import {anchorType, checkAnchorTC} from './redux/reducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {stateType} from './redux/store';
+import {dispatchType, stateType, useAppDispatch} from './redux/store';
 import {appUpdateState, tAppState} from './redux/appReducer/appReducer';
 import {WindowWrapper} from './components/WindowWrapper/WindowWrapper'
 import {loginAPI} from './common/api/loginAPI'
@@ -19,7 +19,7 @@ import {loginAPI} from './common/api/loginAPI'
 function App() {
     const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
     const appState = useSelector<stateType, tAppState>(state => state.appState)
-    const dispatch = useDispatch()
+    const dispatch = useAppDispatch()
     const [scrollY, setScrollY] = useState(0)
     const [elements, setElements] = useState<HTMLDivElement[]>([])
     const anchorsId: anchorType[] = useMemo(() => {
