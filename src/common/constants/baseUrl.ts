@@ -1,1 +1,1 @@
-export const baseUrl = 'https://railwayapp-production-3c99.up.railway.app/'
+export const baseUrl = 'https://railwayapp-production-3c99.up.railway.app'
