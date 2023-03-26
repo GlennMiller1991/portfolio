@@ -2,6 +2,7 @@ export const requests = {
     postRequest<T>(url: string, body: T) {
         return fetch(url, {
             method: 'POST',
+            mode: 'cors',
             body: JSON.stringify(body),
             credentials: 'include',
             headers: {
@@ -14,6 +15,7 @@ export const requests = {
         return fetch(url, {
             method: 'GET',
             credentials: 'include',
+            mode: 'cors',
         })
             .then(checkResponse)
     }

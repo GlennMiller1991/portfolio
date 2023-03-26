@@ -1,6 +1,7 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
 import './common/styles/variables.css'
+import './index.scss'
 
 import {Header} from './components/Header/Header';
 import {Main} from './components/Main/Main';
