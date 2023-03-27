@@ -12,7 +12,7 @@ export const useFieldState = <T>(keys: Array<keyof T>): [T, (event: ChangeEvent<
 
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const field = event.currentTarget.dataset.name as keyof T
-        const value = event.currentTarget.value.trim()
+        const value = event.currentTarget.value.trimStart()
         setState(prev => ({...prev, [field]: value}))
     }, [])
 

@@ -1,4 +1,4 @@
-import React, {useCallback, useState, FocusEvent, ChangeEvent, useMemo} from 'react';
+import React, {useCallback, FocusEvent, useMemo} from 'react';
 import commonStyles from '../../common/styles/CommonStyles.module.scss'
 import styles from './Contacts.module.scss'
 import {tErrors} from '../../common/types/types'
@@ -10,8 +10,6 @@ import {setClasses} from '../../common/utils/setClasses'
 import {Button} from '../../common/components/Button/Button'
 import {useFieldState} from '../../common/customHooks/useFieldState'
 import {messageAPI} from '../../common/api/messageAPI'
-import {requests} from '../../common/api/requests'
-import {helloAPI} from '../../common/api/helloAPI'
 
 type tLoginParamType = {
     email: string,
@@ -23,7 +21,7 @@ const keys = ['email', 'name', 'subject', 'message'] as Array<keyof tLoginParamT
 
 export const Contacts = React.memo(() => {
     //error msg
-    const [state, onChange] = useFieldState<tLoginParamType>(keys)
+    const [state, onChange, clearState] = useFieldState<tLoginParamType>(keys)
 
     const errors = useSelector<stateType, tErrors>(state => state.appState.errors)
     const dispatch = useDispatch()
@@ -98,10 +96,8 @@ export const Contacts = React.memo(() => {
                     <div className={setClasses(styles.submit, 'flex')}>
                         <Button text={resError || 'Send message'} disabled={!!resError}
                                 onClick={() => {
-                                    helloAPI.hello()
-                                    // messageAPI.sendMessage(state)
-                                    //     .then(console.log)
-                                    //     .catch(err => console.log(err.message))
+                                    messageAPI.sendMessage(state)
+                                        .then(clearState)
                                 }}
                         />
                     </div>
