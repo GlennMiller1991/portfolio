@@ -58,7 +58,6 @@ export const Contacts = React.memo(() => {
         return res
     }, [errors, state])
 
-    console.log(state, errors)
     return (
         <div id={'contacts'} className={styles.wrapper}>
             <div className={`${commonStyles.container} ${styles.container}`}>
