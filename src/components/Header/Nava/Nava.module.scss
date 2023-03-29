@@ -70,10 +70,13 @@
 }
 
 .loginContainer {
-  background: var(--main-color);
+  background: transparentize(#252b2f, .2);
   height: max-content;
   min-height: unset !important;
   margin: 2rem;
+  max-width: 100% !important;
+  width: max-content;
+  min-width: 300px !important;
 }
 
 .loginBtn {
