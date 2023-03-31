@@ -17,6 +17,8 @@
   border-radius: 0.25rem;
   min-width: 50%;
   padding: 1rem;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   .closeBtn {
     position: absolute;

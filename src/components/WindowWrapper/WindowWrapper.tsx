@@ -35,7 +35,9 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
             }))
         }
 
-        const canvas = !window.ontouchstart && document.getElementById('wwCanvas') as HTMLCanvasElement | null
+        const canvas = !window.ontouchstart &&
+            !window.navigator.userAgent.toLowerCase().includes("mobi") &&
+            document.getElementById('wwCanvas') as HTMLCanvasElement | null
         let reqId: any
         if (canvas) {
             const context = canvas.getContext('2d')
