@@ -2,12 +2,34 @@
   display: grid;
   row-gap: 2rem;
   padding: 1rem;
+
   h1 {
     margin: 0;
     text-align: center;
-    font-family: var(--primary-font);
+    font-family: var(--secondary-font);
+
+    span {
+      top: 0 !important;
+      transition: 300ms;
+      @media (max-width: 1250px) {
+        font-size: 2em;
+      }
+
+      @media (max-width: 940px) {
+        font-size: 2em;
+      }
+    }
   }
-  .submit {
-    justify-content: flex-end;
+}
+
+.submit {
+  button, button:focus {
+    width: 100%;
+    max-width: unset;
   }
+}
+
+
+.focusedText {
+  background: var(--black) !important;
 }

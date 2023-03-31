@@ -9,6 +9,7 @@ import {tErrors} from '../../common/types/types'
 import {stateType} from '../../redux/store'
 import {appUpdateErrors, appUpdateState} from '../../redux/appReducer/appReducer'
 import {loginAPI} from '../../common/api/loginAPI'
+import commonStyles from '../../common/styles/CommonStyles.module.scss'
 
 type tLoginParams = {
     loginEmail: string,
@@ -52,10 +53,16 @@ export const Login: React.FC = React.memo(() => {
 
     return (
         <div className={styles.container}>
-            <h1>Log in</h1>
-            <Input value={state.loginEmail} name={'Email'} data-name={'loginEmail'} onChange={onChange}
+            <h1>
+                LOG IN
+                <span className={commonStyles.upperThenHeader}>LOG IN</span>
+            </h1>
+            <Input value={state.loginEmail} name={'Email'} data-name={'loginEmail'}
+                   focusedBackgroundClass={styles.focusedText}
+                   onChange={onChange}
                    onBlur={onBlurField}/>
             <Input value={state.loginPassword} type={'password'} name={'Password'} data-name={'loginPassword'}
+                   focusedBackgroundClass={styles.focusedText}
                    onChange={onChange}
                    onBlur={onBlurField}/>
             <div className={setClasses(styles.submit, 'flex')}>

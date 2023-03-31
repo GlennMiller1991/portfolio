@@ -6,12 +6,14 @@ type tInput = {
     name: string,
     asTextArea?: boolean,
     containerClass?: string,
+    focusedBackgroundClass?: string,
     [key: string]: any
 }
 export const Input: React.FC<tInput> = React.memo(({
                                                        name,
                                                        asTextArea,
-                                                       containerClass = '',
+                                                       containerClass,
+                                                       focusedBackgroundClass,
                                                        ...props
                                                    }) => {
     return (
@@ -26,7 +28,7 @@ export const Input: React.FC<tInput> = React.memo(({
                     />
             }
             <div className={setClasses(styles.underField, props.value && styles.focusedDiv)}/>
-            <div className={setClasses(styles.text, props.value && styles.focusedText)}>
+            <div className={setClasses(styles.text, props.value && styles.focusedText, focusedBackgroundClass)}>
                 {name}
             </div>
         </div>

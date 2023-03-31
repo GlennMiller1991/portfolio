@@ -6,10 +6,11 @@
   margin-right: 50px;
   transition: .8s;
   @media (max-width: 1140px) {
-      width: 100%;
-      margin-right: 0;
-      justify-content: space-around;
+    width: 100%;
+    margin-right: 0;
+    justify-content: space-around;
   }
+
   .linkContainer {
     .link {
       cursor: pointer;
@@ -21,12 +22,15 @@
       line-height: 1.7;
       transition: all 0.3s ease-in-out;
       color: var(--white);
+
       &:hover {
         color: var(--secondary-color);
       }
+
       &:focus {
         outline: none;
       }
+
       @media (max-width: 600px) {
         font-size: 1em;
       }
@@ -34,6 +38,7 @@
         font-size: 0.8em;
       }
     }
+
     .active {
       color: var(--secondary-color);
     }
@@ -70,13 +75,13 @@
 }
 
 .loginContainer {
-  background: transparentize(#252b2f, .2);
   height: max-content;
   min-height: unset !important;
   margin: 2rem;
   max-width: 100% !important;
   width: max-content;
   min-width: 300px !important;
+  border: none !important;
 }
 
 .loginBtn {
