@@ -13,3 +13,8 @@ export type tLoginParams = {
 export type tErrors = {
     [key: string]: string
 } | undefined
+
+export type tPos = {
+    x: number,
+    y: number
+}

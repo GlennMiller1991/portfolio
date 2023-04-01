@@ -37,8 +37,10 @@ const appState = {
     windowWrapper: undefined as tWindowWrapper | undefined,
     errors: undefined as tErrors,
     appWidth: 0 as number,
+    appHeight: 0 as number,
     alert: undefined as undefined | string,
     authenticated: false as boolean,
+    isMobile: false as boolean
 }
 
 export const appReducer = (state: tAppState = appState, action: tAppActions) => {

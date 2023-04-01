@@ -1,29 +1,18 @@
-import React, {useCallback, useEffect, useRef} from 'react'
-import styles from './WindowWrapper.module.scss'
-import {setClasses} from '../../common/utils/setClasses'
-import {IoCloseOutline} from 'react-icons/all'
-import {useDispatch} from 'react-redux'
-import {appUpdateState} from '../../redux/appReducer/appReducer'
-import {Particle} from '../../common/classes/Particle/Particle'
+import React, {useEffect, useRef} from "react";
+import {useSelector} from "react-redux";
+import {stateType} from "../../../../redux/store";
+import {Particle} from "../../../classes/Particle/Particle";
+import {wwCanvas} from "../../../constants/ids";
+import styles from "../WindowWrapper.module.scss";
 
-
-type tWindowWrapper = {
-    containerClass?: string,
-    children?: React.ReactNode
-}
-export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
-                                                                       containerClass,
-                                                                       children
-                                                                   }) => {
+export const WindowWrapperCanvas: React.FC = React.memo(() => {
+    const width = useSelector<stateType, number>(state => state.appState.appWidth)
+    const height = useSelector<stateType, number>(state => state.appState.appHeight)
+    const isMobile = useSelector<stateType, boolean>(state => state.appState.isMobile)
     const drawFlag = useRef(false)
-    const dispatch = useDispatch()
-    const onClose = useCallback(() => {
-        dispatch(appUpdateState({
-            windowWrapper: undefined
-        }))
-    }, [])
 
 
+    // visual effects
     useEffect(() => {
         const width = window.innerWidth
         const height = window.innerHeight
@@ -37,6 +26,9 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
                 radius: Math.random() * 30,
                 dots,
             }))
+            if (dots.length > 300) {
+                dots.splice(0 ,1)
+            }
         }
         const mobListener = () => {
             return setInterval(() => {
@@ -49,8 +41,7 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
             }, 300)
         }
         // const isMobile = 2 + 2 === 4
-        const isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes("mobi")
-        const canvas =  document.getElementById('wwCanvas') as HTMLCanvasElement | null
+        const canvas = document.getElementById(wwCanvas) as HTMLCanvasElement | null
         if (canvas) {
             const context = canvas.getContext('2d')
             if (context) {
@@ -65,11 +56,11 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
                         particle.move()
                         particle.draw(context)
 
-                        if ((particle.velocity.x < 0.015 && particle.velocity.x > -0.015) || particle.radius < 1) {
+                        if ((Math.abs(particle.velocity.x) < 0.015) || particle.radius < 1) {
                             dots.splice(i, 1)
                         }
                         if (dots.length > 50) {
-                            dots[0].coef *= .5
+                            dots[0].coef *= 0.5
                         }
                     })
                 }
@@ -78,6 +69,7 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
                     if (drawFlag.current || dots.length) {
                         draw()
                     }
+                    console.log(dots.length)
                     reqId = requestAnimationFrame(render)
                 }
 
@@ -98,8 +90,8 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
     }, [])
 
     return (
-        <div className={setClasses(styles.modalContainer, 'flexCenter')}>
-            <canvas id={'wwCanvas'} width={window.innerWidth} height={window.innerHeight}
+        <>
+            <canvas id={wwCanvas} width={width} height={height}
                     onMouseEnter={() => {
                         drawFlag.current = true
                     }}
@@ -107,14 +99,6 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
                         drawFlag.current = false
                     }}
                     className={styles.canvas}/>
-            <div className={setClasses(styles.modalContent, containerClass)}>
-                <button className={setClasses(styles.closeBtn, 'flexCenter')} onClick={onClose}>
-                    <IoCloseOutline/>
-                </button>
-                {
-                    children
-                }
-            </div>
             <svg className={styles.svg}>
                 <defs>
                     <filter id="liquid">
@@ -123,7 +107,6 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
                     </filter>
                 </defs>
             </svg>
-        </div>
+        </>
     )
 })
-

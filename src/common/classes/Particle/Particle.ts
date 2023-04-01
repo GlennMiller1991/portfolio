@@ -1,7 +1,5 @@
-type tPos = {
-    x: number,
-    y: number
-}
+import {tPos} from "../../types/types";
+
 type tParticleProps = {
     x: number,
     y: number,

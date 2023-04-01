@@ -20,14 +20,7 @@ const router = createHashRouter([
     }
     ])
 
-root.render(
-  <React.StrictMode>
-      <RouterProvider router={router}/>
-      {/*<Provider store={store}>*/}
-      {/*    <App/>*/}
-      {/*</Provider>*/}
-  </React.StrictMode>
-);
+root.render(<RouterProvider router={router}/>);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

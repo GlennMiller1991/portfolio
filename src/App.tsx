@@ -12,10 +12,11 @@ import {Up} from './components/Up/Up';
 import {Footer} from './components/Footer/Footer';
 import {anchorType, checkAnchorTC} from './redux/reducer';
 import {useDispatch, useSelector} from 'react-redux';
-import {dispatchType, stateType, useAppDispatch} from './redux/store';
+import {stateType, useAppDispatch} from './redux/store';
 import {appUpdateState, tAppState} from './redux/appReducer/appReducer';
-import {WindowWrapper} from './components/WindowWrapper/WindowWrapper'
+import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {loginAPI} from './common/api/loginAPI'
+import {appContainer, pageTitle} from "./common/constants/ids";
 
 function App() {
     const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
@@ -49,7 +50,10 @@ function App() {
 
     //get elements and add event listener
     useEffect(() => {
-        document.title = 'React developer'
+
+        const isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes("mobi")
+
+        document.title = pageTitle
         const elements = []
         for (let i = 0; i < anchorsId.length; i++) {
             const elem = document.getElementById(anchorsId[i])
@@ -61,15 +65,16 @@ function App() {
         setElements(elements as HTMLDivElement[])
 
         const observer = new ResizeObserver(() => {
-            const element = document.getElementById('app')
+            const element = document.getElementById(appContainer)
             if (element) {
                 dispatch(appUpdateState({
-                    appWidth: element.getBoundingClientRect().width
+                    appWidth: element.getBoundingClientRect().width,
+                    appHeight: element.getBoundingClientRect().height
                 }))
             }
         })
 
-        const element = document.getElementById('app')
+        const element = document.getElementById(appContainer)
         if (element) {
             observer.observe(element)
         }
@@ -89,7 +94,7 @@ function App() {
     }, [])
 
     return (
-        <div id={'app'}>
+        <div id={appContainer}>
             <Header showUp={showUp}/>
             <Main/>
             <Skills/>
