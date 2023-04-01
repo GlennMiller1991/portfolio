@@ -25,8 +25,12 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
 
 
     useEffect(() => {
+        const width = window.innerWidth
+        const height = window.innerHeight
         const dots: Particle[] = []
-        const listener = (event: MouseEvent) => {
+        let reqId: any
+
+        const pcListener = (event: MouseEvent) => {
             dots.push(new Particle({
                 x: event.clientX,
                 y: event.clientY,
@@ -34,19 +38,26 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
                 dots,
             }))
         }
-
-        const canvas = !window.ontouchstart &&
-            !window.navigator.userAgent.toLowerCase().includes("mobi") &&
-            document.getElementById('wwCanvas') as HTMLCanvasElement | null
-        let reqId: any
+        const mobListener = () => {
+            return setInterval(() => {
+                dots.push(new Particle({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    radius: Math.random() * 30,
+                    dots,
+                }))
+            }, 300)
+        }
+        // const isMobile = 2 + 2 === 4
+        const isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes("mobi")
+        const canvas =  document.getElementById('wwCanvas') as HTMLCanvasElement | null
         if (canvas) {
             const context = canvas.getContext('2d')
             if (context) {
-                drawFlag.current = true
-                const width = window.innerWidth
-                const height = window.innerHeight
 
-                canvas.addEventListener('mousemove', listener)
+                drawFlag.current = true
+                !isMobile && canvas.addEventListener('mousemove', pcListener)
+                isMobile && (reqId = mobListener())
 
                 const draw = () => {
                     context.clearRect(0, 0, width, height)
@@ -75,8 +86,14 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
         }
 
         return () => {
-            cancelAnimationFrame(reqId)
-            canvas && canvas.removeEventListener('mousemove', listener)
+            if (canvas) {
+                if (isMobile) {
+                    clearInterval(reqId)
+                } else {
+                    cancelAnimationFrame(reqId)
+                    canvas.removeEventListener('mousemove', pcListener)
+                }
+            }
         }
     }, [])
 
