@@ -40,7 +40,6 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                 }))
             }, 300)
         }
-        // const isMobile = 2 + 2 === 4
         const canvas = document.getElementById(wwCanvas) as HTMLCanvasElement | null
         if (canvas) {
             const context = canvas.getContext('2d')
@@ -69,8 +68,7 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                     if (drawFlag.current || dots.length) {
                         draw()
                     }
-                    console.log(dots.length)
-                    reqId = requestAnimationFrame(render)
+                    // reqId = requestAnimationFrame(render)
                 }
 
                 render()

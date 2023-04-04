@@ -31,10 +31,10 @@ export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
         const container = document.getElementById(wwContainer)
         let swipeListener: SwipeListener
         if (container) {
-            swipeListener = new SwipeListener({
-                element: container,
-                callback: onClose,
-            })
+            // swipeListener = new SwipeListener({
+            //     element: container,
+            //     callback: onClose,
+            // })
         }
 
         return () => {
