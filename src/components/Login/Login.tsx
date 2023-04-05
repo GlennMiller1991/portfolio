@@ -65,14 +65,14 @@ export const LoginPage: React.FC = React.memo(() => {
         const validators: tObjectValidators<tLoginParams> = {
             loginEmail: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                     validator.checkTemplate(emailRegexp),
                 ]
             },
             loginPassword: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                 ]
             }
@@ -82,6 +82,7 @@ export const LoginPage: React.FC = React.memo(() => {
         return validator
     }, [])
     const [state, onChange, clearState, onBlur] = useFieldState<tLoginParams>(validator)
+    const dispatch = useDispatch()
 
     return (
         <>
@@ -92,11 +93,11 @@ export const LoginPage: React.FC = React.memo(() => {
             <Input value={state.data.loginEmail} name={'Email'} data-name={'loginEmail'}
                    focusedBackgroundClass={styles.focusedText}
                    onChange={onChange}
-                   onBlur={onBlurField}/>
+                   onBlur={onBlur}/>
             <Input value={state.data.loginPassword} type={'password'} name={'Password'} data-name={'loginPassword'}
                    focusedBackgroundClass={styles.focusedText}
                    onChange={onChange}
-                   onBlur={onBlurField}/>
+                   onBlur={onBlur}/>
             <div className={setClasses(styles.submit, 'flex')}>
                 <Button text={state.resError || 'Sign in'} disabled={!!state.resError}
                         onClick={() => {
@@ -142,40 +143,40 @@ export const SignUpPage: React.FC = React.memo(() => {
         const validators: tObjectValidators<tSignupParams> = {
             confirmPassword: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                     validator.compareWith('password')
                 ]
             },
             firstName: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                 ]
             },
             lastName: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                 ]
             },
             email: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                     validator.checkTemplate(emailRegexp),
                 ]
             },
             password: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                     validator.compareWith('password')
                 ]
             },
             telegram: {
                 validators: [
-                    validator.required,
+                    validator.required(),
                     validator.checkStringLength(20),
                     validator.checkTemplate(telegramRegexp),
                 ]

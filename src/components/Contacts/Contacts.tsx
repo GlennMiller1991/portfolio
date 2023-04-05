@@ -1,15 +1,14 @@
-import React, {useCallback, FocusEvent, useMemo} from 'react';
+import React, {useMemo} from 'react';
 import commonStyles from '../../common/styles/CommonStyles.module.scss'
 import styles from './Contacts.module.scss'
-import {tErrors} from '../../common/types/types'
-import {useDispatch, useSelector} from 'react-redux'
-import {appUpdateErrors} from '../../redux/appReducer/appReducer'
-import {stateType} from '../../redux/store'
+import {useDispatch} from 'react-redux'
 import {Input} from '../../common/components/Input/Input'
 import {setClasses} from '../../common/utils/setClasses'
 import {Button} from '../../common/components/Button/Button'
 import {useFieldState} from '../../common/customHooks/useFieldState'
 import {messageAPI} from '../../common/api/messageAPI'
+import {tObjectValidators, Validator} from '../../common/validators/Validator'
+import {emailRegexp} from '../../common/constants/regexps'
 
 type tLoginParamType = {
     email: string,
@@ -17,45 +16,51 @@ type tLoginParamType = {
     subject: string,
     message: string,
 }
-const keys = ['email', 'name', 'subject', 'message'] as Array<keyof tLoginParamType>
 
 export const Contacts = React.memo(() => {
-    //error msg
-    const [state, onChange, clearState] = useFieldState<tLoginParamType>(keys)
-
-    const errors = useSelector<stateType, tErrors>(state => state.appState.errors)
-    const dispatch = useDispatch()
-    const onBlurField = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        const field = event.currentTarget.dataset.name
-        const value = event.currentTarget.value.trim()
-        let error: tErrors = {[field as string]: ''}
-        switch (field) {
-            case 'name':
-            case 'subject':
-            case 'message':
-                if (!value) error[field] = `${field} is required field`
-                break
-            case 'email':
-                if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
-                    error[field] = 'Invalid email address'
-                }
-                break
-            default:
-                return
+    const validator = useMemo(() => {
+        const loginParams: tLoginParamType = {
+            email: '',
+            name: '',
+            subject: '',
+            message: '',
         }
-        dispatch(appUpdateErrors(error))
+        const validator = new Validator<tLoginParamType>(loginParams)
+        const validators: tObjectValidators<tLoginParamType> = {
+            email: {
+                validators: [
+                    validator.required(),
+                    validator.checkStringLength(20),
+                    validator.checkTemplate(emailRegexp),
+                ]
+            },
+            name: {
+                validators: [
+                    validator.required(),
+                    validator.checkStringLength(20),
+                ]
+            },
+            subject: {
+                validators: [
+                    validator.required(),
+                    validator.checkStringLength(150)
+                ]
+            },
+            message: {
+                validators: [
+                    validator.required(),
+                    validator.checkStringLength(1500)
+                ]
+            }
+
+        }
+        validator.updateValidators(validators)
+        return validator
     }, [])
+    const [state, onChange, clearState, onBlur] = useFieldState<tLoginParamType>(validator)
 
-    const resError: string | undefined = useMemo(() => {
-        let res: string | undefined
-        if (state.name && state.email && state.subject && state.message) {
-            res = errors?.name || errors?.email || errors?.subject || errors?.message
-        } else {
-            res = 'Fill all required fields'
-        }
-        return res
-    }, [errors, state])
 
+    console.log(state.resError)
     return (
         <div id={'contacts'} className={styles.wrapper}>
             <div className={`${commonStyles.container} ${styles.container}`}>
@@ -66,37 +71,37 @@ export const Contacts = React.memo(() => {
                 <div className={styles.inputs}>
                     <Input onChange={onChange}
                            containerClass={styles.name}
-                           onBlur={onBlurField}
+                           onBlur={onBlur}
                            data-name={'name'}
-                           value={state.name}
+                           value={state.data.name}
                            name={'Name'}
                     />
                     <Input onChange={onChange}
                            containerClass={styles.email}
-                           onBlur={onBlurField}
+                           onBlur={onBlur}
                            data-name={'email'}
-                           value={state.email}
+                           value={state.data.email}
                            name={'Email'}
                     />
                     <Input onChange={onChange}
                            containerClass={styles.subject}
-                           onBlur={onBlurField}
+                           onBlur={onBlur}
                            data-name={'subject'}
-                           value={state.subject}
+                           value={state.data.subject}
                            name={'Subject'}
                     />
                     <Input onChange={onChange}
                            containerClass={styles.message}
                            asTextArea
-                           onBlur={onBlurField}
+                           onBlur={onBlur}
                            data-name={'message'}
-                           value={state.message}
+                           value={state.data.message}
                            name={'Message'}
                     />
                     <div className={setClasses(styles.submit, 'flex')}>
-                        <Button text={resError || 'Send message'} disabled={!!resError}
+                        <Button text={state.resError || 'Send message'} disabled={!!state.resError}
                                 onClick={() => {
-                                    messageAPI.sendMessage(state)
+                                    messageAPI.sendMessage(state.data)
                                         .then(clearState)
                                 }}
                         />

@@ -8,7 +8,6 @@ export type tObjectValidators<T> = {
 }
 
 export interface iValidator<T> {
-    required: (key: keyof T, message?: string) => string | undefined
 }
 
 export class Validator<T> implements iValidator<T> {
@@ -29,38 +28,39 @@ export class Validator<T> implements iValidator<T> {
         return this.obj
     }
 
-    required = (key: keyof T, message?: string) => {
-        if (this.obj[key]) return undefined
-        return message || 'Field is required'
+    required = (message?: string) => {
+        return (key: keyof T) => {
+            if (this.obj[key]) return undefined
+            return message || `${String(key)} is required field`
+        }
     }
 
     compareWith = (key2: keyof T, message?: string) => {
         return (key: keyof T) => {
             if (this.obj[key] === this.obj[key2]) return undefined
-            return message || 'Fields are not equal'
+            return message || `${String(key)} an ${String(key2)} are not equal`
         }
     }
 
     checkStringLength = (length: number, message?: string) => {
         return (key: keyof T) => {
             if (this.obj[key].length <= length) return undefined
-            return 'Field is exceed maximum length'
+            return message || `Field ${String(key)} is exceed maximum length`
         }
     }
 
-    checkTemplate = (template: RegExp) => {
+    checkTemplate = (template: RegExp, message?: string) => {
         return (key: keyof T) => {
             if (!template.test(this.obj[key])) {
-                return 'Template mismatching'
+                return message || `Field ${String(key)} is mismatching template`
             }
         }
     }
 
     checkField = (key: keyof T, message?: string, args?: any) => {
-        const value = this.obj[key]
         if (this.validators) {
             for (let i = 0; i < this.validators[key].validators.length; i++) {
-                const res = this.validators[key].validators[i](key)
+                const res = this.validators[key].validators[i](key, message, args)
                 if (res) return res
             }
         }
@@ -72,6 +72,7 @@ export class Validator<T> implements iValidator<T> {
         const keys = Object.keys(this.obj) as Array<keyof T>
         for (let key of keys) {
             resError = this.checkField(key)
+            if (resError) return resError
         }
         return resError
     }

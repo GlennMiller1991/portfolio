@@ -1,4 +1,4 @@
-import {ChangeEvent, useCallback, useState, FocusEvent} from 'react'
+import {ChangeEvent, useCallback, useState, FocusEvent, useEffect} from 'react'
 import {tValidator} from '../types/types'
 import {tObjectType, Validator} from '../validators/Validator'
 
@@ -33,13 +33,17 @@ export const useFieldState = <T>(validator: Validator<T>): [
         })
     }, [])
 
-    const onBlur = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const checkFields = useCallback(() => {
         setState((prev) => {
             return {
                 ...prev,
                 resError: validator.checkObject()
             }
         })
+        return validator.checkObject()
+    }, [])
+    const onBlur = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        checkFields()
     }, [])
 
     const clearState = useCallback(() => {
@@ -52,6 +56,10 @@ export const useFieldState = <T>(validator: Validator<T>): [
             validator.updateObject(obj)
             return {data: obj, resError: undefined}
         })
+    }, [])
+
+    useEffect(() => {
+        checkFields()
     }, [])
 
     return [state, onChange, clearState, onBlur]
