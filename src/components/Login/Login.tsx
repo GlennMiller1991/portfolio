@@ -14,7 +14,7 @@ import {required} from '../../common/validators/required'
 import {tObjectValidators, Validator} from '../../common/validators/Validator'
 import {emailRegexp, telegramRegexp} from '../../common/constants/regexps'
 
-type tSignupParams = {
+export type tSignupParams = {
     firstName: string,
     lastName: string,
     email: string,
@@ -23,7 +23,7 @@ type tSignupParams = {
     confirmPassword: string,
 }
 
-type tLoginParams = {
+export type tLoginParams = {
     loginEmail: string,
     loginPassword: string,
 }
@@ -221,7 +221,11 @@ export const SignUpPage: React.FC = React.memo(() => {
                    onBlur={onBlur}/>
             <div className={setClasses(styles.submit, 'flex')}>
                 <Button text={state.resError || 'Sign up'} disabled={!!state.resError}
-                        onClick={console.log}
+                        onClick={() => {
+                            loginAPI.signup(state.data)
+                                .then(console.log)
+                                .catch(console.log)
+                        }}
                 />
             </div>
         </>
