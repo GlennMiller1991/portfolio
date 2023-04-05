@@ -79,7 +79,7 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
         return () => {
             if (canvas) {
                 if (isMobile) {
-                    clearInterval(reqId)
+                    clearInterval(reqId )
                 } else {
                     cancelAnimationFrame(reqId)
                     canvas.removeEventListener('mousemove', pcListener)
