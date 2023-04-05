@@ -6,6 +6,8 @@ import {stateType} from '../../../redux/store';
 import {anchorType} from '../../../redux/reducer';
 import {appUpdateState} from '../../../redux/appReducer/appReducer'
 import {Login} from '../../Login/Login'
+import loginStyles from '../../Login/Login.module.scss'
+
 import {
     AiOutlineContacts,
     AiOutlineFundProjectionScreen,
@@ -91,7 +93,7 @@ export const Nava = React.memo(() => {
 
                     } else {
                         dispatch(appUpdateState({
-                            windowWrapper: {element: <Login/>, containerClass: styles.loginContainer}
+                            windowWrapper: {element: <Login/>, containerClass: loginStyles.loginContainer}
                         }))
                     }
                 }}>

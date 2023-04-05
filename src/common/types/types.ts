@@ -18,3 +18,5 @@ export type tPos = {
     x: number,
     y: number
 }
+
+export type tValidator = (value: string, text?: string) => string | undefined

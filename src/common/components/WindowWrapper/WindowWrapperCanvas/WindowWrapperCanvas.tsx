@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {stateType} from "../../../../redux/store";
 import {Particle} from "../../../classes/Particle/Particle";
 import {wwCanvas} from "../../../constants/ids";
-import styles from "../WindowWrapper.module.scss";
+import styles from "../WindowWrapper.module.scss"
 
 export const WindowWrapperCanvas: React.FC = React.memo(() => {
     const width = useSelector<stateType, number>(state => state.appState.appWidth)
@@ -40,7 +40,6 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                 }))
             }, 300)
         }
-        // const isMobile = 2 + 2 === 4
         const canvas = document.getElementById(wwCanvas) as HTMLCanvasElement | null
         if (canvas) {
             const context = canvas.getContext('2d')
@@ -52,7 +51,8 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
 
                 const draw = () => {
                     context.clearRect(0, 0, width, height)
-                    dots.forEach((particle, i) => {
+                    for (let i = 0; i < dots.length; i++) {
+                        const particle = dots[i]
                         particle.move()
                         particle.draw(context)
 
@@ -62,14 +62,13 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                         if (dots.length > 50) {
                             dots[0].coef *= 0.5
                         }
-                    })
+                    }
                 }
 
                 const render = () => {
                     if (drawFlag.current || dots.length) {
                         draw()
                     }
-                    console.log(dots.length)
                     reqId = requestAnimationFrame(render)
                 }
 

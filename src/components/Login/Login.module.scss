@@ -1,3 +1,22 @@
+.loginContainer {
+  height: max-content;
+  min-height: unset !important;
+  margin: 2rem;
+  width: 30%;
+  max-width: 100% !important;
+  min-width: 300px !important;
+  border: none !important;
+
+  @media (max-width: 1000px) {
+    width: 60%;
+  }
+
+  @media (max-width: 700px) {
+    width: 100%;
+  }
+}
+
+
 .container {
   display: grid;
   row-gap: 2rem;
@@ -29,7 +48,8 @@
   }
 }
 
-
-.focusedText {
-  background: transparent !important;
+.inputContainer {
+  max-width: 100%;
+  width: 100%;
+  min-width: 40%;
 }

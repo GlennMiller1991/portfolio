@@ -28,7 +28,7 @@ export const Input: React.FC<tInput> = React.memo(({
                     />
             }
             <div className={setClasses(styles.underField, props.value && styles.focusedDiv)}/>
-            <div className={setClasses(styles.text, props.value && styles.focusedText, focusedBackgroundClass)}>
+            <div className={setClasses(styles.text, props.value && styles.focusedText)}>
                 {name}
             </div>
         </div>

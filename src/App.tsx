@@ -13,10 +13,10 @@ import {Footer} from './components/Footer/Footer';
 import {anchorType, checkAnchorTC} from './redux/reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {stateType, useAppDispatch} from './redux/store';
-import {appUpdateState, tAppState} from './redux/appReducer/appReducer';
+import {appUpdateErrors, appUpdateState, tAppState} from './redux/appReducer/appReducer';
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {loginAPI} from './common/api/loginAPI'
-import {appContainer, pageTitle} from "./common/constants/ids";
+import {appContainer, pageTitle} from './common/constants/ids';
 
 function App() {
     const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
@@ -51,7 +51,10 @@ function App() {
     //get elements and add event listener
     useEffect(() => {
 
-        const isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes("mobi")
+        const isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
+        dispatch(appUpdateState({
+            isMobile: !!isMobile
+        }))
 
         document.title = pageTitle
         const elements = []
@@ -69,7 +72,7 @@ function App() {
             if (element) {
                 dispatch(appUpdateState({
                     appWidth: element.getBoundingClientRect().width,
-                    appHeight: element.getBoundingClientRect().height
+                    appHeight: window.innerHeight,
                 }))
             }
         })
