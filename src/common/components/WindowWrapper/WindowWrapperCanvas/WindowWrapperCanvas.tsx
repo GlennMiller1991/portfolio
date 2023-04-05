@@ -97,14 +97,14 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                         drawFlag.current = false
                     }}
                     className={styles.canvas}/>
-            <svg className={styles.svg}>
-                <defs>
-                    <filter id="liquid">
-                        <feTurbulence type="fractalNoise" baseFrequency=".03"/>
-                        <feDisplacementMap in="SourceGraphic" scale="150"/>
-                    </filter>
-                </defs>
-            </svg>
+            {/*<svg className={styles.svg}>*/}
+            {/*    <defs>*/}
+            {/*        <filter id="liquid">*/}
+            {/*            <feTurbulence type="fractalNoise" baseFrequency=".03"/>*/}
+            {/*            <feDisplacementMap in="SourceGraphic" scale="150"/>*/}
+            {/*        </filter>*/}
+            {/*    </defs>*/}
+            {/*</svg>*/}
         </>
     )
 })
