@@ -49,7 +49,7 @@ export const useFieldState = <T>(validator: Validator<T>): [
     const clearState = useCallback(() => {
         setState((prev) => {
             const obj: any = {}
-            const keys = Object.keys(prev)
+            const keys = Object.keys(prev.data)
             for (let key of keys) {
                 obj[key] = ''
             }
@@ -62,5 +62,6 @@ export const useFieldState = <T>(validator: Validator<T>): [
         checkFields()
     }, [])
 
+    console.log(state, validator.getObject())
     return [state, onChange, clearState, onBlur]
 }

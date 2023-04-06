@@ -231,8 +231,8 @@ export const SignUpPage: React.FC = React.memo(() => {
                                 .then(() => {
                                     clearState()
                                 })
-                                .catch(() => {
-                                    alert('Пока не реализовано')
+                                .catch((err) => {
+                                    alert(err.message)
                                 })
                         }}
                 />
