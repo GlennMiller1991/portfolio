@@ -42,9 +42,16 @@ export class Validator<T> implements iValidator<T> {
         }
     }
 
-    checkStringLength = (length: number, message?: string) => {
+    checkMaxStringLength = (length: number, message?: string) => {
         return (key: keyof T) => {
             if (this.obj[key].length <= length) return undefined
+            return message || `Field ${String(key)} is exceed maximum length`
+        }
+    }
+
+    checkMinStringLength = (length: number, message?: string) => {
+        return (key: keyof T) => {
+            if (this.obj[key].length >= length) return undefined
             return message || `Field ${String(key)} is exceed maximum length`
         }
     }

@@ -72,7 +72,7 @@ function App() {
             if (element) {
                 dispatch(appUpdateState({
                     appWidth: element.getBoundingClientRect().width,
-                    appHeight: element.getBoundingClientRect().height
+                    appHeight: window.innerHeight,
                 }))
             }
         })

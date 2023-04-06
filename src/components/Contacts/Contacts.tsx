@@ -30,26 +30,26 @@ export const Contacts = React.memo(() => {
             email: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                     validator.checkTemplate(emailRegexp),
                 ]
             },
             name: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                 ]
             },
             subject: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(150)
+                    validator.checkMaxStringLength(150)
                 ]
             },
             message: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(1500)
+                    validator.checkMaxStringLength(1500)
                 ]
             }
 

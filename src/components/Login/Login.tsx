@@ -1,18 +1,18 @@
-import React, {useCallback, useState, FocusEvent, useMemo} from 'react'
+import React, {useCallback, useState, useMemo} from 'react'
 import {Input} from '../../common/components/Input/Input'
 import {Button} from '../../common/components/Button/Button'
 import styles from './Login.module.scss'
 import {setClasses} from '../../common/utils/setClasses'
-import {tKeys, useFieldState} from '../../common/customHooks/useFieldState'
+import {useFieldState} from '../../common/customHooks/useFieldState'
 import {useDispatch, useSelector} from 'react-redux'
 import {tErrors} from '../../common/types/types'
 import {stateType} from '../../redux/store'
-import {appUpdateErrors, appUpdateState} from '../../redux/appReducer/appReducer'
+import {appUpdateState} from '../../redux/appReducer/appReducer'
 import {loginAPI} from '../../common/api/loginAPI'
 import commonStyles from '../../common/styles/CommonStyles.module.scss'
-import {required} from '../../common/validators/required'
 import {tObjectValidators, Validator} from '../../common/validators/Validator'
 import {emailRegexp, telegramRegexp} from '../../common/constants/regexps'
+import {Row} from '../../common/components/Row/Row';
 
 export type tSignupParams = {
     firstName: string,
@@ -66,14 +66,14 @@ export const LoginPage: React.FC = React.memo(() => {
             loginEmail: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                     validator.checkTemplate(emailRegexp),
                 ]
             },
             loginPassword: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                 ]
             }
 
@@ -144,40 +144,43 @@ export const SignUpPage: React.FC = React.memo(() => {
             confirmPassword: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                     validator.compareWith('password')
                 ]
             },
             firstName: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
+                    validator.checkMinStringLength(3),
+
                 ]
             },
             lastName: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
+                    validator.checkMinStringLength(3),
                 ]
             },
             email: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(40),
                     validator.checkTemplate(emailRegexp),
                 ]
             },
             password: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                     validator.compareWith('password')
                 ]
             },
             telegram: {
                 validators: [
                     validator.required(),
-                    validator.checkStringLength(20),
+                    validator.checkMaxStringLength(20),
                     validator.checkTemplate(telegramRegexp),
                 ]
             },
@@ -186,7 +189,6 @@ export const SignUpPage: React.FC = React.memo(() => {
         return validator
     }, [])
     const [state, onChange, clearState, onBlur] = useFieldState<tSignupParams>(validator)
-    const errors = useSelector<stateType, tErrors>(state => state.appState.errors)
 
     return (
         <>
@@ -194,37 +196,44 @@ export const SignUpPage: React.FC = React.memo(() => {
                 SIGN UP
                 <span className={commonStyles.upperThenHeader}>SIGN UP</span>
             </h1>
-            <Input value={state.data.firstName} name={'First name'} data-name={'firstName'}
-                   focusedBackgroundClass={styles.focusedText}
-                   onChange={onChange}
-                   onBlur={onBlur}/>
-            <Input value={state.data.lastName} name={'Last name'} data-name={'lastName'}
-                   focusedBackgroundClass={styles.focusedText}
-                   onChange={onChange}
-                   onBlur={onBlur}/>
-            <Input value={state.data.email} name={'Email'} data-name={'email'}
-                   focusedBackgroundClass={styles.focusedText}
-                   onChange={onChange}
-                   onBlur={onBlur}/>
-            <Input value={state.data.telegram} name={'Telegram'} data-name={'telegram'}
-                   focusedBackgroundClass={styles.focusedText}
-                   onChange={onChange}
-                   onBlur={onBlur}/>
-            <Input value={state.data.password} type={'password'} name={'Password'} data-name={'password'}
-                   focusedBackgroundClass={styles.focusedText}
-                   onChange={onChange}
-                   onBlur={onBlur}/>
-            <Input value={state.data.confirmPassword} type={'password'} name={'Confirm password'}
-                   data-name={'confirmPassword'}
-                   focusedBackgroundClass={styles.focusedText}
-                   onChange={onChange}
-                   onBlur={onBlur}/>
+            <Row withWrap>
+                <Input value={state.data.firstName}
+                       containerClass={styles.inputContainer}
+                       name={'First name'} data-name={'firstName'}
+                       onChange={onChange}
+                       onBlur={onBlur}/>
+                <Input value={state.data.lastName} name={'Last name'} data-name={'lastName'}
+                       containerClass={styles.inputContainer}
+                       onChange={onChange}
+                       onBlur={onBlur}/>
+                <Input value={state.data.email} name={'Email'} data-name={'email'}
+                       containerClass={styles.inputContainer}
+                       onChange={onChange}
+                       onBlur={onBlur}/>
+                <Input value={state.data.telegram} name={'Telegram'} data-name={'telegram'}
+                       containerClass={styles.inputContainer}
+                       onChange={onChange}
+                       onBlur={onBlur}/>
+                <Input value={state.data.password} type={'password'} name={'Password'} data-name={'password'}
+                       onChange={onChange}
+                       containerClass={styles.inputContainer}
+                       onBlur={onBlur}/>
+                <Input value={state.data.confirmPassword} type={'password'} name={'Confirm password'}
+                       data-name={'confirmPassword'}
+                       containerClass={styles.inputContainer}
+                       onChange={onChange}
+                       onBlur={onBlur}/>
+            </Row>
             <div className={setClasses(styles.submit, 'flex')}>
                 <Button text={state.resError || 'Sign up'} disabled={!!state.resError}
                         onClick={() => {
                             loginAPI.signup(state.data)
-                                .then(console.log)
-                                .catch(console.log)
+                                .then(() => {
+                                    clearState()
+                                })
+                                .catch(() => {
+                                    alert('Пока не реализовано')
+                                })
                         }}
                 />
             </div>

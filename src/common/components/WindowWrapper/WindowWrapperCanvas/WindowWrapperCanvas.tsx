@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import {stateType} from "../../../../redux/store";
 import {Particle} from "../../../classes/Particle/Particle";
 import {wwCanvas} from "../../../constants/ids";
-import styles from "../WindowWrapper.module.scss";
+import styles from "../WindowWrapper.module.scss"
 
 export const WindowWrapperCanvas: React.FC = React.memo(() => {
     const width = useSelector<stateType, number>(state => state.appState.appWidth)
@@ -51,7 +51,8 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
 
                 const draw = () => {
                     context.clearRect(0, 0, width, height)
-                    dots.forEach((particle, i) => {
+                    for (let i = 0; i < dots.length; i++) {
+                        const particle = dots[i]
                         particle.move()
                         particle.draw(context)
 
@@ -61,14 +62,14 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                         if (dots.length > 50) {
                             dots[0].coef *= 0.5
                         }
-                    })
+                    }
                 }
 
                 const render = () => {
                     if (drawFlag.current || dots.length) {
                         draw()
                     }
-                    // reqId = requestAnimationFrame(render)
+                    reqId = requestAnimationFrame(render)
                 }
 
                 render()
@@ -78,7 +79,7 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
         return () => {
             if (canvas) {
                 if (isMobile) {
-                    clearInterval(reqId)
+                    clearInterval(reqId )
                 } else {
                     cancelAnimationFrame(reqId)
                     canvas.removeEventListener('mousemove', pcListener)
@@ -97,14 +98,14 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                         drawFlag.current = false
                     }}
                     className={styles.canvas}/>
-            {/*<svg className={styles.svg}>*/}
-            {/*    <defs>*/}
-            {/*        <filter id="liquid">*/}
-            {/*            <feTurbulence type="fractalNoise" baseFrequency=".03"/>*/}
-            {/*            <feDisplacementMap in="SourceGraphic" scale="150"/>*/}
-            {/*        </filter>*/}
-            {/*    </defs>*/}
-            {/*</svg>*/}
+            <svg className={styles.svg}>
+                <defs>
+                    <filter id="liquid">
+                        <feTurbulence type="fractalNoise" baseFrequency=".03"/>
+                        <feDisplacementMap in="SourceGraphic" scale="150"/>
+                    </filter>
+                </defs>
+            </svg>
         </>
     )
 })
