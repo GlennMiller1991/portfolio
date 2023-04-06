@@ -4,7 +4,7 @@ import {Button} from '../../common/components/Button/Button'
 import styles from './Login.module.scss'
 import {setClasses} from '../../common/utils/setClasses'
 import {useFieldState} from '../../common/customHooks/useFieldState'
-import {useDispatch, useSelector} from 'react-redux'
+import {batch, useDispatch, useSelector} from 'react-redux'
 import {tErrors} from '../../common/types/types'
 import {stateType} from '../../redux/store'
 import {appUpdateState} from '../../redux/appReducer/appReducer'
@@ -103,24 +103,21 @@ export const LoginPage: React.FC = React.memo(() => {
                         onClick={() => {
                             loginAPI.login({
                                 email: state.data.loginEmail,
-                                hash: state.data.loginPassword
+                                password: state.data.loginPassword
                             })
-                                .then(() => {
-                                    return true
-                                })
-                                .catch(() => {
-                                    return false
-                                })
-                                .then((res: boolean) => {
-                                    clearState()
-                                    dispatch(appUpdateState({
-                                        authenticated: res
-                                    }))
-                                    if (res) {
-                                        dispatch(appUpdateState({
-                                            windowWrapper: undefined
-                                        }))
+                                .then((res) => {
+                                    let confirmation = confirm(res.message)
+                                    if (confirmation) {
+                                        batch(() => {
+                                            dispatch(appUpdateState({
+                                                windowWrapper: undefined,
+                                                authenticated: true
+                                            }))
+                                        })
                                     }
+                                })
+                                .catch((err) => {
+                                    alert(err.message)
                                 })
                         }}
                 />

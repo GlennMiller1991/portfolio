@@ -7,7 +7,7 @@ export type tMessage = {
 
 export type tLoginParams = {
     email: string,
-    hash: string,
+    password: string,
 }
 
 export type tErrors = {
