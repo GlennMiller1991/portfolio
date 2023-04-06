@@ -106,7 +106,7 @@ export const LoginPage: React.FC = React.memo(() => {
                                 password: state.data.loginPassword
                             })
                                 .then((res) => {
-                                    let confirmation = confirm(res.message)
+                                    let confirmation = window.confirm(res.message)
                                     if (confirmation) {
                                         batch(() => {
                                             dispatch(appUpdateState({
