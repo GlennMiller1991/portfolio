@@ -127,6 +127,7 @@ export const LoginPage: React.FC = React.memo(() => {
 })
 export const SignUpPage: React.FC = React.memo(() => {
 
+    const dispatch = useDispatch()
     const validator = useMemo(() => {
         const signupParams: tSignupParams = {
             firstName: '',
@@ -227,6 +228,11 @@ export const SignUpPage: React.FC = React.memo(() => {
                             loginAPI.signup(state.data)
                                 .then(() => {
                                     clearState()
+                                    dispatch(appUpdateState({
+                                        alertWindow: {
+                                            text: 'For sign up complete please follow telegram @AlexandroBasBot'
+                                        }
+                                    }))
                                 })
                                 .catch((err) => {
                                     alert(err.message)
