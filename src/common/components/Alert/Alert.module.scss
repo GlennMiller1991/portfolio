@@ -1,0 +1,17 @@
+.container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: max-content;
+  padding: 2rem;
+  background: var(--black);
+  z-index: 2;
+}
+
+.textWrapper {
+  font-size: 2rem;
+  color: var(--secondary-color);
+  padding: 2rem;
+  font-family: var(--secondary-font);
+}

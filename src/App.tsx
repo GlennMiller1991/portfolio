@@ -17,6 +17,7 @@ import {appUpdateErrors, appUpdateState, tAppState} from './redux/appReducer/app
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {loginAPI} from './common/api/loginAPI'
 import {appContainer, pageTitle} from './common/constants/ids';
+import {Alert} from './common/components/Alert/Alert'
 
 function App() {
     const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
@@ -114,6 +115,10 @@ function App() {
                         appState.windowWrapper.element
                     }
                 </WindowWrapper>
+            }
+            {
+                appState.alertWindow &&
+                <Alert text={appState.alertWindow.text} className={appState.alertWindow.className}/>
             }
         </div>
     );
