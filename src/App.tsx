@@ -13,11 +13,17 @@ import {Footer} from './components/Footer/Footer';
 import {anchorType, checkAnchorTC} from './redux/reducer';
 import {useDispatch, useSelector} from 'react-redux';
 import {stateType, useAppDispatch} from './redux/store';
-import {appUpdateErrors, appUpdateState, tAppState} from './redux/appReducer/appReducer';
+import {
+    appStateUpdateServerAvailableness,
+    appUpdateErrors,
+    appUpdateState,
+    tAppState
+} from './redux/appReducer/appReducer';
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {loginAPI} from './common/api/loginAPI'
 import {appContainer, pageTitle} from './common/constants/ids';
 import {Alert} from './common/components/Alert/Alert'
+import {commonServerAPI} from "./common/api/commonServerAPI";
 
 function App() {
     const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
@@ -25,6 +31,7 @@ function App() {
     const dispatch = useAppDispatch()
     const [scrollY, setScrollY] = useState(0)
     const [elements, setElements] = useState<HTMLDivElement[]>([])
+    const serverIsAvailable = useSelector<stateType, boolean>(state => state.appState.serverIsAvailable)
     const anchorsId: anchorType[] = useMemo(() => {
         return ['main', 'skills', 'contacts', 'projects']
     }, [])
@@ -51,6 +58,18 @@ function App() {
 
     //get elements and add event listener
     useEffect(() => {
+
+        setInterval(() => {
+            let res: boolean = false
+            commonServerAPI.serverAccess()
+                .then((res) => {
+                    res = true
+                })
+                .finally(() => {
+                    dispatch(appStateUpdateServerAvailableness(res))
+                })
+        }, 60000)
+
 
         const isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
         dispatch(appUpdateState({
@@ -103,7 +122,10 @@ function App() {
             <Main/>
             <Skills/>
             <Projects/>
-            <Contacts/>
+            {
+                serverIsAvailable &&
+                <Contacts/>
+            }
             <Footer/>
             {
                 showUp && <Up/>

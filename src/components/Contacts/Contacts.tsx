@@ -60,7 +60,6 @@ export const Contacts = React.memo(() => {
     const [state, onChange, clearState, onBlur] = useFieldState<tLoginParamType>(validator)
 
 
-    console.log(state.resError)
     return (
         <div id={'contacts'} className={styles.wrapper}>
             <div className={`${commonStyles.container} ${styles.container}`}>

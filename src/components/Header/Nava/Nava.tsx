@@ -1,30 +1,23 @@
 import React, {useCallback} from 'react';
 import styles from './Nava.module.scss'
 import {NavLink} from 'react-router-dom';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {stateType} from '../../../redux/store';
 import {anchorType} from '../../../redux/reducer';
-import {appUpdateState} from '../../../redux/appReducer/appReducer'
-import {Login} from '../../Login/Login'
-import loginStyles from '../../Login/Login.module.scss'
 
 import {
     AiOutlineContacts,
     AiOutlineFundProjectionScreen,
-    AiOutlineLogin,
-    AiOutlineLogout, BsFileEarmarkPerson,
-    FiLogIn, FiLogOut,
+   BsFileEarmarkPerson,
+    FiLogIn,
     GiSkills,
-    GrProjects
 } from 'react-icons/all'
-import {setClasses} from '../../../common/utils/setClasses'
+import {serverUrl} from "../../../common/constants/baseUrl";
 
 export const Nava = React.memo(() => {
-        const dispatch = useDispatch()
         const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
         const appWidth = useSelector<stateType, number>(state => state.appState.appWidth)
-        const authenticated = useSelector<stateType, boolean>(state => state.appState.authenticated)
-
+        const serverIsAvailable = useSelector<stateType, boolean>(state => state.appState.serverIsAvailable)
 
         const linkStyle = useCallback((elementId: string) => {
             return `${styles.link} ${currentAnchor === elementId ? styles.active : ''}`
@@ -76,34 +69,33 @@ export const Nava = React.memo(() => {
                     </NavLink>
                     <div className={divStyle('skills')}>{''}</div>
                 </div>
-                <div className={styles.linkContainer}>
-                    <NavLink className={() => linkStyle('contacts')}
-                             onClick={() => scrollTo('contacts')}
-                             to={'#contacts'}>
-                        {
-                            appWidth < 1000 ?
-                                <AiOutlineContacts/> :
-                                'Contacts'
-                        }
-                    </NavLink>
-                    <div className={divStyle('contacts')}>{''}</div>
-                </div>
-                <div className={styles.linkContainer} onClick={() => {
-                    if (authenticated) {
+                {
+                    serverIsAvailable &&
+                    <>
+                        <div className={styles.linkContainer}>
+                            <NavLink className={() => linkStyle('contacts')}
+                                     onClick={() => scrollTo('contacts')}
+                                     to={'#contacts'}>
+                                {
+                                    appWidth < 1000 ?
+                                        <AiOutlineContacts/> :
+                                        'Contacts'
+                                }
+                            </NavLink>
+                            <div className={divStyle('contacts')}>{''}</div>
+                        </div>
 
-                    } else {
-                        dispatch(appUpdateState({
-                            windowWrapper: {element: <Login/>, containerClass: loginStyles.loginContainer}
-                        }))
-                    }
-                }}>
-                    <div className={styles.link}>
-                        {
-                            appWidth < 1000 ? authenticated ? <FiLogOut/> : <FiLogIn/> :
-                                authenticated ? 'Logout' : 'Login'
-                        }
+                    <div className={styles.linkContainer} onClick={() => {
+                        window.location.replace(`${serverUrl}/login`)
+                    }}>
+                        <div className={styles.link}>
+                            {
+                                appWidth < 1000 ? <FiLogIn/> : 'Login'
+                            }
+                        </div>
                     </div>
-                </div>
+                        </>
+                }
             </div>
         )
     }
