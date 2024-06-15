@@ -1,10 +1,10 @@
 import React, {useContext, useEffect, useRef} from "react";
 import {Particle} from "../../../classes/Particle/Particle";
 import styles from "../WindowWrapper.module.scss"
-import {WindowViewContext} from "../../../../App";
+import {AppContext} from "../../../../App";
 
 export const WindowWrapperCanvas: React.FC = React.memo(() => {
-    const viewController = useContext(WindowViewContext)
+    const viewController = useContext(AppContext)
     const drawFlag = useRef(false)
     const canvasRef = useRef<HTMLCanvasElement>(null)
 
@@ -40,12 +40,14 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
         if (canvasRef.current) {
             const context = canvasRef.current.getContext('2d')
             if (context) {
-
+                context.canvas.width = Math.min(context.canvas.getBoundingClientRect().width)
+                context.canvas.height = Math.min(context.canvas.getBoundingClientRect().height)
                 drawFlag.current = true
                 !viewController.isMobile && canvasRef.current.addEventListener('mousemove', pcListener)
                 viewController.isMobile && (reqId = mobListener())
 
                 const draw = () => {
+                    console.log('draw')
                     context.clearRect(0, 0, width, height)
                     for (let i = 0; i < dots.length; i++) {
                         const particle = dots[i]
@@ -87,7 +89,6 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
     return (
         <>
             <canvas ref={canvasRef}
-                    width={viewController.appDomRect.width} height={viewController.appDomRect.height}
                     onMouseEnter={() => {
                         drawFlag.current = true
                     }}

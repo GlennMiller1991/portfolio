@@ -1,5 +1,4 @@
 import {actionsType} from "./store";
-import {Dispatch} from "redux";
 
 //constants
 const TEST = 'TEST'
@@ -87,17 +86,5 @@ export const reducer = (state: baseType = initialState, action: actionsType) => 
         case TEST:
         default:
             return state
-    }
-}
-
-//thunks
-export const checkAnchorTC = (elements: HTMLDivElement[], currentAnchor: anchorType) => (dispatch: Dispatch) => {
-    for (let elem of elements) {
-        let rect = elem.getBoundingClientRect()
-        if (((rect.top >= 85 && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)) ||
-                (rect.top < 200 && rect.bottom >= (window.innerHeight || document.documentElement.clientHeight)- 100)) &&
-            currentAnchor !== elem.id) {
-            dispatch(setCurrentAnchor(elem.id as anchorType))
-        }
     }
 }

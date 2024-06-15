@@ -8,7 +8,6 @@ import {
     testActionType
 } from './reducer';
 import {appReducer, tAppActions} from './appReducer/appReducer'
-import {useDispatch} from "react-redux";
 
 const rootReducer = combineReducers({
     state: reducer,
@@ -23,6 +22,3 @@ export type actionsType = testActionType
     | endTypeCycleActionType
     | setCurrentAnchorActionType
     | tAppActions
-
-export type dispatchType = typeof store.dispatch
-export const useAppDispatch: () => dispatchType = useDispatch

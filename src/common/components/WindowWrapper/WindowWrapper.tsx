@@ -1,33 +1,22 @@
-import React, {useCallback} from 'react'
+import React, {useContext} from 'react'
 import styles from './WindowWrapper.module.scss'
 import {setClasses} from '../../utils/setClasses'
-import {useDispatch} from 'react-redux'
-import {appUpdateState} from '../../../redux/appReducer/appReducer'
 import {WindowWrapperCanvas} from "./WindowWrapperCanvas/WindowWrapperCanvas";
 import {IoCloseOutline} from "react-icons/io5";
+import {AppContext} from "../../../App";
 
-
-type tWindowWrapper = {
-    containerClass?: string,
-    children?: React.ReactNode
-}
-export const WindowWrapper: React.FC<tWindowWrapper> = React.memo(({
-                                                                       containerClass,
-                                                                       children
-                                                                   }) => {
-    const dispatch = useDispatch()
-    const onClose = useCallback(() => {
-        dispatch(appUpdateState({
-            windowWrapper: undefined
-        }))
-    }, [])
-
+export const WindowWrapper: React.FC<React.PropsWithChildren> = React.memo(({
+                                                                                children
+                                                                            }) => {
+    const appController = useContext(AppContext)
 
     return (
         <div className={setClasses(styles.modalContainer, 'flexCenter')}>
             <WindowWrapperCanvas/>
-            <div className={setClasses(styles.modalContent, containerClass)}>
-                <button className={setClasses(styles.closeBtn, 'flexCenter')} onClick={onClose}>
+            <div className={styles.modalContent}>
+                <button className={setClasses(styles.closeBtn, 'flexCenter')} onClick={() => {
+                    appController.setWindowContent(undefined)
+                }}>
                     <IoCloseOutline/>
                 </button>
                 {

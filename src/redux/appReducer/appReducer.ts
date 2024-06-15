@@ -30,11 +30,6 @@ export const appUpdateState = (payload: Partial<tAppState>) => {
 }
 type tAppUpdateState = ReturnType<typeof appUpdateState>
 
-export type tWindowWrapper = {
-    element: JSX.Element,
-    containerClass?: string,
-}
-
 export type tAlertWindow = {
     text: string,
     className?: string,
@@ -42,10 +37,7 @@ export type tAlertWindow = {
 
 export type tAppState = typeof appState
 const appState = {
-    windowWrapper: undefined as tWindowWrapper | undefined,
     errors: undefined as tErrors,
-    authenticated: false as boolean,
-    alertWindow: undefined as undefined | tAlertWindow,
 }
 
 export const appReducer = (state: tAppState = appState, action: tAppActions) => {

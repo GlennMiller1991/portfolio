@@ -11,11 +11,11 @@ import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
 import {app} from "../../../app/constants";
-import {WindowViewContext} from "../../../App";
+import {AppContext} from "../../../App";
 
 export const Nava = React.memo(() => {
 
-        const appController = useContext(WindowViewContext)
+        const appController = useContext(AppContext)
         const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
 
         const linkStyle = useCallback((elementId: string) => {

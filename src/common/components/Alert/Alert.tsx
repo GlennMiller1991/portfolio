@@ -1,31 +1,29 @@
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 import styles from './Alert.module.scss'
 import {setClasses} from '../../utils/setClasses'
-import {useDispatch} from 'react-redux'
-import {appUpdateState} from '../../../redux/appReducer/appReducer'
+import {AppContext} from "../../../App";
 
 type tAlert = {
-    text: string,
-    className?: string
+    children: string
 }
 export const Alert: React.FC<tAlert> = React.memo(({
-                                                       text,
-                                                       className,
+                                                       children,
                                                    }) => {
 
-    const dispatch = useDispatch()
+    const appController = useContext(AppContext)
+
     useEffect(() => {
         const id = setTimeout(() => {
-            dispatch(appUpdateState({alertWindow: undefined}))
+            appController.setAlertMessage(undefined)
         }, 3000)
 
     }, [])
 
     return (
-        <div className={setClasses(styles.container, className)}>
+        <div className={styles.container}>
             <div className={setClasses(styles.textWrapper, 'flexCenter')}>
                 {
-                    text
+                    children
                 }
             </div>
         </div>

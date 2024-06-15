@@ -1,18 +1,17 @@
-import React, {useCallback, useState, useMemo} from 'react'
+import React, {useCallback, useState, useMemo, useContext} from 'react'
 import {Input} from '../../common/components/Input/Input'
 import {Button} from '../../common/components/Button/Button'
 import styles from './Login.module.scss'
 import {setClasses} from '../../common/utils/setClasses'
 import {useFieldState} from '../../common/customHooks/useFieldState'
-import {batch, useDispatch, useSelector} from 'react-redux'
-import {tErrors} from '../../common/types/types'
-import {stateType} from '../../redux/store'
+import {useDispatch} from 'react-redux'
 import {appUpdateState} from '../../redux/appReducer/appReducer'
 import {loginAPI} from '../../common/api/loginAPI'
 import commonStyles from '../../common/styles/common.module.scss'
 import {tObjectValidators, Validator} from '../../common/validators/Validator'
 import {emailRegexp, telegramRegexp} from '../../common/constants/regexps'
 import {Row} from '../../common/components/Row/Row';
+import {AppContext} from "../../App";
 
 export type tSignupParams = {
     firstName: string,
@@ -56,6 +55,7 @@ export const Login: React.FC = React.memo(() => {
 })
 
 export const LoginPage: React.FC = React.memo(() => {
+    const appController = useContext(AppContext)
     const validator = useMemo(() => {
         const loginParams: tLoginParams = {
             loginPassword: '',
@@ -82,7 +82,6 @@ export const LoginPage: React.FC = React.memo(() => {
         return validator
     }, [])
     const [state, onChange, clearState, onBlur] = useFieldState<tLoginParams>(validator)
-    const dispatch = useDispatch()
 
     return (
         <>
@@ -106,14 +105,9 @@ export const LoginPage: React.FC = React.memo(() => {
                                 password: state.data.loginPassword
                             })
                                 .then((res) => {
-                                    let confirmation = window.confirm(res.message)
-                                    if (confirmation) {
-                                        batch(() => {
-                                            dispatch(appUpdateState({
-                                                windowWrapper: undefined,
-                                                authenticated: true
-                                            }))
-                                        })
+                                    if (window.confirm(res.message)) {
+                                        appController.setWindowContent(null)
+                                        appController.setIsAuthenticated(true)
                                     }
                                 })
                                 .catch((err) => {
@@ -127,6 +121,7 @@ export const LoginPage: React.FC = React.memo(() => {
 })
 export const SignUpPage: React.FC = React.memo(() => {
 
+    const appController = useContext(AppContext)
     const dispatch = useDispatch()
     const validator = useMemo(() => {
         const signupParams: tSignupParams = {
@@ -228,11 +223,7 @@ export const SignUpPage: React.FC = React.memo(() => {
                             loginAPI.signup(state.data)
                                 .then(() => {
                                     clearState()
-                                    dispatch(appUpdateState({
-                                        alertWindow: {
-                                            text: 'For sign up complete please follow telegram @AlexandroBasBot'
-                                        }
-                                    }))
+                                    appController.setAlertMessage('For sign up complete please follow telegram @AlexandroBasBot')
                                 })
                                 .catch((err) => {
                                     alert(err.message)

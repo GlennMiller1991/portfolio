@@ -4,14 +4,14 @@
   left: 0;
   right: 0;
   height: max-content;
-  padding: 2rem;
-  background: var(var(--dark-primary-color));
-  z-index: 2;
+  padding: 1rem;
+  background: var(--color-dark-primary);
+  z-index: 3;
 }
 
 .textWrapper {
   font-size: 2rem;
-  color: var(var(--color-theme));
-  padding: 2rem;
+  color: var(--color-theme);
+  padding: 1rem;
   font-family: var(--font-secondary);
 }

@@ -2,10 +2,10 @@ import React, {useContext} from 'react';
 import styles from './Main.module.scss'
 import commonStyles from '../../common/styles/common.module.scss'
 import {ChangableSpan} from './ChangableSpan/ChangableSpan';
-import {WindowViewContext} from "../../App";
+import {AppContext} from "../../App";
 
 export const Main = React.memo(() => {
-        const appController = useContext(WindowViewContext)
+        const appController = useContext(AppContext)
         const appWidth = appController.appDomRect.width
 
         return (

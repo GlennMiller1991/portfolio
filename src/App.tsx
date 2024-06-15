@@ -21,7 +21,7 @@ import {makeAutoObservable} from "mobx"
 import {observer} from "mobx-react-lite";
 import {app} from "./app/constants";
 
-export const WindowViewContext = createContext<AppController>(null as any)
+export const AppContext = createContext<AppController>(null as any)
 
 export class AppController {
     isUpBtnShown = false
@@ -30,9 +30,19 @@ export class AppController {
     resizeObserver: ResizeObserver | undefined
     appDomRect = document.body.getBoundingClientRect()
     isUserAuthenticated = false
+    windowContent: React.ReactNode | undefined = undefined
+    alertMessage: string | undefined = undefined
 
     get isAppReady() {
         return !!this.appDomRect
+    }
+
+    setAlertMessage(msg: typeof this.alertMessage) {
+        this.alertMessage = msg
+    }
+
+    setWindowContent(content: typeof this.windowContent) {
+        this.windowContent = content
     }
 
     setIsUpBtnShown = (value: boolean) => {
@@ -58,7 +68,9 @@ export class AppController {
             isUpBtnShown: true,
             isServerAvailable: true,
             appDomRect: true,
-            isUserAuthenticated: true
+            isUserAuthenticated: true,
+            windowContent: true,
+            alertMessage: true
         })
     }
 
@@ -89,7 +101,7 @@ export class AppController {
         this.setIsUpBtnShown(currentY > headerHeight)
     }
 
-    async kickTheServer() {
+    kickTheServer = async () => {
         const res = await commonServerAPI.serverAccess()
             .then((res) => {
                 return true
@@ -102,7 +114,7 @@ export class AppController {
         this.setIsServerAvailable(res)
     }
 
-    authenticate() {
+    authenticate = () => {
         loginAPI.authenticate()
             .then(() => {
                 this.setIsAuthenticated(true)
@@ -125,7 +137,7 @@ export const App = observer(() => {
 
     if (!appController.isAppReady) return null
     return (
-        <WindowViewContext.Provider value={appController}>
+        <AppContext.Provider value={appController}>
             <div>
                 <Header showUp={appController.isUpBtnShown}/>
                 <Main/>
@@ -140,18 +152,22 @@ export const App = observer(() => {
                     appController.isUpBtnShown && <Up/>
                 }
                 {
-                    appState.windowWrapper &&
-                    <WindowWrapper containerClass={appState.windowWrapper.containerClass}>
+                    appController.windowContent &&
+                    <WindowWrapper>
                         {
-                            appState.windowWrapper.element
+                            appController.windowContent
                         }
                     </WindowWrapper>
                 }
                 {
-                    appState.alertWindow &&
-                    <Alert text={appState.alertWindow.text} className={appState.alertWindow.className}/>
+                    appController.alertMessage &&
+                    <Alert>
+                        {
+                            appController.alertMessage
+                        }
+                    </Alert>
                 }
             </div>
-        </WindowViewContext.Provider>
+        </AppContext.Provider>
     );
 })
