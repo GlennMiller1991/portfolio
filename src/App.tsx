@@ -8,11 +8,6 @@ import {Projects} from './components/Projects/Projects';
 import {Contacts} from './components/Contacts/Contacts';
 import {Up} from './components/Up/Up';
 import {Footer} from './components/Footer/Footer';
-import {useSelector} from 'react-redux';
-import {stateType} from './redux/store';
-import {
-    tAppState
-} from './redux/appReducer/appReducer';
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {loginAPI} from './common/api/loginAPI'
 import {Alert} from './common/components/Alert/Alert'
@@ -132,8 +127,6 @@ export class AppController {
 
 export const App = observer(() => {
     const [appController] = useState(() => new AppController())
-
-    const appState = useSelector<stateType, tAppState>(state => state.appState)
 
     if (!appController.isAppReady) return null
     return (

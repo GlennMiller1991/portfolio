@@ -7,11 +7,9 @@ import {
     reducer, setCurrentAnchorActionType,
     testActionType
 } from './reducer';
-import {appReducer, tAppActions} from './appReducer/appReducer'
 
 const rootReducer = combineReducers({
     state: reducer,
-    appState: appReducer,
 })
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))
@@ -21,4 +19,3 @@ export type actionsType = testActionType
     | changeReverseActionType
     | endTypeCycleActionType
     | setCurrentAnchorActionType
-    | tAppActions

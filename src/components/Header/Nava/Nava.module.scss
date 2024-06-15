@@ -21,7 +21,7 @@
       text-decoration: none;
       line-height: 1.7;
       transition: all 0.3s ease-in-out;
-      color: var(var(--color-light-primary));
+      color: var(--color-light-primary);
 
       &:hover {
         color: var(--color-theme);
@@ -40,7 +40,7 @@
     }
 
     .active {
-      color: var(var(--color-theme));
+      color: var(--color-theme);
     }
 
     .underMenu {
@@ -56,7 +56,7 @@
     .underActive:before {
       content: '';
       display: block;
-      background-color: var(var(--color-theme));
+      background-color: var(--color-theme);
       height: 100%;
       width: 0;
       animation: getWidth 0.3s ease-in;
