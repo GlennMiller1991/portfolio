@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useContext} from 'react';
 import styles from './Nava.module.scss'
 import {NavLink} from 'react-router-dom';
 import {useSelector} from 'react-redux';
@@ -11,11 +11,12 @@ import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
 import {app} from "../../../app/constants";
+import {WindowViewContext} from "../../../App";
 
 export const Nava = React.memo(() => {
+
+        const appController = useContext(WindowViewContext)
         const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
-        const appWidth = useSelector<stateType, number>(state => state.appState.appWidth)
-        const serverIsAvailable = useSelector<stateType, boolean>(state => state.appState.serverIsAvailable)
 
         const linkStyle = useCallback((elementId: string) => {
             return `${styles.link} ${currentAnchor === elementId ? styles.active : ''}`
@@ -32,6 +33,7 @@ export const Nava = React.memo(() => {
             }
         }, [])
 
+        const appWidth = appController.appDomRect.width
         return (
             <div className={styles.nava}>
                 <div className={styles.linkContainer}>
@@ -68,7 +70,7 @@ export const Nava = React.memo(() => {
                     <div className={divStyle('skills')}>{''}</div>
                 </div>
                 {
-                    serverIsAvailable &&
+                    appController.isServerAvailable &&
                     <>
                         <div className={styles.linkContainer}>
                             <NavLink className={() => linkStyle('contacts')}
@@ -83,16 +85,16 @@ export const Nava = React.memo(() => {
                             <div className={divStyle('contacts')}>{''}</div>
                         </div>
 
-                    <div className={styles.linkContainer} onClick={() => {
-                        window.location.replace(`${app.server}/login`)
-                    }}>
-                        <div className={styles.link}>
-                            {
-                                appWidth < 1000 ? <FiLogIn/> : 'Login'
-                            }
+                        <div className={styles.linkContainer} onClick={() => {
+                            window.location.replace(`${app.server}/login`)
+                        }}>
+                            <div className={styles.link}>
+                                {
+                                    appWidth < 1000 ? <FiLogIn/> : 'Login'
+                                }
+                            </div>
                         </div>
-                    </div>
-                        </>
+                    </>
                 }
             </div>
         )

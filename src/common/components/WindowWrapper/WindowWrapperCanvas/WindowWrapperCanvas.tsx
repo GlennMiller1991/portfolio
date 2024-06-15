@@ -1,6 +1,4 @@
 import React, {useContext, useEffect, useRef} from "react";
-import {useSelector} from "react-redux";
-import {stateType} from "../../../../redux/store";
 import {Particle} from "../../../classes/Particle/Particle";
 import {wwCanvas} from "../../../constants/ids";
 import styles from "../WindowWrapper.module.scss"
@@ -8,8 +6,6 @@ import {WindowViewContext} from "../../../../App";
 
 export const WindowWrapperCanvas: React.FC = React.memo(() => {
     const viewController = useContext(WindowViewContext)
-    const width = useSelector<stateType, number>(state => state.appState.appWidth)
-    const height = useSelector<stateType, number>(state => state.appState.appHeight)
     const drawFlag = useRef(false)
 
 
@@ -91,7 +87,7 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
 
     return (
         <>
-            <canvas id={wwCanvas} width={width} height={height}
+            <canvas id={wwCanvas} width={viewController.appDomRect.width} height={viewController.appDomRect.height}
                     onMouseEnter={() => {
                         drawFlag.current = true
                     }}

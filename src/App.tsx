@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
+import React, {createContext, useEffect, useState} from 'react';
 import './index.css'
 
 import {Header} from './components/Header/Header';
@@ -11,7 +11,6 @@ import {Footer} from './components/Footer/Footer';
 import {useSelector} from 'react-redux';
 import {stateType, useAppDispatch} from './redux/store';
 import {
-    appStateUpdateServerAvailableness,
     appUpdateState,
     tAppState
 } from './redux/appReducer/appReducer';
@@ -20,30 +19,61 @@ import {loginAPI} from './common/api/loginAPI'
 import {appContainer, pageTitle} from './common/constants/ids';
 import {Alert} from './common/components/Alert/Alert'
 import {commonServerAPI} from "./common/api/commonServerAPI";
-import {app} from "./app/constants";
 import {makeAutoObservable} from "mobx"
 import {observer} from "mobx-react-lite";
 
-export const WindowViewContext = createContext<WindowViewController>(null as any)
+export const WindowViewContext = createContext<AppController>(null as any)
 
-export class WindowViewController {
+export class AppController {
     isUpBtnShown = false
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
+    isServerAvailable = false
+    resizeObserver: ResizeObserver | undefined
+    appDomRect!: DOMRect
+
+    get isAppReady() {
+        return !!this.appDomRect
+    }
 
     setIsUpBtnShown = (value: boolean) => {
         this.isUpBtnShown = value
+    }
+
+    setIsServerAvailable = (value: boolean) => {
+        this.isServerAvailable = value
+    }
+
+    setWindowWidth = (rect: DOMRect) => {
+        this.appDomRect = rect
     }
 
     constructor() {
         this.init()
 
         makeAutoObservable(this, {
-            isUpBtnShown: true
+            isUpBtnShown: true,
+            isServerAvailable: true,
+            appDomRect: true
         })
     }
 
     init() {
         document.addEventListener('scroll', this.onWindowScroll)
+
+        setInterval(this.kickTheServer, 60000)
+        this.kickTheServer()
+
+        document.title = pageTitle
+
+
+        const body = document.querySelector('body')
+        if (body) {
+            this.resizeObserver = new ResizeObserver(() => {
+                this.setWindowWidth(body.getBoundingClientRect())
+            })
+
+            this.resizeObserver.observe(body)
+        }
     }
 
     onWindowScroll = () => {
@@ -55,63 +85,34 @@ export class WindowViewController {
         this.setIsUpBtnShown(currentY > headerHeight)
     }
 
+    async kickTheServer() {
+        const res = await commonServerAPI.serverAccess()
+            .then((res) => {
+                return true
+            })
+            .catch((err) => {
+                console.warn(err.message)
+                return false
+            })
+
+        this.setIsServerAvailable(res)
+    }
+
     dispose() {
         document.removeEventListener('scroll', this.onWindowScroll)
+        this.resizeObserver?.disconnect()
     }
 
 }
 
 export const App = observer(() => {
-    const [viewController] = useState(() => new WindowViewController())
+    const [viewController] = useState(() => new AppController())
 
     const appState = useSelector<stateType, tAppState>(state => state.appState)
     const dispatch = useAppDispatch()
-    const [elements, setElements] = useState<HTMLDivElement[]>([])
-    const serverIsAvailable = useSelector<stateType, boolean>(state => state.appState.serverIsAvailable)
 
     //get elements and add event listener
     useEffect(() => {
-        setInterval(() => {
-            let res: boolean = false
-            commonServerAPI.serverAccess()
-                .then((res) => {
-                    res = true
-                })
-                .catch((err) => {
-                    console.warn(err.message)
-                    res = false
-                })
-                .finally(() => {
-                    dispatch(appStateUpdateServerAvailableness(res))
-                })
-        }, 60000)
-
-
-        document.title = pageTitle
-        const elements = []
-        for (let i = 0; i < app.d.sections.length; i++) {
-            const elem = document.getElementById(app.d.sections[i])
-            if (elem) {
-                elements.push(elem)
-            }
-        }
-        setElements(elements as HTMLDivElement[])
-
-        const observer = new ResizeObserver(() => {
-            const element = document.getElementById(appContainer)
-            if (element) {
-                dispatch(appUpdateState({
-                    appWidth: element.getBoundingClientRect().width,
-                    appHeight: window.innerHeight,
-                }))
-            }
-        })
-
-        const element = document.getElementById(appContainer)
-        if (element) {
-            observer.observe(element)
-        }
-
         loginAPI.authenticate()
             .then(() => {
                 dispatch(appUpdateState({authenticated: true}))
@@ -120,12 +121,10 @@ export const App = observer(() => {
                 console.log(err.message)
             })
 
-        return () => {
-            element && observer && observer.unobserve(element)
-            viewController.dispose()
-        }
+        return viewController.dispose.bind(viewController)
     }, [])
 
+    if (!viewController.isAppReady) return null
     return (
         <WindowViewContext.Provider value={viewController}>
             <div id={appContainer}>
@@ -134,7 +133,7 @@ export const App = observer(() => {
                 <Skills/>
                 <Projects/>
                 {
-                    serverIsAvailable &&
+                    viewController.isServerAvailable &&
                     <Contacts/>
                 }
                 <Footer/>

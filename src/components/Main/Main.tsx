@@ -1,12 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import styles from './Main.module.scss'
 import commonStyles from '../../common/styles/common.module.scss'
 import {ChangableSpan} from './ChangableSpan/ChangableSpan';
-import {useSelector} from 'react-redux'
-import {stateType} from '../../redux/store'
+import {WindowViewContext} from "../../App";
 
 export const Main = React.memo(() => {
-        const appWidth = useSelector<stateType, number>(state => state.appState.appWidth)
+        const appController = useContext(WindowViewContext)
+        const appWidth = appController.appDomRect.width
 
         return (
             <div id={'main'} className={styles.main}>
