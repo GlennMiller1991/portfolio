@@ -1,12 +1,12 @@
 import React, {useContext, useEffect, useRef} from "react";
 import {Particle} from "../../../classes/Particle/Particle";
-import {wwCanvas} from "../../../constants/ids";
 import styles from "../WindowWrapper.module.scss"
 import {WindowViewContext} from "../../../../App";
 
 export const WindowWrapperCanvas: React.FC = React.memo(() => {
     const viewController = useContext(WindowViewContext)
     const drawFlag = useRef(false)
+    const canvasRef = useRef<HTMLCanvasElement>(null)
 
 
     // visual effects
@@ -37,13 +37,12 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                 }))
             }, 300)
         }
-        const canvas = document.getElementById(wwCanvas) as HTMLCanvasElement | null
-        if (canvas) {
-            const context = canvas.getContext('2d')
+        if (canvasRef.current) {
+            const context = canvasRef.current.getContext('2d')
             if (context) {
 
                 drawFlag.current = true
-                !viewController.isMobile && canvas.addEventListener('mousemove', pcListener)
+                !viewController.isMobile && canvasRef.current.addEventListener('mousemove', pcListener)
                 viewController.isMobile && (reqId = mobListener())
 
                 const draw = () => {
@@ -74,12 +73,12 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
         }
 
         return () => {
-            if (canvas) {
+            if (canvasRef.current) {
                 if (viewController.isMobile) {
                     clearInterval(reqId)
                 } else {
                     cancelAnimationFrame(reqId)
-                    canvas.removeEventListener('mousemove', pcListener)
+                    canvasRef.current.removeEventListener('mousemove', pcListener)
                 }
             }
         }
@@ -87,7 +86,8 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
 
     return (
         <>
-            <canvas id={wwCanvas} width={viewController.appDomRect.width} height={viewController.appDomRect.height}
+            <canvas ref={canvasRef}
+                    width={viewController.appDomRect.width} height={viewController.appDomRect.height}
                     onMouseEnter={() => {
                         drawFlag.current = true
                     }}
