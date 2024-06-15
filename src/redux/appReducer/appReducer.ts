@@ -57,7 +57,6 @@ const appState = {
     appWidth: 0 as number,
     appHeight: 0 as number,
     authenticated: false as boolean,
-    isMobile: false as boolean,
     alertWindow: undefined as undefined | tAlertWindow,
     serverIsAvailable: false as boolean,
 }

@@ -1,14 +1,15 @@
-import React, {useEffect, useRef} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import {useSelector} from "react-redux";
 import {stateType} from "../../../../redux/store";
 import {Particle} from "../../../classes/Particle/Particle";
 import {wwCanvas} from "../../../constants/ids";
 import styles from "../WindowWrapper.module.scss"
+import {WindowViewContext} from "../../../../App";
 
 export const WindowWrapperCanvas: React.FC = React.memo(() => {
+    const viewController = useContext(WindowViewContext)
     const width = useSelector<stateType, number>(state => state.appState.appWidth)
     const height = useSelector<stateType, number>(state => state.appState.appHeight)
-    const isMobile = useSelector<stateType, boolean>(state => state.appState.isMobile)
     const drawFlag = useRef(false)
 
 
@@ -27,7 +28,7 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
                 dots,
             }))
             if (dots.length > 300) {
-                dots.splice(0 ,1)
+                dots.splice(0, 1)
             }
         }
         const mobListener = () => {
@@ -46,8 +47,8 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
             if (context) {
 
                 drawFlag.current = true
-                !isMobile && canvas.addEventListener('mousemove', pcListener)
-                isMobile && (reqId = mobListener())
+                !viewController.isMobile && canvas.addEventListener('mousemove', pcListener)
+                viewController.isMobile && (reqId = mobListener())
 
                 const draw = () => {
                     context.clearRect(0, 0, width, height)
@@ -78,8 +79,8 @@ export const WindowWrapperCanvas: React.FC = React.memo(() => {
 
         return () => {
             if (canvas) {
-                if (isMobile) {
-                    clearInterval(reqId )
+                if (viewController.isMobile) {
+                    clearInterval(reqId)
                 } else {
                     cancelAnimationFrame(reqId)
                     canvas.removeEventListener('mousemove', pcListener)
