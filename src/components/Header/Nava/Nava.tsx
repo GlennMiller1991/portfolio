@@ -6,11 +6,11 @@ import {stateType} from '../../../redux/store';
 import {anchorType} from '../../../redux/reducer';
 
 
-import {serverUrl} from "../../../common/constants/baseUrl";
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
+import {app} from "../../../app/constants";
 
 export const Nava = React.memo(() => {
         const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
@@ -84,7 +84,7 @@ export const Nava = React.memo(() => {
                         </div>
 
                     <div className={styles.linkContainer} onClick={() => {
-                        window.location.replace(`${serverUrl}/login`)
+                        window.location.replace(`${app.server}/login`)
                     }}>
                         <div className={styles.link}>
                             {

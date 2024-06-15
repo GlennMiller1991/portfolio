@@ -1,8 +1,8 @@
-import {baseUrl} from "../constants/baseUrl";
 import {requests} from "./requests";
+import {app} from "../../app/constants";
 
 export const commonServerAPI = {
     serverAccess() {
-        return requests.getRequest(`${baseUrl}/commonacess`)
+        return requests.getRequest(`${app.api}/commonacess`)
     }
 }

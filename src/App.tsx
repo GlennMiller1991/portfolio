@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import './App.css';
 import './index.css'
 
@@ -22,6 +22,7 @@ import {loginAPI} from './common/api/loginAPI'
 import {appContainer, pageTitle} from './common/constants/ids';
 import {Alert} from './common/components/Alert/Alert'
 import {commonServerAPI} from "./common/api/commonServerAPI";
+import {app} from "./app/constants";
 
 function App() {
     const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
@@ -30,9 +31,7 @@ function App() {
     const [scrollY, setScrollY] = useState(0)
     const [elements, setElements] = useState<HTMLDivElement[]>([])
     const serverIsAvailable = useSelector<stateType, boolean>(state => state.appState.serverIsAvailable)
-    const anchorsId: anchorType[] = useMemo(() => {
-        return ['main', 'skills', 'contacts', 'projects']
-    }, [])
+
     const [showUp, setShowUp] = useState(false)
     const onScrollWindow = useCallback(() => {
         setScrollY(window.scrollY)
@@ -56,7 +55,6 @@ function App() {
 
     //get elements and add event listener
     useEffect(() => {
-
         setInterval(() => {
             let res: boolean = false
             commonServerAPI.serverAccess()
@@ -76,8 +74,8 @@ function App() {
 
         document.title = pageTitle
         const elements = []
-        for (let i = 0; i < anchorsId.length; i++) {
-            const elem = document.getElementById(anchorsId[i])
+        for (let i = 0; i < app.d.sections.length; i++) {
+            const elem = document.getElementById(app.d.sections[i])
             if (elem) {
                 elements.push(elem)
             }
