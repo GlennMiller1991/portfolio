@@ -25,6 +25,7 @@ import {makeAutoObservable} from "mobx"
 import {observer} from "mobx-react-lite";
 
 export const WindowViewContext = createContext<WindowViewController>(null as any)
+
 export class WindowViewController {
     isUpBtnShown = false
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
@@ -75,6 +76,10 @@ export const App = observer(() => {
             commonServerAPI.serverAccess()
                 .then((res) => {
                     res = true
+                })
+                .catch((err) => {
+                    console.warn(err.message)
+                    res = false
                 })
                 .finally(() => {
                     dispatch(appStateUpdateServerAvailableness(res))
