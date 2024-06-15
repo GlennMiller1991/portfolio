@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from "react";
 import styles from './Header.module.scss'
 import {Nava} from "./Nava/Nava";
-import variables from './../../common/styles/Variables.module.scss'
+import variables from '../../common/styles/templates.module.scss'
 
 type HeaderPropsType = {
     showUp: boolean

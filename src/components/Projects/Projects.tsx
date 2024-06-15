@@ -1,5 +1,5 @@
 import React, {useMemo} from "react";
-import commonStyles from '../../common/styles/CommonStyles.module.scss'
+import commonStyles from '../../common/styles/common.module.scss'
 import styles from './Projects.module.scss'
 import {Project} from "./Project/Project";
 import portfolioPic from './../../../src/assets/pic/portfolio.png'

@@ -2,7 +2,7 @@ import React from "react";
 import styles from './Footer.module.scss'
 import {faVk, faGit, faTelegram, faWhatsapp} from "@fortawesome/free-brands-svg-icons";
 import {faAt, faMapMarked, faPhone} from "@fortawesome/free-solid-svg-icons";
-import commonStyles from "../../common/styles/CommonStyles.module.scss";
+import commonStyles from "../../common/styles/common.module.scss";
 import {Socnet} from "./Socnet/Socnet";
 
 export const Footer = React.memo(() => {

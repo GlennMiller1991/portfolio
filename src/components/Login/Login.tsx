@@ -9,7 +9,7 @@ import {tErrors} from '../../common/types/types'
 import {stateType} from '../../redux/store'
 import {appUpdateState} from '../../redux/appReducer/appReducer'
 import {loginAPI} from '../../common/api/loginAPI'
-import commonStyles from '../../common/styles/CommonStyles.module.scss'
+import commonStyles from '../../common/styles/common.module.scss'
 import {tObjectValidators, Validator} from '../../common/validators/Validator'
 import {emailRegexp, telegramRegexp} from '../../common/constants/regexps'
 import {Row} from '../../common/components/Row/Row';

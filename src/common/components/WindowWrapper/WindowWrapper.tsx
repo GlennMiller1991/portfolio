@@ -1,12 +1,12 @@
 import React, {useCallback, useEffect} from 'react'
 import styles from './WindowWrapper.module.scss'
 import {setClasses} from '../../utils/setClasses'
-import {IoCloseOutline} from 'react-icons/all'
 import {useDispatch} from 'react-redux'
 import {appUpdateState} from '../../../redux/appReducer/appReducer'
 import {SwipeListener} from "../../utils/SwipeListener";
 import {wwContainer} from "../../constants/ids";
 import {WindowWrapperCanvas} from "./WindowWrapperCanvas/WindowWrapperCanvas";
+import {IoCloseOutline} from "react-icons/io5";
 
 
 type tWindowWrapper = {

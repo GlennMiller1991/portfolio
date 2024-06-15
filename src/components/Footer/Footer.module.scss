@@ -1,7 +1,7 @@
-@import './../../common/styles/Variables.module.scss';
+@import '../../common/styles/templates.module';
 
 .footer {
-    background-color: $restColor;
+    background-color: var(--color-dark-secondary);
 }
 
 .container {

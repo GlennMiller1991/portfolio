@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import './App.css';
-import './common/styles/variables.css'
-import './index.scss'
+import './index.css'
 
 import {Header} from './components/Header/Header';
 import {Main} from './components/Main/Main';
@@ -11,11 +10,10 @@ import {Contacts} from './components/Contacts/Contacts';
 import {Up} from './components/Up/Up';
 import {Footer} from './components/Footer/Footer';
 import {anchorType, checkAnchorTC} from './redux/reducer';
-import {useDispatch, useSelector} from 'react-redux';
+import {useSelector} from 'react-redux';
 import {stateType, useAppDispatch} from './redux/store';
 import {
     appStateUpdateServerAvailableness,
-    appUpdateErrors,
     appUpdateState,
     tAppState
 } from './redux/appReducer/appReducer';

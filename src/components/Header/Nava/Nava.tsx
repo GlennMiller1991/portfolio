@@ -5,14 +5,12 @@ import {useSelector} from 'react-redux';
 import {stateType} from '../../../redux/store';
 import {anchorType} from '../../../redux/reducer';
 
-import {
-    AiOutlineContacts,
-    AiOutlineFundProjectionScreen,
-   BsFileEarmarkPerson,
-    FiLogIn,
-    GiSkills,
-} from 'react-icons/all'
+
 import {serverUrl} from "../../../common/constants/baseUrl";
+import {BsFileEarmarkPerson} from "react-icons/bs";
+import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
+import {GiSkills} from "react-icons/gi";
+import {FiLogIn} from "react-icons/fi";
 
 export const Nava = React.memo(() => {
         const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from './Project.module.scss'
-import {AiFillEye} from 'react-icons/all'
+import {AiFillEye} from "react-icons/ai";
 
 type ProjectPropsType = {
     title: string,

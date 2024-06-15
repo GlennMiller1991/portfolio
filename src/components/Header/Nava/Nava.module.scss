@@ -16,15 +16,15 @@
       cursor: pointer;
       font-weight: 400;
       letter-spacing: .1em;
-      font-family: var(--primary-font);
+      font-family: var(--font-primary);
       font-size: 1.3em;
       text-decoration: none;
       line-height: 1.7;
       transition: all 0.3s ease-in-out;
-      color: var(--white);
+      color: var(var(--color-light-primary));
 
       &:hover {
-        color: var(--secondary-color);
+        color: var(--color-theme);
       }
 
       &:focus {
@@ -40,7 +40,7 @@
     }
 
     .active {
-      color: var(--secondary-color);
+      color: var(var(--color-theme));
     }
 
     .underMenu {
@@ -56,7 +56,7 @@
     .underActive:before {
       content: '';
       display: block;
-      background-color: var(--secondary-color);
+      background-color: var(var(--color-theme));
       height: 100%;
       width: 0;
       animation: getWidth 0.3s ease-in;

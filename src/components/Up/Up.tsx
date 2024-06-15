@@ -1,6 +1,6 @@
 import React, {useCallback} from "react";
 import styles from './Up.module.scss'
-import {FaChevronUp} from 'react-icons/all'
+import {FaChevronUp} from "react-icons/fa";
 
 export const Up = React.memo(() => {
     const scrollTo = useCallback(() => {

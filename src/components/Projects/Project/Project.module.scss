@@ -1,4 +1,4 @@
-@import './../../../common/styles/Variables.module';
+@import '../../../common/styles/templates.module';
 
 .project {
     position: relative;
@@ -45,7 +45,7 @@
         @include flexCenter;
         flex-direction: column;
         width: 100%;
-        border: 1px solid $borderColor;
+        border: 1px solid var(--font-tertiary);
         background-position: center;
         background-size: cover;
         font-size: 70px;
@@ -76,7 +76,7 @@
             height: 80%;
             width: 80%;
             margin: 5% 10%;
-            font-family: $primaryFont;
+            font-family: var(--font-primary);
             @include flexCenter(center);
             flex-direction: column;
             h3 {
@@ -87,15 +87,15 @@
             p {
                 text-align: center;
                 font-weight: 200;
-                color: $secondaryFont;
+                color: var(--font-secondary);
                 margin: 0;
             }
             a {
-                color: $textColor;
+                color: var(--color-light-primary);
                 text-decoration: none;
                 transition: 0.8s;
                 &:hover {
-                    color: $themeColor;
+                    color: var(--color-theme);
                 }
             }
         }

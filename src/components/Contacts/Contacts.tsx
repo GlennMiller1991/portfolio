@@ -1,5 +1,5 @@
 import React, {useMemo} from 'react';
-import commonStyles from '../../common/styles/CommonStyles.module.scss'
+import commonStyles from '../../common/styles/common.module.scss'
 import styles from './Contacts.module.scss'
 import {useDispatch} from 'react-redux'
 import {Input} from '../../common/components/Input/Input'

@@ -1,4 +1,4 @@
-@import './Variables.module';
+@import 'templates.module';
 
 .container {
     height: 100%;
@@ -9,7 +9,7 @@
 }
 
 .upperThenHeader {
-    -webkit-text-stroke: 2px $themeColor;
+    -webkit-text-stroke: 2px var(--color-theme);
     font-size: 2em;
     color: transparent;
     display: block;
@@ -29,8 +29,8 @@
     font-size: 3em;
     z-index: 0;
     opacity: .8;
-    color: $textColor;
-    font-family: $secondaryFont;
+    color: var(--color-light-primary);
+    font-family: var(--font-secondary);
     font-weight: 400;
 }
 

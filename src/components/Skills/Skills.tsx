@@ -1,6 +1,6 @@
 import React, {useMemo} from "react";
 import styles from './Skills.module.scss'
-import commonStyles from '../../common/styles/CommonStyles.module.scss'
+import commonStyles from '../../common/styles/common.module.scss'
 import {Skill} from "./Skill/Skill";
 import {faJs} from "@fortawesome/free-brands-svg-icons/faJs";
 import {faFileCode, faProjectDiagram} from "@fortawesome/free-solid-svg-icons";

@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './Main.module.scss'
-import commonStyles from '../../common/styles/CommonStyles.module.scss'
+import commonStyles from '../../common/styles/common.module.scss'
 import {ChangableSpan} from './ChangableSpan/ChangableSpan';
 import {useSelector} from 'react-redux'
 import {stateType} from '../../redux/store'

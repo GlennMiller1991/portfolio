@@ -1,9 +1,9 @@
-@import './../../common/styles/Variables.module';
+@import '../../common/styles/templates.module';
 
 .up {
     position: fixed;
     @include flexCenter(center);
-    background-color: $themeColor;
+    background-color: var(--color-theme);
     width: 55px;
     height: 55px;
     bottom: 150px;
@@ -13,7 +13,7 @@
     animation: show 3s forwards;
     cursor: pointer;
     .svg {
-        color: $mainColor;
+        color: var(--color-dark-primary);
     }
 }
 

@@ -1,8 +1,8 @@
-@import './../../common/styles/Variables.module';
+@import '../../common/styles/templates.module';
 
 .projects {
     min-height: 100vh;
-    background-color: $mainColor;
+    background-color: var(--color-dark-primary);
     padding-bottom: 100px;
     .container {
         @include flexCenter(flex-start);

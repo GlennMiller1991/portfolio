@@ -5,13 +5,13 @@
   right: 0;
   height: max-content;
   padding: 2rem;
-  background: var(--black);
+  background: var(var(--dark-primary-color));
   z-index: 2;
 }
 
 .textWrapper {
   font-size: 2rem;
-  color: var(--secondary-color);
+  color: var(var(--color-theme));
   padding: 2rem;
-  font-family: var(--secondary-font);
+  font-family: var(--font-secondary);
 }

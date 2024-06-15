@@ -1,4 +1,4 @@
-@import './../../../common/styles/Variables.module';
+@import '../../../common/styles/templates.module';
 $skillIconSize: 70px;
 
 .skill {
@@ -7,7 +7,6 @@ $skillIconSize: 70px;
   align-items: flex-start;
         flex-direction: column;
         padding: 32px;
-        /*border: 1px solid $borderColor;*/
         @media screen and (max-width: 1280px) {
           width: 290px;
         }
@@ -21,7 +20,7 @@ $skillIconSize: 70px;
           width: 510px;
         }
         .skillContainer {
-            font-family: $primaryFont;
+            font-family: var(--font-primary);
             @include flexCenter;
             flex-direction: column;
             align-items: flex-start;
@@ -30,7 +29,7 @@ $skillIconSize: 70px;
                 height: $skillIconSize;
                 @include flexCenter();
                 * {
-                    color: $themeColor;
+                    color: var(--color-theme);
                     font-size: 70px;
                 }
             }
@@ -41,7 +40,7 @@ $skillIconSize: 70px;
             }
             p {
                 font-weight: 200;
-                color: $secondaryFont;
+                color: var(--font-secondary);
                 margin: 0;
             }
     }
