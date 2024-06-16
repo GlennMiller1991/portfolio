@@ -3,13 +3,14 @@ import styles from './Main.module.scss'
 import commonStyles from '../../common/styles/common.module.scss'
 import {ChangableSpan} from './ChangableSpan/ChangableSpan';
 import {AppContext} from "../../App";
+import {sections} from "../../app/constants";
 
 export const Main = React.memo(() => {
         const appController = useContext(AppContext)
         const appWidth = appController.appDomRect.width
 
         return (
-            <div id={'main'} className={styles.main}>
+            <div id={sections.main} className={styles.main}>
                 <div className={commonStyles.container + ' ' + styles.container}>
                     <div className={styles.greeting}>
                         <h2 className={styles.rest}>Hi There! I am</h2>

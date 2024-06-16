@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 import commonStyles from '../../common/styles/common.module.scss'
 import styles from './Contacts.module.scss'
-import {useDispatch} from 'react-redux'
 import {Input} from '../../common/components/Input/Input'
 import {setClasses} from '../../common/utils/setClasses'
 import {Button} from '../../common/components/Button/Button'
@@ -9,6 +8,7 @@ import {useFieldState} from '../../common/customHooks/useFieldState'
 import {messageAPI} from '../../common/api/messageAPI'
 import {tObjectValidators, Validator} from '../../common/validators/Validator'
 import {emailRegexp} from '../../common/constants/regexps'
+import {sections} from "../../app/constants";
 
 type tLoginParamType = {
     email: string,
@@ -61,7 +61,7 @@ export const Contacts = React.memo(() => {
 
 
     return (
-        <div id={'contacts'} className={styles.wrapper}>
+        <div id={sections.contacts} className={styles.wrapper}>
             <div className={`${commonStyles.container} ${styles.container}`}>
                 <h2 className={commonStyles.title}>
                     <span className={commonStyles.upperThenHeader}>GET IN TOUCH</span>

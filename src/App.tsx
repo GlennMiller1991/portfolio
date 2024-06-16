@@ -14,7 +14,7 @@ import {Alert} from './common/components/Alert/Alert'
 import {commonServerAPI} from "./common/api/commonServerAPI";
 import {makeAutoObservable} from "mobx"
 import {observer} from "mobx-react-lite";
-import {app} from "./app/constants";
+import {app, sections} from "./app/constants";
 
 export const AppContext = createContext<AppController>(null as any)
 
@@ -27,6 +27,7 @@ export class AppController {
     isUserAuthenticated = false
     windowContent: React.ReactNode | undefined = undefined
     alertMessage: string | undefined = undefined
+    nearestSection: keyof typeof sections | undefined = sections.main
 
     get isAppReady() {
         return !!this.appDomRect
@@ -56,6 +57,10 @@ export class AppController {
         this.isUserAuthenticated = value
     }
 
+    setNearestSection(section: typeof this.nearestSection) {
+        this.nearestSection = section
+    }
+
     constructor() {
         this.init()
 
@@ -65,7 +70,8 @@ export class AppController {
             appDomRect: true,
             isUserAuthenticated: true,
             windowContent: true,
-            alertMessage: true
+            alertMessage: true,
+            nearestSection: true
         })
     }
 
@@ -77,7 +83,6 @@ export class AppController {
         this.isServerAvailable && this.authenticate()
 
         document.title = app.d.title
-
 
         this.resizeObserver = new ResizeObserver(this.onResize)
         this.resizeObserver.observe(document.body)
@@ -94,6 +99,20 @@ export class AppController {
         const currentY = document.documentElement.scrollTop
         const headerHeight = header.offsetHeight
         this.setIsUpBtnShown(currentY > headerHeight)
+        let topDistance = Infinity
+        let currentDistance: number
+        let element: HTMLElement | null
+        let nearestElement: string | undefined = undefined
+        for (let section of app.d.sections) {
+            element = document.getElementById(section)
+            if (!element) continue
+            currentDistance = Math.abs(element.getBoundingClientRect().top)
+            if (currentDistance < topDistance) {
+                nearestElement = section
+                topDistance = currentDistance
+            }
+        }
+        this.setNearestSection(nearestElement as typeof this.nearestSection)
     }
 
     kickTheServer = async () => {
@@ -136,10 +155,7 @@ export const App = observer(() => {
                 <Main/>
                 <Skills/>
                 <Projects/>
-                {
-                    appController.isServerAvailable &&
-                    <Contacts/>
-                }
+                <Contacts/>
                 <Footer/>
                 {
                     appController.isUpBtnShown && <Up/>

@@ -1,101 +1,96 @@
 import React, {useCallback, useContext} from 'react';
 import styles from './Nava.module.scss'
 import {NavLink} from 'react-router-dom';
-import {useSelector} from 'react-redux';
-import {stateType} from '../../../redux/store';
-import {anchorType} from '../../../redux/reducer';
-
 
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
-import {app} from "../../../app/constants";
+import {app, sections} from "../../../app/constants";
 import {AppContext} from "../../../App";
+import {setClasses} from "../../../common/utils/setClasses";
+import {observer} from "mobx-react-lite";
+import {Login, LoginPage} from "../../Login/Login";
 
-export const Nava = React.memo(() => {
+export const Nava = observer(() => {
 
         const appController = useContext(AppContext)
-        const currentAnchor = useSelector<stateType, anchorType>(state => state.state.currentAnchor)
+        const currentAnchor = appController.nearestSection
+        console.log('rerender')
 
-        const linkStyle = useCallback((elementId: string) => {
-            return `${styles.link} ${currentAnchor === elementId ? styles.active : ''}`
-        }, [currentAnchor])
-        const divStyle = useCallback((elementId: string) => {
-            return `${styles.underMenu} ${currentAnchor === elementId ? styles.underActive : ''}`
-        }, [currentAnchor])
         const scrollTo = useCallback((elementId: string) => {
             const elem = document.getElementById(elementId)
-            if (elem) {
-                const yOffset = 85
-                const y = elem.getBoundingClientRect().top - yOffset + window.pageYOffset
-                window.scrollTo({top: y, behavior: 'smooth'})
-            }
+            elem && elem.scrollIntoView({
+                behavior: 'smooth'
+            })
         }, [])
 
         const appWidth = appController.appDomRect.width
         return (
             <div className={styles.nava}>
+                {/* Main */}
                 <div className={styles.linkContainer}>
-                    <NavLink className={() => linkStyle('main')}
-                             onClick={() => scrollTo('main')}
-                             to={'#main'}>
+                    <NavLink className={setClasses(styles.link, currentAnchor === sections.main && styles.active)}
+                             onClick={() => scrollTo(sections.main)}
+                             to={`#${sections.main}`}>
                         {
                             appWidth < 1000 ?
-                                <BsFileEarmarkPerson/> : 'Common'
+                                <BsFileEarmarkPerson/> :
+                                sections.main
                         }
                     </NavLink>
-                    <div className={divStyle('main')}>{''}</div>
+                    <div className={setClasses(styles.underMenu, currentAnchor === sections.main && styles.underActive)}/>
                 </div>
+                {/* Skills */}
                 <div className={styles.linkContainer}>
-                    <NavLink className={() => linkStyle('projects')}
-                             onClick={() => scrollTo('projects')}
-                             to={'#projects'}>
+                    <NavLink className={setClasses(styles.link, currentAnchor === sections.skills && styles.active)}
+                             onClick={() => scrollTo(sections.skills)}
+                             to={`#${sections.skills}`}>
                         {
                             appWidth < 1000 ?
-                                <AiOutlineFundProjectionScreen/> : 'Projects'
+                                <GiSkills/> : sections.skills
                         }
                     </NavLink>
-                    <div className={divStyle('projects')}>{''}</div>
+                    <div
+                        className={setClasses(styles.underMenu, currentAnchor === sections.skills && styles.underActive)}/>
                 </div>
+                {/* Projects */}
                 <div className={styles.linkContainer}>
-                    <NavLink className={() => linkStyle('skills')}
-                             onClick={() => scrollTo('skills')}
-                             to={'#skills'}>
+                    <NavLink className={setClasses(styles.link, currentAnchor === sections.projects && styles.active)}
+                             onClick={() => scrollTo(sections.projects)}
+                             to={`#${sections.projects}`}>
                         {
                             appWidth < 1000 ?
-                                <GiSkills/> : 'Experience'
+                                <AiOutlineFundProjectionScreen/> : sections.projects
                         }
                     </NavLink>
-                    <div className={divStyle('skills')}>{''}</div>
+                    <div
+                        className={setClasses(styles.underMenu, currentAnchor === sections.projects && styles.underActive)}/>
                 </div>
-                {
-                    appController.isServerAvailable &&
-                    <>
-                        <div className={styles.linkContainer}>
-                            <NavLink className={() => linkStyle('contacts')}
-                                     onClick={() => scrollTo('contacts')}
-                                     to={'#contacts'}>
-                                {
-                                    appWidth < 1000 ?
-                                        <AiOutlineContacts/> :
-                                        'Contacts'
-                                }
-                            </NavLink>
-                            <div className={divStyle('contacts')}>{''}</div>
-                        </div>
-
-                        <div className={styles.linkContainer} onClick={() => {
-                            window.location.replace(`${app.server}/login`)
-                        }}>
-                            <div className={styles.link}>
-                                {
-                                    appWidth < 1000 ? <FiLogIn/> : 'Login'
-                                }
-                            </div>
-                        </div>
-                    </>
-                }
+                {/* Contacts */}
+                <div className={styles.linkContainer}>
+                    <NavLink className={setClasses(styles.link, currentAnchor === sections.contacts && styles.active)}
+                             onClick={() => scrollTo(sections.contacts)}
+                             to={`#${sections.contacts}`}>
+                        {
+                            appWidth < 1000 ?
+                                <AiOutlineContacts/> :
+                                sections.contacts
+                        }
+                    </NavLink>
+                    <div
+                        className={setClasses(styles.underMenu, currentAnchor === sections.contacts && styles.underActive)}/>
+                </div>
+                {/* Login */}
+                <div className={styles.linkContainer} onClick={() => {
+                    appController.setWindowContent(<Login/>)
+                }}>
+                    <div className={styles.link}>
+                        {
+                            appWidth < 1000 ? <FiLogIn/> : 'Login'
+                        }
+                    </div>
+                </div>
             </div>
         )
     }
