@@ -10,11 +10,12 @@
 
 .modalContent {
   position: relative;
-  min-height: 50%;
-  background: var(--color-dark-primary);
+  max-height: 80%;
+  height: max-content;
   border: 1px solid var(--color-light-primary);
   border-radius: 0.25rem;
-  min-width: 50%;
+  max-width: 80%;
+  width: max-content;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 2rem;

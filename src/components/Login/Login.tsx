@@ -4,7 +4,6 @@ import {Button} from '../../common/components/Button/Button'
 import styles from './Login.module.scss'
 import {setClasses} from '../../common/utils/setClasses'
 import {useFieldState} from '../../common/customHooks/useFieldState'
-import {useDispatch} from 'react-redux'
 import {loginAPI} from '../../common/api/loginAPI'
 import commonStyles from '../../common/styles/common.module.scss'
 import {tObjectValidators, Validator} from '../../common/validators/Validator'
@@ -121,7 +120,6 @@ export const LoginPage: React.FC = React.memo(() => {
 export const SignUpPage: React.FC = React.memo(() => {
 
     const appController = useContext(AppContext)
-    const dispatch = useDispatch()
     const validator = useMemo(() => {
         const signupParams: tSignupParams = {
             firstName: '',
