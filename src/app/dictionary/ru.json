@@ -1,6 +1,16 @@
 {
   "title": "React Developer",
+  "typedString": [
+    "Frontend",
+    "React",
+    "Redux",
+    "TypeScript",
+    "JavaScript"
+  ],
   "sections": [
-    "main", "skills", "contacts", "projects"
+    "main",
+    "skills",
+    "contacts",
+    "projects"
   ]
 }

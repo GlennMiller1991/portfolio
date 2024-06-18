@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import styles from './Main.module.scss'
 import commonStyles from '../../common/styles/common.module.scss'
-import {ChangableSpan} from './ChangableSpan/ChangableSpan';
+import {TypedString} from './typed-string/typed-string';
 import {AppContext} from "../../App";
 import {sections} from "../../app/constants";
 
@@ -17,7 +17,7 @@ export const Main = React.memo(() => {
                         <h1 className={styles.name}>ALEXANDR BASALOV</h1>
                         <p>
                             {
-                                <ChangableSpan/>
+                                <TypedString/>
                             }
                             <span className={styles.keyboardSpan}>|</span>
                             {
