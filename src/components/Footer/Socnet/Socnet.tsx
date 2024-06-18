@@ -12,7 +12,7 @@ export const Socnet: React.FC<SocnetPropsType> = React.memo((props) => {
         <div className={styles.icon}>
             <a href={props.link}>
                 {
-                    React.createElement(IoLogoJavascript)
+                    React.createElement(props.icon)
                 }
             </a>
         </div>

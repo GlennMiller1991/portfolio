@@ -5,8 +5,8 @@ $iconSquare: 50px;
     width: $iconSquare;
     height: $iconSquare;
     border: 1px solid #31383d;
-    @include flexCenter(center);
-    font-size: 30px;
+    @include flexCenter;
+    font-size: 35px;
     transition: 0.5s;
     cursor: pointer;
     &:hover {
@@ -15,7 +15,9 @@ $iconSquare: 50px;
         border: 1px solid var(--color-light-primary);
     }
     a, a:visited {
+        height: 35px;
         text-decoration: none;
         color: var(--color-light-primary);
     }
+
 }
