@@ -1,7 +1,7 @@
 import React, {useContext} from 'react'
 import styles from './WindowWrapper.module.scss'
 import {setClasses} from '../../utils/setClasses'
-import {WindowWrapperCanvas} from "./WindowWrapperCanvas/WindowWrapperCanvas";
+import {DistortedBackground} from "./background/view";
 import {IoCloseOutline} from "react-icons/io5";
 import {AppContext} from "../../../App";
 
@@ -12,7 +12,7 @@ export const WindowWrapper: React.FC<React.PropsWithChildren> = React.memo(({
 
     return (
         <div className={setClasses(styles.modalContainer, 'flexCenter')}>
-            <WindowWrapperCanvas/>
+            <DistortedBackground/>
             <div className={styles.modalContent}>
                 <button className={setClasses(styles.closeBtn, 'flexCenter')} onClick={() => {
                     appController.setWindowContent(undefined)
