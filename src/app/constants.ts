@@ -42,7 +42,7 @@ export const skillsEntities = [
     {
         name: 'State management',
         icon: SiRedux,
-        description: 'Redux, Mobx, self-writing'
+        description: 'Redux, Mobx'
     },
     {
         name: 'Styling',
