@@ -1,17 +1,20 @@
 import {Dictionary} from "./dictionary/dictionary";
-import {useMemo} from "react";
-import {faJs} from "@fortawesome/free-brands-svg-icons/faJs";
-import {faTextHeight} from "@fortawesome/free-solid-svg-icons/faTextHeight";
-import {faFileCode, faProjectDiagram} from "@fortawesome/free-solid-svg-icons";
-import {faCss3Alt} from "@fortawesome/free-brands-svg-icons/faCss3Alt";
-import {faHtml5, faSass} from "@fortawesome/free-brands-svg-icons";
-import {faPython} from "@fortawesome/free-brands-svg-icons/faPython";
-import {faVials} from "@fortawesome/free-solid-svg-icons/faVials";
-import {faGithubSquare} from "@fortawesome/free-brands-svg-icons/faGithubSquare";
-import {faHighlighter} from "@fortawesome/free-solid-svg-icons/faHighlighter";
-import {faEdit} from "@fortawesome/free-solid-svg-icons/faEdit";
-import {faChartArea} from "@fortawesome/free-solid-svg-icons/faChartArea";
-import {faDigitalTachograph} from "@fortawesome/free-solid-svg-icons/faDigitalTachograph";
+import {TbPlugConnectedX, TbMathSymbols} from "react-icons/tb";
+import {
+    SiPostgresql,
+    SiNodedotjs,
+    SiSoundcharts,
+    SiBootstrap,
+    SiGithub,
+    SiMinetest,
+    SiPython,
+    SiServerless,
+    SiHtml5,
+    SiTypescript,
+    SiJavascript,
+    SiRedux,
+    SiStylelint
+} from "react-icons/si";
 
 export const d = new Dictionary()
 
@@ -28,73 +31,78 @@ export const app = {
 export const skillsEntities = [
     {
         name: 'JavaScript',
-        icon: faJs,
+        icon: SiJavascript,
         description: 'Context, Closures, Event loop, Promises, Classes, Callbacks and more'
     },
     {
         name: 'TypeScript',
-        icon: faTextHeight,
+        icon: SiTypescript,
         description: 'Types, Interfaces, Generics, Extends, Enums, Mixins, Utility types and more'
     },
     {
-        name: 'Thunk',
-        icon: faFileCode,
-        description: 'Redux Middleware'
+        name: 'State management',
+        icon: SiRedux,
+        description: 'Redux, Mobx, self-writing'
     },
     {
-        name: 'CSS3',
-        icon: faCss3Alt,
-        description: 'CSS Flex, CSS Grid, Responsive Layout, Media queries and more'
-    },
-    {
-        name: 'SASS',
-        icon: faSass,
-        description: 'Imports, Mixins, Variables, Functions, Nesting and more'
+        name: 'Styling',
+        icon: SiStylelint,
+        description: 'CSS, SASS, SCSS, Responsive Layout, Media queries and more'
     },
     {
         name: 'HTML',
-        icon: faHtml5,
+        icon: SiHtml5,
         description: 'Semantic Layout, БЭМ'
     },
     {
-        name: 'Rest API',
-        icon: faProjectDiagram,
-        description: 'Restful API, Axios, Fetch, Error Handling and more'
+        name: 'Requests',
+        icon: SiServerless,
+        description: 'GraphQL, Restful API, Axios, Fetch, Error Handling and more'
     },
     {
         name: 'Python v3.6.x',
-        icon: faPython,
+        icon: SiPython,
         description: 'SQLAlchemy, Flask and more'
     },
     {
-        name: 'Unit test',
-        icon: faVials,
-        description: 'TDD, StoryBook, Jest'
+        name: 'Backend',
+        icon: SiNodedotjs,
+        description: 'NextJS, NestJS, NodeJS'
+    },
+    {
+        name: 'SQL',
+        icon: SiPostgresql,
+        description: 'Postgres',
+    },
+    {
+        name: 'Math',
+        icon: SiPython,
+        description: 'Linear algebra, analytic geometry, 2D, 3D'
+    },
+    {
+        name: 'Testing',
+        icon: SiMinetest,
+        description: 'TDD, StoryBook, Jest, React-Testing-Library'
     },
     {
         name: 'Git',
-        icon: faGithubSquare,
+        icon: SiGithub,
         description: ''
     },
     {
-        name: 'Material UI',
-        icon: faHighlighter,
-        description: ''
-    },
-    {
-        name: 'Ant Design',
-        icon: faEdit,
-        description: ''
+        name: 'Styling Libraries',
+        icon: SiBootstrap,
+        description: 'Ant Design, TailwindCSS, MaterialUI, Bootstrap'
     },
     {
         name: 'Data Viz',
-        icon: faChartArea,
-        description: 'SVG, D3'
+        icon: SiSoundcharts,
+        description: 'SVG, Canvas, Charts, Maps, D3 and more'
     },
     {
         name: 'Other API',
-        icon: faDigitalTachograph,
-        description: 'VK API, 2GIS API'
+        icon: TbPlugConnectedX,
+        description: 'VK API, 2GIS API and more'
     }
 
 ]

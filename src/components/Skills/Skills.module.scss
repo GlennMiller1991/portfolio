@@ -9,8 +9,10 @@
         flex-direction: column;
         .skillsContainer {
             width: 100%;
-            @include flexCenter(center);
-            flex-wrap: wrap;
+            display: grid;
+            grid-auto-columns: 1fr;
+            grid-auto-rows: 1fr;
+            grid-template-columns: repeat(auto-fill, 320px);
             row-gap: 30px;
             column-gap: 30px;
         }
