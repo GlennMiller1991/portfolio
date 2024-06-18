@@ -1,4 +1,4 @@
-import {makeObservable} from "mobx";
+import {makeObservable, action} from "mobx";
 
 export class TypedStringController {
     carriage: number = 0
@@ -7,7 +7,9 @@ export class TypedStringController {
 
     constructor() {
         makeObservable(this, {
-            carriage: true
+            carriage: true,
+            increment: action,
+            decrement: action,
         })
     }
 
@@ -30,16 +32,12 @@ export class TypedStringController {
         this.typedString = newString
     }
 
-    setCarriage(value: number) {
-        this.carriage = value
-    }
-
     increment() {
-        this.setCarriage(this.carriage + 1)
+        this.carriage++
     }
 
     decrement() {
-        this.setCarriage(this.carriage - 1)
+        this.carriage--
     }
 
     get currentPart() {
