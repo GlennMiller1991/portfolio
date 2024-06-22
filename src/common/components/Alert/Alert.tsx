@@ -1,7 +1,8 @@
 import React, {useContext, useEffect} from 'react'
 import styles from './Alert.module.scss'
 import {setClasses} from '../../utils/setClasses'
-import {AppContext} from "../../../App";
+
+import {AppContext} from "../../../app/app.context";
 
 type tAlert = {
     children: string

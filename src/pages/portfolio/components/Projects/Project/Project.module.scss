@@ -1,0 +1,104 @@
+@import 'src/common/styles/templates.module';
+
+.project {
+    position: relative;
+    width: 500px;
+    height: 280px;
+    @include flexCenter;
+    flex-direction: column;
+    transition: 0.8s;
+    @media (max-width: 1315px) {
+        font-size: .9em;
+        width: 450px;
+        height: 250px;
+    }
+    @media (max-width: 1200px) {
+        width: 400px;
+        height: 220px;
+    }
+    @media (max-width: 1070px) {
+        width: 360px;
+        height: 200px;
+    }
+    @media (max-width: 960px) {
+        width: 500px;
+        height: 280px;
+    }
+    @media (max-width: 800px) {
+        width: 450px;
+        height: 250px;
+    }
+    @media (max-width: 585px) {
+        width: 360px;
+        height: 200px;
+    }
+    @media (max-width: 485px) {
+        font-size: .7em;
+        width: 300px;
+        height: 165px;
+    }
+    &:hover {
+        transform: scale(1.06);
+    }
+    .screen {
+        height: 100%;
+        @include flexCenter;
+        flex-direction: column;
+        width: 100%;
+        border: 1px solid var(--font-tertiary);
+        background-position: center;
+        background-size: cover;
+        font-size: 70px;
+        filter: blur(5px);
+        transition: all 0.5s;
+        &:hover {
+            border: none;
+            box-shadow: none;
+            * {
+                font-size: .5em;
+                opacity: 1;
+            }
+        }
+    }
+    .cover {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        background-color: black;
+        opacity: 0;
+        transition: 1.3s;
+        &:hover {
+            opacity: .6;
+        }
+        .projectInfo {
+            height: 80%;
+            width: 80%;
+            margin: 5% 10%;
+            font-family: var(--font-primary);
+            @include flexCenter(center);
+            flex-direction: column;
+            h3 {
+                font-size: 1.5em;
+                font-weight: 450;
+                margin: 18px 0;
+            }
+            p {
+                text-align: center;
+                font-weight: 200;
+                color: var(--font-secondary);
+                margin: 0;
+            }
+            a {
+                color: var(--color-light-primary);
+                text-decoration: none;
+                transition: 0.8s;
+                &:hover {
+                    color: var(--color-theme);
+                }
+            }
+        }
+    }
+}
+

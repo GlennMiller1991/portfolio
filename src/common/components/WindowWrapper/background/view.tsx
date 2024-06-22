@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef, useState} from "react";
 import styles from "../WindowWrapper.module.scss"
-import {AppContext} from "../../../../App";
 import {ParticlesController} from "./controller";
+import {AppContext} from "../../../../app/app.context";
 
 export const DistortedBackground: React.FC = React.memo(() => {
     const viewController = useContext(AppContext)

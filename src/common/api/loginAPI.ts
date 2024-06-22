@@ -1,6 +1,6 @@
 import {tLoginParams} from '../types/types'
 import {requests} from './requests'
-import {tSignupParams} from '../../components/Login/Login'
+import {tSignupParams} from '../../pages/auth/Login/Login'
 import {app} from "../../app/constants";
 
 export const loginAPI = {

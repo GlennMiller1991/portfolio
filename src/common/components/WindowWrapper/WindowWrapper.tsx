@@ -3,7 +3,8 @@ import styles from './WindowWrapper.module.scss'
 import {setClasses} from '../../utils/setClasses'
 import {DistortedBackground} from "./background/view";
 import {IoCloseOutline} from "react-icons/io5";
-import {AppContext} from "../../../App";
+
+import {AppContext} from "../../../app/app.context";
 
 type IWindowWrapper = {
     onClose?: () => void
