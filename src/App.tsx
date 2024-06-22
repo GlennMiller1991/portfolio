@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import './index.css'
 
 import {Header} from './components/Header/Header';
@@ -15,8 +15,13 @@ import {commonServerAPI} from "./common/api/commonServerAPI";
 import {makeAutoObservable} from "mobx"
 import {observer} from "mobx-react-lite";
 import {app, sections} from "./app/constants";
+import {Routes, Route} from "react-router-dom";
+import {Login} from "./components/Login/Login";
 
 export const AppContext = createContext<AppController>(null as any)
+const useAppContext = () => {
+    return useContext(AppContext)
+}
 
 export class AppController {
     isUpBtnShown = false
@@ -151,32 +156,45 @@ export const App = observer(() => {
     return (
         <AppContext.Provider value={appController}>
             <div>
-                <Header showUp={appController.isUpBtnShown}/>
-                <Main/>
-                <Skills/>
-                <Projects/>
-                <Contacts/>
-                <Footer/>
-                {
-                    appController.isUpBtnShown && <Up/>
-                }
-                {
-                    appController.windowContent &&
-                    <WindowWrapper>
-                        {
-                            appController.windowContent
-                        }
-                    </WindowWrapper>
-                }
-                {
-                    appController.alertMessage &&
-                    <Alert>
-                        {
-                            appController.alertMessage
-                        }
-                    </Alert>
-                }
+                <Routes>
+                    <Route path={'/auth'} element={<Login/>}/>
+                    <Route path={'/*'} element={<Portfolio/>}/>
+                </Routes>
             </div>
+            {
+                appController.windowContent &&
+                <WindowWrapper>
+                    {
+                        appController.windowContent
+                    }
+                </WindowWrapper>
+            }
+            {
+                appController.alertMessage &&
+                <Alert>
+                    {
+                        appController.alertMessage
+                    }
+                </Alert>
+            }
         </AppContext.Provider>
     );
+})
+
+
+export const Portfolio: React.FC = observer(() => {
+    const appController = useAppContext()
+    return (
+        <>
+            <Header showUp={appController.isUpBtnShown}/>
+            <Main/>
+            <Skills/>
+            <Projects/>
+            <Contacts/>
+            <Footer/>
+            {
+                appController.isUpBtnShown && <Up/>
+            }
+        </>
+    )
 })

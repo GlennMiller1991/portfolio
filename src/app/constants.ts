@@ -111,5 +111,6 @@ export const sections = {
     main: 'main',
     skills: 'skills',
     contacts: 'contacts',
-    projects: 'projects'
+    projects: 'projects',
+    login: 'login'
 } as const

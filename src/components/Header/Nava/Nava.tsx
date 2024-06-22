@@ -1,6 +1,6 @@
 import React, {useCallback, useContext} from 'react';
 import styles from './Nava.module.scss'
-import {NavLink} from 'react-router-dom';
+import {NavLink, useNavigate} from 'react-router-dom';
 
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
@@ -11,12 +11,13 @@ import {AppContext} from "../../../App";
 import {setClasses} from "../../../common/utils/setClasses";
 import {observer} from "mobx-react-lite";
 import {Login, LoginPage} from "../../Login/Login";
+import {routes} from "../../../common/constants/routes";
 
 export const Nava = observer(() => {
 
         const appController = useContext(AppContext)
         const currentAnchor = appController.nearestSection
-        console.log('rerender')
+        const goto = useNavigate()
 
         const scrollTo = useCallback((elementId: string) => {
             const elem = document.getElementById(elementId)
@@ -82,12 +83,10 @@ export const Nava = observer(() => {
                         className={setClasses(styles.underMenu, currentAnchor === sections.contacts && styles.underActive)}/>
                 </div>
                 {/* Login */}
-                <div className={styles.linkContainer} onClick={() => {
-                    appController.setWindowContent(<Login/>)
-                }}>
+                <div className={styles.linkContainer} onClick={() => goto(routes.auth)}>
                     <div className={styles.link}>
                         {
-                            appWidth < 1000 ? <FiLogIn/> : 'Login'
+                            appWidth < 1000 ? <FiLogIn/> : sections.login
                         }
                     </div>
                 </div>

@@ -5,9 +5,13 @@ import {DistortedBackground} from "./background/view";
 import {IoCloseOutline} from "react-icons/io5";
 import {AppContext} from "../../../App";
 
-export const WindowWrapper: React.FC<React.PropsWithChildren> = React.memo(({
-                                                                                children
-                                                                            }) => {
+type IWindowWrapper = {
+    onClose?: () => void
+}
+export const WindowWrapper: React.FC<React.PropsWithChildren<IWindowWrapper>> = React.memo(({
+                                                                                                children,
+                                                                                                onClose
+                                                                                            }) => {
     const appController = useContext(AppContext)
 
     return (
@@ -15,7 +19,8 @@ export const WindowWrapper: React.FC<React.PropsWithChildren> = React.memo(({
             <DistortedBackground/>
             <div className={styles.modalContent}>
                 <button className={setClasses(styles.closeBtn, 'flexCenter')} onClick={() => {
-                    appController.setWindowContent(undefined)
+                    onClose && onClose()
+                    !onClose && appController.setWindowContent(undefined)
                 }}>
                     <IoCloseOutline/>
                 </button>

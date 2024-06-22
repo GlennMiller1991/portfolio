@@ -10,6 +10,10 @@ import {tObjectValidators, Validator} from '../../common/validators/Validator'
 import {emailRegexp, telegramRegexp} from '../../common/constants/regexps'
 import {Row} from '../../common/components/Row/Row';
 import {AppContext} from "../../App";
+import {WindowWrapper} from "../../common/components/WindowWrapper/WindowWrapper";
+import {useNavigate} from 'react-router-dom'
+import {routes} from "../../common/constants/routes";
+import {observer} from "mobx-react-lite";
 
 export type tSignupParams = {
     firstName: string,
@@ -25,30 +29,34 @@ export type tLoginParams = {
     loginPassword: string,
 }
 
-export const Login: React.FC = React.memo(() => {
+export const Login: React.FC = observer(() => {
     const [state, setState] = useState<{
         loginMode: boolean
     }>({
         loginMode: true,
     })
 
+    const goto = useNavigate()
+
     const switchMode = useCallback(() => {
         setState(prev => ({...prev, loginMode: !prev.loginMode}))
     }, [])
 
     return (
-        <div className={styles.container}>
-            {
-                state.loginMode ?
-                    <LoginPage/> :
-                    <SignUpPage/>
-            }
-            <div className={setClasses(styles.submit, 'flex')}>
-                <Button text={state.loginMode ? 'Sign up' : 'Sign in'}
-                        onClick={switchMode}
-                />
+        <WindowWrapper onClose={() => goto(routes.main)}>
+            <div className={styles.container}>
+                {
+                    state.loginMode ?
+                        <LoginPage/> :
+                        <SignUpPage/>
+                }
+                <div className={setClasses(styles.submit, 'flex')}>
+                    <Button text={state.loginMode ? 'Sign up' : 'Sign in'}
+                            onClick={switchMode}
+                    />
+                </div>
             </div>
-        </div>
+        </WindowWrapper>
     )
 })
 
