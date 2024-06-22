@@ -1,22 +1,20 @@
-import React, {useEffect, useMemo, useState} from "react";
+import React from "react";
 import styles from './Header.module.scss'
 import {Nava} from "./Nava/Nava";
-import variables from '../../../../common/styles/templates.module.scss'
+import {observer} from "mobx-react-lite";
+import {useAppContext} from "../../../../app/app.context";
+import {setClasses} from "../../../../common/utils/setClasses";
 
 type HeaderPropsType = {
     showUp: boolean
 }
-export const Header: React.FC<HeaderPropsType> = React.memo((props) => {
-        const [showUp, setShowUp] = useState(props.showUp)
-        const style = useMemo(() => {
-            return showUp ? {backgroundColor: variables.mainColor} : {}
-        }, [showUp])
+export const Header: React.FC<HeaderPropsType> = observer((props) => {
 
-        useEffect(() => {
-            setShowUp(props.showUp)
-        }, [props.showUp])
+        const appController = useAppContext()
+
+        console.log(appController.isUpBtnShown)
         return (
-            <div id={'header'} className={styles.header} style={style}>
+            <div id={'header'} className={setClasses(styles.header, appController.isUpBtnShown && styles.backgrounded)}>
                 <Nava/>
             </div>
         )

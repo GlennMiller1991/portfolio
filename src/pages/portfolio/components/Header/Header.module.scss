@@ -1,5 +1,9 @@
 @import 'src/common/styles/templates.module';
 
+.backgrounded {
+    background-color: var(--color-dark-primary) !important;
+}
+
 .header {
     z-index: 2;
     height: 85px;
@@ -9,7 +13,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    transition: 1.8s;
+    transition: 1s;
     @media (max-width: 1140px) {
         justify-content: center;
     }
