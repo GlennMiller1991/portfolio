@@ -13,15 +13,12 @@ export const Portfolio: React.FC = observer(() => {
     const appController = useAppContext()
     return (
         <>
-            <Header showUp={appController.isUpBtnShown}/>
+            <Header/>
             <Main/>
             <Skills/>
             <Projects/>
             <Contacts/>
             <Footer/>
-            {
-                appController.isUpBtnShown && <Up/>
-            }
         </>
     )
 })

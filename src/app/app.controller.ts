@@ -5,7 +5,6 @@ import {commonServerAPI} from "../common/api/commonServerAPI";
 import {loginAPI} from "../common/api/loginAPI";
 
 export class AppController {
-    isUpBtnShown = false
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
     isServerAvailable = false
     resizeObserver: ResizeObserver | undefined
@@ -13,7 +12,6 @@ export class AppController {
     isUserAuthenticated = false
     windowContent: React.ReactNode | undefined = undefined
     alertMessage: string | undefined = undefined
-    nearestSection: keyof typeof sections | undefined = sections.main
 
     get isAppReady() {
         return !!this.appDomRect
@@ -25,10 +23,6 @@ export class AppController {
 
     setWindowContent(content: typeof this.windowContent) {
         this.windowContent = content
-    }
-
-    setIsUpBtnShown = (value: boolean) => {
-        this.isUpBtnShown = value
     }
 
     setIsServerAvailable = (value: boolean) => {
@@ -43,26 +37,19 @@ export class AppController {
         this.isUserAuthenticated = value
     }
 
-    setNearestSection(section: typeof this.nearestSection) {
-        this.nearestSection = section
-    }
-
     constructor() {
         this.init()
 
         makeAutoObservable(this, {
-            isUpBtnShown: true,
             isServerAvailable: true,
             appDomRect: true,
             isUserAuthenticated: true,
             windowContent: true,
             alertMessage: true,
-            nearestSection: true
         })
     }
 
     async init() {
-        document.addEventListener('scroll', this.onWindowScroll)
 
         setInterval(this.kickTheServer, 60000)
         await this.kickTheServer()
@@ -78,28 +65,6 @@ export class AppController {
         this.setWindowWidth(document.body.getBoundingClientRect())
     }
 
-    onWindowScroll = () => {
-        const header = document.getElementById('header')
-        if (!header) return
-
-        const currentY = document.documentElement.scrollTop
-        const headerHeight = header.offsetHeight
-        this.setIsUpBtnShown(currentY > headerHeight)
-        let topDistance = Infinity
-        let currentDistance: number
-        let element: HTMLElement | null
-        let nearestElement: string | undefined = undefined
-        for (let section of app.d.sections) {
-            element = document.getElementById(section)
-            if (!element) continue
-            currentDistance = Math.abs(element.getBoundingClientRect().top)
-            if (currentDistance < topDistance) {
-                nearestElement = section
-                topDistance = currentDistance
-            }
-        }
-        this.setNearestSection(nearestElement as typeof this.nearestSection)
-    }
 
     kickTheServer = async () => {
         const res = await commonServerAPI.serverAccess()

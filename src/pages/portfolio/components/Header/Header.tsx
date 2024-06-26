@@ -1,22 +1,27 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import styles from './Header.module.scss'
 import {Nava} from "./Nava/Nava";
 import {observer} from "mobx-react-lite";
-import {useAppContext} from "../../../../app/app.context";
 import {setClasses} from "../../../../common/utils/setClasses";
+import {Up} from "../Up/Up";
+import {HeaderController} from "./header.controller";
 
-type HeaderPropsType = {
-    showUp: boolean
-}
-export const Header: React.FC<HeaderPropsType> = observer((props) => {
+export const Header: React.FC = observer(() => {
+        const [controller] = useState(() => new HeaderController())
 
-        const appController = useAppContext()
+        useEffect(() => controller.dispose.bind(controller), [])
 
-        console.log(appController.isUpBtnShown)
         return (
-            <div id={'header'} className={setClasses(styles.header, appController.isUpBtnShown && styles.backgrounded)}>
-                <Nava/>
-            </div>
+            <>
+                <div id={'header'}
+                     className={setClasses(styles.header, controller.isUpBtnShown && styles.backgrounded)}>
+                    <Nava currentAnchor={controller.nearestSection}/>
+                </div>
+                {
+                    controller.isUpBtnShown && <Up/>
+                }
+            </>
+
         )
     }
 )
