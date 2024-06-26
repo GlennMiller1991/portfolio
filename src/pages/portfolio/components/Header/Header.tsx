@@ -15,6 +15,7 @@ export const Header: React.FC = observer(() => {
             <>
                 <div id={'header'}
                      className={setClasses(styles.header, controller.isUpBtnShown && styles.backgrounded)}>
+                    <LanguageChoice/>
                     <Nava currentAnchor={controller.nearestSection}/>
                 </div>
                 {
@@ -25,3 +26,11 @@ export const Header: React.FC = observer(() => {
         )
     }
 )
+
+export const LanguageChoice: React.FC = React.memo(() => {
+    return (
+        <div className={styles.lang}>
+            <div className={styles.control}/>
+        </div>
+    )
+})

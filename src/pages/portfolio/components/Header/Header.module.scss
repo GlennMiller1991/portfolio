@@ -1,20 +1,42 @@
 @import 'src/common/styles/templates.module';
 
 .backgrounded {
-    background-color: var(--color-dark-primary) !important;
+  background-color: var(--color-dark-primary) !important;
 }
 
 .header {
-    z-index: 2;
-    height: 85px;
-    background-color: transparent;
-    @include flexCenter(flex-end);
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    transition: 1s;
-    @media (max-width: 1140px) {
-        justify-content: center;
-    }
+  z-index: 2;
+  height: 85px;
+  background-color: transparent;
+  @include flexCenter(space-between);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  transition: 1s;
+  @media (max-width: 1140px) {
+    justify-content: center;
+  }
+}
+
+$side: 100px;
+
+.lang {
+  width: $side;
+  height: $side;
+  background: white;
+  @include flexCenter(center);
+}
+
+.control {
+  width: calc($side / 2);
+  height: calc($side / 2);
+  background: gray;
+  border-radius: 50%;
+}
+
+.controlBorder {
+  width: calc($side / 2 + $side / 10);
+  height: calc($side / 2 + $side / 10);
+  border-radius: 50%;
 }
