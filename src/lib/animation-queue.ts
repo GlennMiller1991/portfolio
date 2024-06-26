@@ -3,10 +3,21 @@
  * Here we manage functions for one next raf
  */
 export class AnimationQueue {
-    queue: Function[] = []
-    id: number | undefined
+    private queue: Function[] = []
+    private id: number | undefined
+    private isBlocked = false
+
+    block() {
+        this.isBlocked = true
+    }
+
+    unblock() {
+        this.isBlocked = false
+    }
 
     push(f: Function, previousClear?: boolean) {
+        if (this.isBlocked) return
+
         if (previousClear) {
             this.queue = []
             this.dispose()
