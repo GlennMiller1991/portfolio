@@ -19,24 +19,51 @@
   }
 }
 
-$side: 100px;
+$side: 70px;
 
 .lang {
   width: $side;
   height: $side;
-  background: white;
   @include flexCenter(center);
+  transform-origin: left top;
+  transform: scale(10);
 }
 
 .control {
   width: calc($side / 2);
   height: calc($side / 2);
-  background: gray;
+  background: radial-gradient(#d5d4d4, #ece9e9, #070707);
   border-radius: 50%;
+  border: 3px solid #343333;
+  position: relative;
+  @include flexCenter(center);
 }
 
 .controlBorder {
   width: calc($side / 2 + $side / 10);
   height: calc($side / 2 + $side / 10);
   border-radius: 50%;
+  background: radial-gradient(#181717, #797676, #070707);
+  @include flexCenter(center);
+  border: 1px solid #343333;
+}
+
+.risk {
+  width: 5px;
+  height: 5px;
+  position: relative;
+  right: -30%;
+  border-radius: 50%;
+  background: radial-gradient(white, white, black);
+  box-shadow: black 0 0 3px 1px;
+}
+
+.button {
+  cursor: pointer;
+  transform: scale(1);
+  transition: 1s;
+}
+
+.button:focus {
+  transform: scale(1.2);
 }

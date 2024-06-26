@@ -30,7 +30,12 @@ export const Header: React.FC = observer(() => {
 export const LanguageChoice: React.FC = React.memo(() => {
     return (
         <div className={styles.lang}>
-            <div className={styles.control}/>
+            <div tabIndex={1}
+                 className={setClasses(styles.controlBorder, styles.button)}>
+                <div className={styles.control}>
+                    <div className={styles.risk}/>
+                </div>
+            </div>
         </div>
     )
 })
