@@ -23,6 +23,7 @@ export const Header: React.FC = observer(() => {
                 <div id={'header'}
                      className={setClasses(styles.header, controller.isUpBtnShown && styles.backgrounded)}>
                     <LanguageChoice/>
+                    <ThemeChoice/>
                     <Nava currentAnchor={controller.nearestSection}/>
                 </div>
                 {
@@ -94,6 +95,60 @@ export class LanguageChoiceController {
     }
 }
 
+export const ThemeChoice: React.FC = observer(() => {
+    const [controller] = useState(() => new LanguageChoiceController())
+    return (
+        <div className={styles.field}
+             tabIndex={1}
+             onFocus={() => controller.setIsActive(true)}
+             onBlur={() => controller.setIsActive(false)}>
+            <Choiser angle={(controller.chosenIndex + 1) * controller.angleStep}/>
+            <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}
+                 style={{
+                     width: 70,
+                     height: 70,
+                     zIndex: -1,
+                     borderRadius: '50%'
+                 }}
+            >
+                <canvas width={70}
+                        ref={(node) => {
+                            if (!node) return
+                            const ctx = node.getContext('2d')
+                            if (!ctx) return
+
+                            const gradient = ctx.createConicGradient(0, 35, 35)
+
+                            gradient.addColorStop(0, 'red')
+                            gradient.addColorStop(.33, 'green')
+                            gradient.addColorStop(.66, 'blue')
+                            gradient.addColorStop(1, 'red')
+
+                            ctx.fillStyle  = gradient
+                            ctx.fillRect(0, 0, 70, 70)
+                        }}
+                        height={70} style={{
+                    position: 'absolute',
+                    borderRadius: '50%',
+                    inset: 0,
+                    width: 70,
+                    height: 70,
+                }}/>
+                <div style={{
+                    position: 'absolute',
+                    background: 'black',
+                    width: 50,
+                    height: 50,
+                    left: '50%',
+                    top: '50%',
+                    borderRadius: '50%',
+                    transform: 'translate(-50%, -50%)',
+                }}/>
+            </div>
+        </div>
+    )
+})
+
 export const LanguageChoice: React.FC = observer(() => {
 
     const [controller] = useState(() => new LanguageChoiceController())
@@ -130,9 +185,9 @@ export const Choiser: React.FC<IChoiser> = React.memo(({
     return (
         <div
             className={styles.lang}
-             style={{
-                 transform: `rotate(${angle}deg)`
-             }}
+            style={{
+                transform: `rotate(${angle}deg)`
+            }}
         >
             <div className={setClasses(styles.controlBorder, styles.button)}>
                 <div className={styles.control}>
