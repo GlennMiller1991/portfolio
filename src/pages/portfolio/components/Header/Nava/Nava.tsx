@@ -16,8 +16,6 @@ type INava = {
 }
 export const Nava: React.FC<INava> = ({currentAnchor}) => {
 
-    console.log(currentAnchor)
-
     const appController = useAppContext()
     const goto = useNavigate()
 

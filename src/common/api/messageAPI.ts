@@ -4,10 +4,10 @@ import {app} from "../../app/constants";
 
 export const messageAPI = {
     sendMessage(message: tMessage) {
-        return requests.postRequest<tMessage>(`${app.api}/messages`, message)
+        return requests.postRequest<tMessage>(`/messages`, message)
     },
 
     getMessages(message: tMessage) {
-        return requests.getRequest<tMessage>(`${app.api}/messages`)
+        return requests.getRequest<tMessage>(`/messages`)
     }
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './index.css'
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {Alert} from './common/components/Alert/Alert'
@@ -6,33 +6,33 @@ import {observer} from "mobx-react-lite";
 import {Route, Routes} from "react-router-dom";
 import {Portfolio} from "./pages/portfolio/portfolio";
 import {Login} from "./pages/auth/Login/Login";
-import {AppController} from "./app/app.controller";
 import {AppContext} from "./app/app.context";
+import {app} from "./app/constants";
 
 export const App = observer(() => {
-    const [appController] = useState(() => new AppController())
 
-    if (!appController.isAppReady) return null
+    if (!app.isAppReady) return null
+    console.log('app is ready')
     return (
-        <AppContext.Provider value={appController}>
+        <AppContext.Provider value={app}>
             <div>
                 <Routes>
                     <Route path={'/auth'} element={<Login/>}/>
                     <Route path={'/*'} element={<Portfolio/>}/>
                 </Routes>
                 {
-                    appController.windowContent &&
+                    app.windowContent &&
                     <WindowWrapper>
                         {
-                            appController.windowContent
+                            app.windowContent
                         }
                     </WindowWrapper>
                 }
                 {
-                    appController.alertMessage &&
+                    app.alertMessage &&
                     <Alert>
                         {
-                            appController.alertMessage
+                            app.alertMessage
                         }
                     </Alert>
                 }

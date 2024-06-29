@@ -1,10 +1,33 @@
 import React from "react";
-import {app, sections} from "./constants";
-import {makeAutoObservable} from "mobx";
+import {action, makeAutoObservable, makeObservable} from "mobx";
 import {commonServerAPI} from "../common/api/commonServerAPI";
 import {loginAPI} from "../common/api/loginAPI";
+import {Dictionary} from "./dictionary/dictionary";
+
+export class Lang {
+    langs = ['ru', 'en'] as const
+    currentLang: typeof this.langs[number] = 'ru'
+
+    constructor() {
+        makeObservable(this, {
+            currentLang: true,
+            switch: action,
+        })
+    }
+
+    switch(lang: typeof this.currentLang) {
+        this.currentLang = lang
+    }
+}
 
 export class AppController {
+    lang = new Lang()
+    dictionary = new Dictionary()
+    server = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://railwayapp-production-3c99.up.railway.app'
+    get api() {
+        return `${this.server}/api/v1`
+    }
+
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
     isServerAvailable = false
     resizeObserver: ResizeObserver | undefined
@@ -37,6 +60,10 @@ export class AppController {
         this.isUserAuthenticated = value
     }
 
+    get d() {
+        return this.dictionary[this.lang.currentLang]
+    }
+
     constructor() {
         this.init()
 
@@ -55,7 +82,7 @@ export class AppController {
         await this.kickTheServer()
         this.isServerAvailable && this.authenticate()
 
-        document.title = app.d.title
+        document.title = this.d.title
 
         this.resizeObserver = new ResizeObserver(this.onResize)
         this.resizeObserver.observe(document.body)
