@@ -40,12 +40,12 @@ export class HeaderController {
         let currentDistance: number
         let element: HTMLElement | null
         let nearestElement: string | undefined = undefined
-        for (let section of app.d.sections) {
-            element = document.getElementById(section)
+        for (let section of Object.entries(app.d.sections)) {
+            element = document.getElementById(section as any)
             if (!element) continue
             currentDistance = Math.abs(element.getBoundingClientRect().top)
             if (currentDistance < topDistance) {
-                nearestElement = section
+                nearestElement = section as any
                 topDistance = currentDistance
             }
         }

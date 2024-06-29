@@ -6,17 +6,17 @@ import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
-import {sections} from "../../../../../app/constants";
+import {app, sections} from "../../../../../app/constants";
 import {setClasses} from "../../../../../common/utils/setClasses";
 import {routes} from "../../../../../common/constants/routes";
 import {useAppContext} from "../../../../../app/app.context";
+import {observer} from "mobx-react-lite";
 
 type INava = {
     currentAnchor: string | undefined
 }
-export const Nava: React.FC<INava> = ({currentAnchor}) => {
+export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
-    const appController = useAppContext()
     const goto = useNavigate()
 
     const scrollTo = useCallback((elementId: string) => {
@@ -26,7 +26,7 @@ export const Nava: React.FC<INava> = ({currentAnchor}) => {
         })
     }, [])
 
-    const appWidth = appController.appDomRect.width
+    const appWidth = app.appDomRect.width
     return (
         <div className={styles.nava}>
             {/* Main */}
@@ -37,7 +37,7 @@ export const Nava: React.FC<INava> = ({currentAnchor}) => {
                     {
                         appWidth < 1000 ?
                             <BsFileEarmarkPerson/> :
-                            sections.main
+                            app.d.sections.main
                     }
                 </NavLink>
                 <div className={setClasses(styles.underMenu, currentAnchor === sections.main && styles.underActive)}/>
@@ -49,7 +49,7 @@ export const Nava: React.FC<INava> = ({currentAnchor}) => {
                          to={`#${sections.skills}`}>
                     {
                         appWidth < 1000 ?
-                            <GiSkills/> : sections.skills
+                            <GiSkills/> : app.d.sections.skills
                     }
                 </NavLink>
                 <div
@@ -62,7 +62,7 @@ export const Nava: React.FC<INava> = ({currentAnchor}) => {
                          to={`#${sections.projects}`}>
                     {
                         appWidth < 1000 ?
-                            <AiOutlineFundProjectionScreen/> : sections.projects
+                            <AiOutlineFundProjectionScreen/> : app.d.sections.projects
                     }
                 </NavLink>
                 <div
@@ -76,7 +76,7 @@ export const Nava: React.FC<INava> = ({currentAnchor}) => {
                     {
                         appWidth < 1000 ?
                             <AiOutlineContacts/> :
-                            sections.contacts
+                            app.d.sections.contacts
                     }
                 </NavLink>
                 <div
@@ -92,4 +92,4 @@ export const Nava: React.FC<INava> = ({currentAnchor}) => {
             </div>
         </div>
     )
-}
+})

@@ -24,11 +24,16 @@ $side: 70px;
 
 .field {
   position: relative;
+  width: 120px;
+  height: 120px;
+  font-family: var(--font-secondary);
+  @include flexCenter(center);
 
   .lang {
     width: $side;
     height: $side;
     @include flexCenter(center);
+    transition: 500ms;
   }
 
   .control {
@@ -63,8 +68,7 @@ $side: 70px;
 
   .button {
     cursor: pointer;
-    transform: scale(1);
-    transition: 1s;
+    transition: 500ms;
   }
 
 
@@ -72,15 +76,22 @@ $side: 70px;
     position: absolute;
     width: 0;
     height: 0;
-    top: 50%;
-    left: 50%;
   }
 
   .variant {
     position: absolute;
-    transform: translate(-50%, -50%);
+    cursor: pointer;
     width: max-content;
     height: max-content;
+    transition: 500ms;
+  }
+
+  .variant:hover {
+    text-shadow: red 0 0 10px;
+  }
+
+  .chosenVariant {
+    color: var(--color-theme);
   }
 }
 
@@ -88,12 +99,6 @@ $side: 70px;
   .button {
     transform: scale(1.2);
     box-shadow: var(--color-theme) 0 0 10px 2px;
-
-    .risk {
-      background: var(--color-theme);
-      box-shadow: #590000 0 0 10px 2px;
-      outline: 1px solid red;
-    }
   }
 }
 

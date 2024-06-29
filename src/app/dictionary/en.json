@@ -7,10 +7,10 @@
     "TypeScript",
     "JavaScript"
   ],
-  "sections": [
-    "main",
-    "skills",
-    "contacts",
-    "projects"
-  ]
+  "sections": {
+    "main": "main",
+    "skills": "skills",
+    "contacts": "contacts",
+    "projects": "projects"
+  }
 }
