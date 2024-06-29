@@ -12,6 +12,7 @@ import {IPoint2} from "../../../../lib/math/figures";
 import {Operator} from "../../../../lib/math/operator";
 import {app} from "../../../../app/constants";
 import {action, makeObservable} from "mobx";
+import {Color} from "../../../../lib/math/colors/color";
 
 export const Header: React.FC = observer(() => {
         const [controller] = useState(() => new HeaderController())
@@ -41,7 +42,7 @@ type IVariant = {
     isChosen: boolean,
     onChoose(): void,
 }
-export const Variant: React.FC<IVariant> = React.memo(({
+export const Variant: React.FC<IVariant> = observer(({
                                                            center,
                                                            text,
                                                            isChosen,
@@ -97,12 +98,13 @@ export class LanguageChoiceController {
 
 export const ThemeChoice: React.FC = observer(() => {
     const [controller] = useState(() => new LanguageChoiceController())
+    const angle = app.theme.colorAngle || 0
     return (
         <div className={styles.field}
              tabIndex={1}
              onFocus={() => controller.setIsActive(true)}
              onBlur={() => controller.setIsActive(false)}>
-            <Choiser angle={(controller.chosenIndex + 1) * controller.angleStep}/>
+            <Choiser angle={angle}/>
             <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}
                  style={{
                      width: 70,
@@ -112,20 +114,39 @@ export const ThemeChoice: React.FC = observer(() => {
                  }}
             >
                 <canvas width={70}
+                        onClick={(e) => {
+                            const canvas = e.currentTarget
+                            const ctx = canvas.getContext('2d')!
+                            const rect = canvas.getBoundingClientRect()
+                            const x = e.clientX - rect.left
+                            const y = e.clientY - rect.top
+                            const data = ctx.getImageData(x, y, 1, 1)
+                            app.theme.switchColor(new Color(
+                                data.data[0],
+                                data.data[1],
+                                data.data[2]
+                            ))
+                            console.log('ok')
+                        }}
                         ref={(node) => {
                             if (!node) return
-                            const ctx = node.getContext('2d')
+                            const ctx = node.getContext('2d', {
+                                willReadFrequently: true,
+                                alpha: false,
+                            })
                             if (!ctx) return
 
                             const gradient = ctx.createConicGradient(0, 35, 35)
 
-                            gradient.addColorStop(0, 'red')
-                            gradient.addColorStop(.33, 'green')
-                            gradient.addColorStop(.66, 'blue')
-                            gradient.addColorStop(1, 'red')
+                            for (let color of app.theme.colors) {
+                                gradient.addColorStop(color.angle, color.color.toCSS())
+                            }
+                            gradient.addColorStop(1, app.theme.colors[0].color.toCSS())
 
-                            ctx.fillStyle  = gradient
+                            ctx.fillStyle = gradient
                             ctx.fillRect(0, 0, 70, 70)
+
+
                         }}
                         height={70} style={{
                     position: 'absolute',
@@ -180,8 +201,9 @@ type IChoiser = {
     angle: number,
 }
 export const Choiser: React.FC<IChoiser> = React.memo(({
-                                                           angle,
-                                                       }) => {
+                                                         angle,
+                                                     }) => {
+
     return (
         <div
             className={styles.lang}

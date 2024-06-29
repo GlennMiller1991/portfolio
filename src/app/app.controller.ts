@@ -3,6 +3,35 @@ import {action, makeAutoObservable, makeObservable} from "mobx";
 import {commonServerAPI} from "../common/api/commonServerAPI";
 import {loginAPI} from "../common/api/loginAPI";
 import {Dictionary} from "./dictionary/dictionary";
+import {ConicGradient} from "../lib/math/colors/conic.gradient";
+import {Color} from "../lib/math/colors/color";
+
+export class Theme extends ConicGradient {
+    color: Color
+
+    constructor() {
+        super(
+            {angle: 0, color: new Color(255, 0, 0)},
+            {angle: 0.33, color: new Color(0, 255, 0)},
+            {angle: 0.66, color: new Color(0, 0, 255)},
+        );
+
+        this.color = this.colors[0].color
+
+        makeObservable(this, {
+            color: true,
+            switchColor: action,
+        })
+    }
+
+    switchColor(color: typeof this.color) {
+        this.color = color
+    }
+
+    get colorAngle() {
+        return super.getAngleByColor(this.color)
+    }
+}
 
 export class Lang {
     langs = ['ru', 'en'] as const
@@ -22,8 +51,11 @@ export class Lang {
 
 export class AppController {
     lang = new Lang()
+    theme = new Theme()
+
     dictionary = new Dictionary()
     server = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://railwayapp-production-3c99.up.railway.app'
+
     get api() {
         return `${this.server}/api/v1`
     }
