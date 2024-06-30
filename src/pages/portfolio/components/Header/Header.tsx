@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {MouseEventHandler, useEffect, useState} from "react";
 import styles from './Header.module.scss'
 import sharedStyles from '../../../../common/styles/common.module.scss'
 import {Nava} from "./Nava/Nava";
@@ -43,11 +43,11 @@ type IVariant = {
     onChoose(): void,
 }
 export const Variant: React.FC<IVariant> = observer(({
-                                                           center,
-                                                           text,
-                                                           isChosen,
-                                                           onChoose,
-                                                       }) => {
+                                                         center,
+                                                         text,
+                                                         isChosen,
+                                                         onChoose,
+                                                     }) => {
 
     return (
         <div className={setClasses(sharedStyles.transformToCenter, styles.variant, isChosen && styles.chosenVariant)}
@@ -68,16 +68,8 @@ export class LanguageChoiceController {
     circle = new Circle([0, 0], 45)
     line = new StraightLine(this.circle.center, [this.circle.r, this.circle.center[0]])
 
-    isActive: boolean = false
-
-    setIsActive(value: typeof this.isActive) {
-        this.isActive = value
-    }
-
     switchVariant(variant: typeof app.lang.langs[number]) {
-        if (this.isActive) {
-            app.lang.switch(variant)
-        }
+        app.lang.switch(variant)
     }
 
     get chosenIndex() {
@@ -88,66 +80,81 @@ export class LanguageChoiceController {
         return 360 / app.lang.langs.length
     }
 
-    constructor() {
-        makeObservable(this, {
-            isActive: true,
-            setIsActive: action
-        })
+}
+
+
+export class ThemeChoiceController {
+    private canvas!: HTMLCanvasElement
+    private ctx!: CanvasRenderingContext2D
+
+    get angle() {
+        return app.theme.colorAngle || 0
     }
+
+    init = (canvas: HTMLCanvasElement | null) => {
+        if (!canvas) return
+        if (this.canvas) return
+
+        const ctx = canvas.getContext('2d', {
+            willReadFrequently: true,
+            alpha: false,
+        })
+        if (!ctx) return
+        this.canvas = canvas
+        this.ctx = ctx
+
+        requestAnimationFrame(this.draw)
+        this.draw()
+    }
+
+    onPick: MouseEventHandler<HTMLCanvasElement> = (e: React.MouseEvent<HTMLCanvasElement>) => {
+        if (!this.ctx) return
+        const canvas = this.canvas
+        const ctx = this.ctx
+        const rect = canvas.getBoundingClientRect()
+        const x = e.clientX - rect.left
+        const y = e.clientY - rect.top
+        const data = ctx.getImageData(x, y, 1, 1)
+        app.theme.switchColor(new Color(
+            data.data[0],
+            data.data[1],
+            data.data[2]
+        ))
+        console.log(app.theme.colorAngle)
+    }
+
+    draw = () => {
+        if (!this.ctx) return
+        const gradient = this.ctx.createConicGradient(0, 35, 35)
+
+        for (let color of app.theme.colors) {
+            gradient.addColorStop(color.angle, color.color.toCSS())
+        }
+        gradient.addColorStop(1, app.theme.colors[0].color.toCSS())
+
+        this.ctx.fillStyle = gradient
+        this.ctx.fillRect(0, 0, 70, 70)
+    }
+
 }
 
 export const ThemeChoice: React.FC = observer(() => {
-    const [controller] = useState(() => new LanguageChoiceController())
-    const angle = app.theme.colorAngle || 0
+    const [controller] = useState(() => new ThemeChoiceController())
+    console.log(controller.angle)
     return (
         <div className={styles.field}
-             tabIndex={1}
-             onFocus={() => controller.setIsActive(true)}
-             onBlur={() => controller.setIsActive(false)}>
-            <Choiser angle={angle}/>
+             tabIndex={1}>
+            <Choiser angle={controller.angle}/>
             <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}
                  style={{
                      width: 70,
                      height: 70,
-                     zIndex: -1,
                      borderRadius: '50%'
                  }}
             >
                 <canvas width={70}
-                        onClick={(e) => {
-                            const canvas = e.currentTarget
-                            const ctx = canvas.getContext('2d')!
-                            const rect = canvas.getBoundingClientRect()
-                            const x = e.clientX - rect.left
-                            const y = e.clientY - rect.top
-                            const data = ctx.getImageData(x, y, 1, 1)
-                            app.theme.switchColor(new Color(
-                                data.data[0],
-                                data.data[1],
-                                data.data[2]
-                            ))
-                            console.log('ok')
-                        }}
-                        ref={(node) => {
-                            if (!node) return
-                            const ctx = node.getContext('2d', {
-                                willReadFrequently: true,
-                                alpha: false,
-                            })
-                            if (!ctx) return
-
-                            const gradient = ctx.createConicGradient(0, 35, 35)
-
-                            for (let color of app.theme.colors) {
-                                gradient.addColorStop(color.angle, color.color.toCSS())
-                            }
-                            gradient.addColorStop(1, app.theme.colors[0].color.toCSS())
-
-                            ctx.fillStyle = gradient
-                            ctx.fillRect(0, 0, 70, 70)
-
-
-                        }}
+                        onClick={controller.onPick as MouseEventHandler}
+                        ref={controller.init}
                         height={70} style={{
                     position: 'absolute',
                     borderRadius: '50%',
@@ -176,9 +183,7 @@ export const LanguageChoice: React.FC = observer(() => {
 
     return (
         <div className={styles.field}
-             tabIndex={1}
-             onFocus={() => controller.setIsActive(true)}
-             onBlur={() => controller.setIsActive(false)}>
+             tabIndex={1}>
             <Choiser angle={(controller.chosenIndex + 1) * controller.angleStep}/>
             <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}>
                 {
@@ -201,8 +206,8 @@ type IChoiser = {
     angle: number,
 }
 export const Choiser: React.FC<IChoiser> = React.memo(({
-                                                         angle,
-                                                     }) => {
+                                                           angle,
+                                                       }) => {
 
     return (
         <div

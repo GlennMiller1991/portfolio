@@ -30,6 +30,8 @@ $side: 70px;
   @include flexCenter(center);
 
   .lang {
+    z-index: 1;
+    pointer-events: none;
     width: $side;
     height: $side;
     @include flexCenter(center);
