@@ -6,8 +6,10 @@ export class StraightLine {
 
     }
 
-    transform(matrix: IMatrix2d) {
-        this.p1 = Matrix2d.apply(matrix, this.p1)
-        this.p2 = Matrix2d.apply(matrix, this.p2)
+    transform(matrix: IMatrix2d, transformThis = false) {
+        if (transformThis) {
+            return this
+        }
+        return new StraightLine(Matrix2d.apply(matrix, this.p1), Matrix2d.apply(matrix, this.p2))
     }
 }

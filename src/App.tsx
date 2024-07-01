@@ -15,15 +15,6 @@ export const App = observer(() => {
     return (
         <AppContext.Provider value={app}>
             <div>
-                <div style={{
-                    position: "fixed",
-                    bottom: 0,
-                    left: 0,
-                    width: 50,
-                    height: 50,
-                    zIndex: 9999,
-                    background: app.theme.color.toCSS()
-                }}/>
                 <Routes>
                     <Route path={'/auth'} element={<Login/>}/>
                     <Route path={'/*'} element={<Portfolio/>}/>
