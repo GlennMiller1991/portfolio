@@ -12,7 +12,8 @@ import {IPoint2} from "../../../../lib/math/figures";
 import {Operator} from "../../../../lib/math/operator";
 import {app} from "../../../../app/constants";
 import {Color} from "../../../../lib/math/colors/color";
-import {Angle, AngleUnits} from "../../../../lib/math/angle";
+import {Angle, AngleUnits} from "../../../../lib/math/angle/angle";
+import {ConicGradient} from "../../../../lib/math/colors/conic.gradient";
 
 export const Header: React.FC = observer(() => {
         const [controller] = useState(() => new HeaderController())
@@ -110,17 +111,13 @@ export class ThemeChoiceController {
     onPick: MouseEventHandler<HTMLCanvasElement> = (e: React.MouseEvent<HTMLCanvasElement>) => {
         if (!this.ctx) return
         const canvas = this.canvas
-        const ctx = this.ctx
         const rect = canvas.getBoundingClientRect()
-        const x = e.clientX - rect.left
-        const y = e.clientY - rect.top
-        const data = ctx.getImageData(x, y, 1, 1)
-        app.theme.switchColor(new Color(
-            data.data[0],
-            data.data[1],
-            data.data[2]
-        ))
-        console.log(app.theme.colorAngle)
+        const center: IPoint2 = [rect.left + 35, rect.top + 35]
+        let angle = Angle.toTurn(Math.atan2(-center[1] + e.clientY, -center[0] + e.clientX), AngleUnits.Rad)
+        angle = Angle.toPositive(angle, AngleUnits.Turn)
+        angle = Angle.normalize(angle, AngleUnits.Turn)
+        const color = app.theme.getColorAtAngle(angle)
+        color && app.theme.switchColor(color)
     }
 
     draw = () => {
@@ -131,6 +128,7 @@ export class ThemeChoiceController {
             gradient.addColorStop(color.angle, color.color.toCSS())
         }
         gradient.addColorStop(1, app.theme.colors[0].color.toCSS())
+
 
         this.ctx.fillStyle = gradient
         this.ctx.fillRect(0, 0, 70, 70)
@@ -143,7 +141,7 @@ export const ThemeChoice: React.FC = observer(() => {
     return (
         <div className={styles.field}
              tabIndex={1}>
-            <Choiser angle={Angle.toDeg(controller.angle, AngleUnits.turn)!}/>
+            <Choiser angle={Angle.toDeg(controller.angle, AngleUnits.Turn)!}/>
             <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}
                  style={{
                      width: 70,
