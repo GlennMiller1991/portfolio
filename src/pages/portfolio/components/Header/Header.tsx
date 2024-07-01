@@ -11,8 +11,8 @@ import {StraightLine} from "../../../../lib/math/figures/straight-line";
 import {IPoint2} from "../../../../lib/math/figures";
 import {Operator} from "../../../../lib/math/operator";
 import {app} from "../../../../app/constants";
-import {action, makeObservable} from "mobx";
 import {Color} from "../../../../lib/math/colors/color";
+import {Angle, AngleUnits} from "../../../../lib/math/angle";
 
 export const Header: React.FC = observer(() => {
         const [controller] = useState(() => new HeaderController())
@@ -140,11 +140,10 @@ export class ThemeChoiceController {
 
 export const ThemeChoice: React.FC = observer(() => {
     const [controller] = useState(() => new ThemeChoiceController())
-    console.log(controller.angle)
     return (
         <div className={styles.field}
              tabIndex={1}>
-            <Choiser angle={controller.angle}/>
+            <Choiser angle={Angle.toDeg(controller.angle, AngleUnits.turn)!}/>
             <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}
                  style={{
                      width: 70,

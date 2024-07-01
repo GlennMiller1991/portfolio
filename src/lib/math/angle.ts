@@ -27,4 +27,15 @@ export class Angle {
                 return angle / (Math.PI * 2)
         }
     }
+
+    static toDeg(angle: number, unit: AngleUnits = AngleUnits.rad) {
+        switch(unit) {
+            case AngleUnits.deg:
+                return angle
+            case AngleUnits.turn:
+                return angle * 360
+            case AngleUnits.rad:
+                return undefined
+        }
+    }
 }

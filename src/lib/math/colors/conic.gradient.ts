@@ -5,6 +5,10 @@ export class ConicGradient {
 
     constructor(...colors: { angle: number, color: Color }[]) {
         this.colors = [...colors].sort((a, b) => a.angle - b.angle)
+        this.colors.push({
+            angle: 1,
+            color: this.colors[0].color
+        })
     }
 
     /**
@@ -43,15 +47,21 @@ export class ConicGradient {
             prev = this.colors[i - 1]
             if (color.red === next.color.red && color.green === next.color.green && color.blue === next.color.blue) return next.angle
 
+            let redDif = next.color.red - prev.color.red
+            let greenDif = next.color.green - prev.color.green
+            let blueDif = next.color.blue - prev.color.blue
+            let redDifColor = color.red - prev.color.red
+            let greenDifColor = color.green - prev.color.green
+            let blueDifColor = color.blue - prev.color.blue
+
             if (
-                Math.max(prev.color.red, color.red, next.color.red) !== color.red &&
-                Math.min(prev.color.red, color.red, next.color.red) !== color.red &&
-                Math.max(prev.color.green, color.green, next.color.green) !== color.green &&
-                Math.min(prev.color.green, color.green, next.color.green) !== color.green &&
-                Math.max(prev.color.blue, color.blue, next.color.blue) !== color.blue &&
-                Math.min(prev.color.blue, color.blue, next.color.blue) !== color.blue
+                ((redDifColor >= 0 && redDifColor <= redDif) || (redDifColor <= 0 && redDifColor >= redDif)) &&
+                ((greenDifColor >= 0 && greenDifColor <= greenDif) || (greenDifColor <= 0 && greenDifColor >= greenDif)) &&
+                ((blueDifColor >= 0 && blueDifColor <= blueDif) || (blueDifColor <= 0 && blueDifColor >= blueDif))
             ) {
-                const coef = (color.red - prev.color.red) / (next.color.red - prev.color.red)
+                const coef = ((color.red - prev.color.red) / (next.color.red - prev.color.red)) ||
+                    ((color.green - prev.color.green) / (next.color.green - prev.color.green)) ||
+                    ((color.blue - prev.color.blue) / (next.color.blue - prev.color.blue))
                 return (next.angle - prev.angle) * coef + prev.angle
             }
         }
