@@ -1,73 +1,67 @@
 @import 'templates.module';
 
 .container {
-    height: 100%;
-    width: 80%;
-    margin: 0 auto;
-    @include flexCenter(space-between);
-    flex-wrap: wrap;
+  height: 100%;
+  width: 80%;
+  margin: 0 auto;
+  @include flexCenter(space-between);
+  flex-wrap: wrap;
 }
 
 .upperThenHeader {
-    -webkit-text-stroke: 2px var(--color-theme);
-    font-size: 2em;
-    color: transparent;
-    display: block;
-    position: absolute;
-    opacity: .15;
-    top: -0.55em;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: -2;
-    white-space: nowrap;
-}
-
-.transformToCenter {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%)
+  -webkit-text-stroke: 2px var(--color-theme);
+  font-size: 2em;
+  color: transparent;
+  display: block;
+  position: absolute;
+  opacity: .15;
+  top: -0.55em;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: -2;
+  white-space: nowrap;
 }
 
 .title {
-    letter-spacing: 1em;
-    margin: 100px 0 40px;
-    position: relative;
-    font-size: 3em;
-    z-index: 0;
-    opacity: .8;
-    color: var(--color-light-primary);
-    font-family: var(--font-secondary);
-    font-weight: 400;
+  letter-spacing: 1em;
+  margin: 100px 0 40px;
+  position: relative;
+  font-size: 3em;
+  z-index: 0;
+  opacity: .8;
+  color: var(--color-light-primary);
+  font-family: var(--font-secondary);
+  font-weight: 400;
 }
 
 @media (max-width: 1250px) {
-    .upperThenHeader {
-        font-size: 1em;
-    }
+  .upperThenHeader {
+    font-size: 1em;
+  }
 
-    .title {
-        letter-spacing: 0.8em;
-    }
+  .title {
+    letter-spacing: 0.8em;
+  }
 }
 
 @media (max-width: 940px) {
-    .upperThenHeader {
-        font-size: .5em;
-    }
-    .title {
-        letter-spacing: 0.5em;
-    }
+  .upperThenHeader {
+    font-size: .5em;
+  }
+  .title {
+    letter-spacing: 0.5em;
+  }
 }
 
 @media (max-width: 580px) {
-    .title {
-        letter-spacing: 0.2em;
-    }
+  .title {
+    letter-spacing: 0.2em;
+  }
 }
 
 @media (max-width: 420px) {
-    .title {
-        letter-spacing: 0.1em;
-        font-size: 2.5em;
-    }
+  .title {
+    letter-spacing: 0.1em;
+    font-size: 2.5em;
+  }
 }

@@ -1,73 +1,59 @@
 @import 'src/common/styles/templates.module';
 
 $side: 70px;
+$letterSpacing: 3px;
 
 .field {
-  position: relative;
   width: 120px;
   height: 120px;
   font-family: var(--font-secondary);
-  @include flexCenter(center);
+
+  &:focus {
+    .button {
+      transform: scale(1.1);
+      box-shadow: var(--color-theme) 0 0 10px 2px;
+    }
+  }
 
   .choicer {
     z-index: 1;
-    pointer-events: none;
     width: $side;
     height: $side;
-    @include flexCenter(center);
-    transition: 500ms;
+  }
+
+  .choicer * {
+    border-radius: 50%;
   }
 
   .control {
     width: calc($side / 2 + 1px);
     height: calc($side / 2 + 1px);
     background: radial-gradient(#d5d4d4, #ece9e9, #070707);
-    border-radius: 50%;
     outline: 3px solid #343333;
-    position: relative;
-    @include flexCenter(center);
   }
 
   .controlBorder {
     width: calc($side / 2 + $side / 10);
     height: calc($side / 2 + $side / 10);
-    border-radius: 50%;
     background: radial-gradient(#181717, #797676, #070707);
-    @include flexCenter(center);
     outline: 1px solid #343333;
   }
 
   .risk {
     width: 6px;
     height: 6px;
-    position: relative;
     right: -30%;
-    border-radius: 50%;
     background: radial-gradient(white, white, black);
     box-shadow: black 0 0 3px 1px;
-    transition: 1s;
-  }
-
-  .button {
-    cursor: pointer;
-    transition: 500ms;
-  }
-
-
-  .variants {
-    position: absolute;
-    width: 0;
-    height: 0;
   }
 
   .variant {
-    position: absolute;
-    cursor: pointer;
-    width: max-content;
-    height: max-content;
-    transition: 500ms;
+    background: var(--color-dark-primary);
+    border-radius: 0;
+    @include flexCenter;
+    letter-spacing: $letterSpacing;
+    padding: 3px;
   }
-
   .variant:hover {
     text-shadow: red 0 0 10px;
   }
@@ -77,9 +63,21 @@ $side: 70px;
   }
 }
 
-.field:focus {
-  .button {
-    transform: scale(1.1);
-    box-shadow: var(--color-theme) 0 0 10px 2px;
+.canvasCircle {
+  background: var(--color-dark-primary);
+}
+
+.choiceCaption {
+  @include flexCenter(center, flex-start);
+  text-transform: capitalize;
+  font: var(--font-primary);
+  outline: 2px solid gray;
+  width: calc($side * 1.25);
+  height: calc($side * 1.25);
+  span {
+    transform: translateY(-60%);
+    letter-spacing: $letterSpacing;
+    padding: 5px;
+    background-color: var(--color-dark-primary);
   }
 }

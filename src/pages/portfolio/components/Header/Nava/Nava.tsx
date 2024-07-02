@@ -3,14 +3,14 @@ import styles from './Nava.module.scss'
 import {NavLink, useNavigate} from 'react-router-dom';
 
 import {BsFileEarmarkPerson} from "react-icons/bs";
-import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
+import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
 import {app, sections} from "../../../../../app/constants";
 import {setClasses} from "../../../../../common/utils/setClasses";
 import {routes} from "../../../../../common/constants/routes";
-import {useAppContext} from "../../../../../app/app.context";
 import {observer} from "mobx-react-lite";
+import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
 
 type INava = {
     currentAnchor: string | undefined
@@ -86,10 +86,28 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
             <div className={styles.linkContainer} onClick={() => goto(routes.auth)}>
                 <div className={styles.link}>
                     {
-                        appWidth < 1000 ? <FiLogIn/> : sections.login
+                        appWidth < 1000 ? <FiLogIn/> : app.d.pages.login
                     }
                 </div>
             </div>
+
+            {/* Settings */}
+            {
+                app.appDomRect.width <= 1000 &&
+                <div className={styles.linkContainer}>
+                    <NavLink className={styles.link}
+                             onClick={() => app.setWindowContent(<AppSettings/>)}
+                             to={''}>
+                        {
+                            appWidth < 1000 ?
+                                <AiFillSetting/> :
+                                app.d.sections.settings
+                        }
+                    </NavLink>
+                    <div
+                        className={setClasses(styles.underMenu, currentAnchor === sections.contacts && styles.underActive)}/>
+                </div>
+            }
         </div>
     )
 })

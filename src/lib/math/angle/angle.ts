@@ -71,5 +71,17 @@ export class Angle {
         }
     }
 
+    // region representation
+    static toCSS(angle: number, unit: AngleUnits) {
+        return `rotate(${angle}${Angle.angleUnitCorrespondence[unit]})`
+    }
+
+    static angleUnitCorrespondence: Record<AngleUnits, string> = {
+        [AngleUnits.Rad]: 'rad',
+        [AngleUnits.Turn]: 'turn',
+        [AngleUnits.Deg]: 'deg',
+    }
+    // endregion representation
+
 }
 

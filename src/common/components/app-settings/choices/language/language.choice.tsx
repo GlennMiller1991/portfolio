@@ -1,23 +1,31 @@
 import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
-import styles from '../../settings.module.scss';
 import {setClasses} from "../../../../utils/setClasses";
-import sharedStyles from "../../../../styles/common.module.scss";
 import {app} from "../../../../../app/constants";
 import {Operator} from "../../../../../lib/math/operator";
-import {Choicer} from "../../shared/choicer";
+import {Caption, Choicer} from "../../shared/choicer";
 import {LanguageChoiceController} from "./language-choice.controller";
 import {Variant} from "../../shared/variant";
+import {AngleUnits} from "../../../../../lib/math/angle/angle";
 
 export const LanguageChoice: React.FC = observer(() => {
 
     const [controller] = useState(() => new LanguageChoiceController())
 
     return (
-        <div className={styles.field}
-             tabIndex={1}>
-            <Choicer angle={controller.chosenIndex * controller.angleStep}/>
-            <div className={setClasses(styles.variants, sharedStyles.transformToCenter)}>
+        <>
+            <Choicer angle={controller.chosenIndex * controller.angleStep}
+                     unit={AngleUnits.Deg}/>
+            <div className={setClasses(
+                'transformToCenter',
+                'abs',
+                'origin',
+            )}>
+                <Caption>
+                    {
+                        app.d.settings.language
+                    }
+                </Caption>
                 {
                     app.lang.langs.map((variant, i) => {
                         let line = controller.line.transform(Operator.rotateIdentity(i && controller.angleStep))
@@ -30,6 +38,6 @@ export const LanguageChoice: React.FC = observer(() => {
                     })
                 }
             </div>
-        </div>
+        </>
     )
 })

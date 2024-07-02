@@ -1,5 +1,16 @@
 {
   "title": "React Developer",
+  "pages": {
+    "main": "main",
+    "login": "login"
+  },
+  "sections": {
+    "main": "main",
+    "skills": "skills",
+    "contacts": "contacts",
+    "projects": "projects",
+    "settings": "settings"
+  },
   "typedString": [
     "Frontend",
     "React",
@@ -7,10 +18,8 @@
     "TypeScript",
     "JavaScript"
   ],
-  "sections": {
-    "main": "main",
-    "skills": "skills",
-    "contacts": "contacts",
-    "projects": "projects"
+  "settings": {
+    "language": "language",
+    "theme": "theme"
   }
 }

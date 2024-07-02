@@ -1,9 +1,9 @@
 .nava {
-  max-width: 100%;
   display: flex;
+  flex-wrap: nowrap;
   column-gap: 2%;
   justify-content: space-between;
-  margin-right: 50px;
+  margin-right: 50px ;
   transition: .8s;
   @media (max-width: 1140px) {
     width: 100%;
@@ -13,6 +13,8 @@
   text-transform: capitalize;
 
   .linkContainer {
+    height: max-content;
+    max-height: max-content;
     .link {
       cursor: pointer;
       font-weight: 400;

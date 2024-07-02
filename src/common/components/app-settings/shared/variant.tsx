@@ -19,7 +19,14 @@ export const Variant: React.FC<IVariant> = observer(({
                                                      }) => {
 
     return (
-        <div className={setClasses(sharedStyles.transformToCenter, styles.variant, isChosen && styles.chosenVariant)}
+        <div className={setClasses(
+            'transformToCenter',
+            'abs',
+            'pointer',
+            'transition',
+            'maxContent',
+            styles.variant,
+            isChosen && styles.chosenVariant)}
              onClick={onChoose}
              style={{
                  left: center[0],
