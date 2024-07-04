@@ -5,11 +5,13 @@ import {setClasses} from "../../../../utils/setClasses";
 import {Caption, Choicer} from "../../shared/choicer";
 import {ThemeChoiceController} from "./theme-choice.controller";
 import styles from './../../settings.module.scss'
-import {app} from "../../../../../app/constants";
+import {app, s} from "../../../../../app/constants";
 
 export const ThemeChoice: React.FC = observer(() => {
     const [controller] = useState(() => new ThemeChoiceController())
     const size = 70
+
+    const gradient = app.theme.toCSS()
     return (
         <>
             <Choicer angle={controller.angle} unit={AngleUnits.Turn}/>
@@ -18,12 +20,21 @@ export const ThemeChoice: React.FC = observer(() => {
                     app.d.settings.theme
                 }
             </Caption>
-            <div className={setClasses(
-                'abs',
-                'origin',
-                'transformToCenter',
-                'fullBordered',
-            )}>
+            <div className={setClasses(s.abs, s.origin, s.transformToCenter, s.fullBordered)}>
+                <div
+                    onClick={controller.onPick as MouseEventHandler}
+                    className={setClasses(
+                        s.abs,
+                        s.fullBordered,
+                        s.transformToCenter,
+                    )}
+                    style={{
+                        width: size,
+                        height: size,
+                        background: gradient,
+                    }}>
+
+                </div>
                 <canvas width={size}
                         onClick={controller.onPick as MouseEventHandler}
                         ref={controller.init}

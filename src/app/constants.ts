@@ -15,6 +15,9 @@ import {
     SiStylelint
 } from "react-icons/si";
 import {AppController} from "./app.controller";
+import styles from './../index.module.scss'
+
+export const s = styles
 
 export const app = new AppController()
 

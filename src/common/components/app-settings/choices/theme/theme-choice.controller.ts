@@ -27,11 +27,12 @@ export class ThemeChoiceController {
         this.draw()
     }
 
-    onPick: MouseEventHandler<HTMLCanvasElement> = (e: React.MouseEvent<HTMLCanvasElement>) => {
+    onPick = (e: React.MouseEvent<HTMLDivElement>) => {
         if (!this.ctx) return
         const canvas = this.canvas
         const rect = canvas.getBoundingClientRect()
         const center: IPoint2 = [rect.left + 35, rect.top + 35]
+        console.log(-center[1] + e.clientY, -center[0] + e.clientX)
         let angle = Angle.toTurn(Math.atan2(-center[1] + e.clientY, -center[0] + e.clientX), AngleUnits.Rad)
         angle = Angle.toPositive(angle, AngleUnits.Turn)
         angle = Angle.normalize(angle, AngleUnits.Turn)
@@ -41,16 +42,9 @@ export class ThemeChoiceController {
 
     draw = () => {
         if (!this.ctx) return
-        const gradient = this.ctx.createConicGradient(0, 35, 35)
-
-        for (let color of app.theme.colors) {
-            gradient.addColorStop(color.angle, color.color.toCSS())
-        }
-        gradient.addColorStop(1, app.theme.colors[0].color.toCSS())
-
-
-        this.ctx.fillStyle = gradient
+        this.ctx.fillStyle = app.theme.toCanvas(this.ctx, [35, 35])
         this.ctx.fillRect(0, 0, 70, 70)
+        console.log(app.theme.toCSS())
     }
 
 }

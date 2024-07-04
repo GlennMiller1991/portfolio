@@ -1,4 +1,6 @@
 import {Color} from "./color";
+import {app} from "../../../app/constants";
+import {IPoint2} from "../figures";
 
 export class ConicGradient {
     colors: { angle: number, color: Color }[]
@@ -66,6 +68,33 @@ export class ConicGradient {
             }
         }
         return undefined
+    }
+
+    /**
+     * Для использования метода, углы  должны быть в Turn единицах измерения
+     */
+    toCanvas(ctx: CanvasRenderingContext2D, center: IPoint2) {
+        const gradient = ctx.createConicGradient(0, ...center)
+        for (let color of this.colors) {
+            gradient.addColorStop(color.angle, color.color.toCSS())
+        }
+
+        return gradient
+    }
+
+    /**
+     * Для использования метода, углы  должны быть в Turn единицах измерения
+     */
+    toCSS() {
+        let s = ''
+
+        for (let color of this.colors) {
+            if (s) s += ','
+            s += `rgb(${color.color.red},${color.color.green},${color.color.blue})`
+        }
+
+        s = `conic-gradient(in srgb from 0.25turn at 50% 50%, ${s})`
+        return s
     }
 
 }
