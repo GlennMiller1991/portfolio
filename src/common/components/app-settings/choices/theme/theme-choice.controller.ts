@@ -18,7 +18,7 @@ export class ThemeChoiceController {
         angle = Angle.toPositive(angle, AngleUnits.Turn)
         angle = Angle.normalize(angle, AngleUnits.Turn)
         const color = app.theme.getColorAtAngle(angle)
-        color && app.theme.switchColor(color)
+        color && app.setTheme(color)
     }
 
 }

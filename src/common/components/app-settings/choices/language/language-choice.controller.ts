@@ -7,7 +7,7 @@ export class LanguageChoiceController {
     line = new StraightLine(this.circle.center, [this.circle.r, this.circle.center[0]])
 
     switchVariant(variant: typeof app.lang.langs[number]) {
-        app.lang.switch(variant)
+        app.setLanguage(variant)
     }
 
     get chosenIndex() {

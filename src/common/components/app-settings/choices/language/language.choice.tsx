@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
 import {setClasses} from "../../../../utils/setClasses";
-import {app} from "../../../../../app/constants";
+import {app, s} from "../../../../../app/constants";
 import {Operator} from "../../../../../lib/math/operator";
 import {Caption, Choicer} from "../../shared/choicer";
 import {LanguageChoiceController} from "./language-choice.controller";
@@ -16,16 +16,8 @@ export const LanguageChoice: React.FC = observer(() => {
         <>
             <Choicer angle={controller.chosenIndex * controller.angleStep}
                      unit={AngleUnits.Deg}/>
-            <div className={setClasses(
-                'transformToCenter',
-                'abs',
-                'origin',
-            )}>
-                <Caption>
-                    {
-                        app.d.settings.language
-                    }
-                </Caption>
+            <div className={setClasses(s.transformToCenter, s.abs, s.origin)}>
+                <Caption>{app.d.settings.language}</Caption>
                 {
                     app.lang.langs.map((variant, i) => {
                         let line = controller.line.transform(Operator.rotateIdentity(i && controller.angleStep))

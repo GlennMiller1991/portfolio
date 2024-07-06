@@ -22,7 +22,6 @@ export class Theme extends ConicGradient {
 
     switchColor(color: typeof this.color) {
         this.color = color
-        document.documentElement.style.setProperty('--color-theme', color.toCSS())
     }
 
     get colorAngle() {

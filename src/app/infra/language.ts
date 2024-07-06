@@ -1,17 +1,17 @@
 import {action, makeObservable} from "mobx";
 
-export class Language {
-    langs = ['ru', 'en'] as const
-    currentLang: typeof this.langs[number] = 'ru'
+export class Language<T extends string> {
+    currentLang: T
 
-    constructor() {
+    constructor(public langs: Array<T>, initial?: T) {
         makeObservable(this, {
             currentLang: true,
             switch: action,
         })
+        this.currentLang = initial || langs[0]
     }
 
-    switch(lang: typeof this.currentLang) {
+    switch(lang: T) {
         this.currentLang = lang
     }
 }

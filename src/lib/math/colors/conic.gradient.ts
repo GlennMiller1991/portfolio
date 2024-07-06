@@ -1,5 +1,4 @@
 import {Color} from "./color";
-import {app} from "../../../app/constants";
 import {IPoint2} from "../figures";
 
 export class ConicGradient {
@@ -70,6 +69,10 @@ export class ConicGradient {
             }
         }
         return undefined
+    }
+
+    isColorInRange(color: Color): boolean {
+        return Boolean(this.getAngleByColor(color))
     }
 
     /**
