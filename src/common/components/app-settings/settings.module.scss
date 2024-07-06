@@ -49,11 +49,13 @@ $letterSpacing: 3px;
 
   .variant {
     background: var(--color-dark-primary);
+    text-transform: uppercase;
+    height: 1rem;
     border-radius: 0;
     @include flexCenter;
     letter-spacing: $letterSpacing;
-    padding: 3px;
   }
+
   .variant:hover {
     text-shadow: red 0 0 10px;
   }
@@ -69,15 +71,15 @@ $letterSpacing: 3px;
 
 .choiceCaption {
   @include flexCenter(center, flex-start);
-  text-transform: capitalize;
+  text-transform: uppercase;
   font: var(--font-primary);
   outline: 2px solid gray;
   width: calc($side * 1.25);
   height: calc($side * 1.25);
+
   span {
     transform: translateY(-60%);
     letter-spacing: $letterSpacing;
-    padding: 5px;
     background-color: var(--color-dark-primary);
   }
 }

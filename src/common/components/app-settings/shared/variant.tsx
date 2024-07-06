@@ -1,9 +1,9 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
 import {setClasses} from "../../../utils/setClasses";
-import sharedStyles from "../../../styles/common.module.scss";
 import styles from "../settings.module.scss";
 import {IPoint2} from "../../../../lib/math/figures";
+import {s} from "../../../../app/constants";
 
 type IVariant = {
     center: IPoint2,
@@ -19,12 +19,12 @@ export const Variant: React.FC<IVariant> = observer(({
                                                      }) => {
 
     return (
-        <div className={setClasses(
-            'transformToCenter',
-            'abs',
-            'pointer',
-            'transition',
-            'maxContent',
+        <span className={setClasses(
+            s.transformToCenter,
+            s.abs,
+            s.pointer,
+            s.transition,
+            s.maxContent,
             styles.variant,
             isChosen && styles.chosenVariant)}
              onClick={onChoose}
@@ -35,6 +35,6 @@ export const Variant: React.FC<IVariant> = observer(({
             {
                 text
             }
-        </div>
+        </span>
     )
 })
