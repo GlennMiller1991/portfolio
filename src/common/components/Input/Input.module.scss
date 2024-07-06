@@ -51,12 +51,12 @@
 }
 
 .field:focus + .underField {
-  background-color: #f07f81;
+  background-color: var(--color-theme);
   width: 100%;
 }
 
 .field:focus + .underField + .text {
-  color: #f07f81;
+  color: var(--color-theme);
   position: absolute;
   top: -8px;
   left: 8px;
@@ -64,12 +64,12 @@
 }
 
 .focusedDiv {
-  background-color: #f07f81;
+  background-color: var(--color-theme);
   width: 100%;
 }
 
 .focusedText {
-  color: #f07f81;
+  color: var(--color-theme);
   position: absolute;
   top: -8px;
   left: 8px;
@@ -88,6 +88,6 @@
 }
 
 .textarea::-webkit-scrollbar-thumb {
-  background-color: #f07f81;
+  background-color: var(--color-theme);
   border-radius: 3px;
 }
