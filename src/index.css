@@ -27,7 +27,7 @@ body::-webkit-scrollbar {
 
 body::-webkit-scrollbar-thumb {
     border-radius: 2px;
-    background-color: #f07f81;
+    background-color: var(--color-theme);
 }
 
 .flex {
