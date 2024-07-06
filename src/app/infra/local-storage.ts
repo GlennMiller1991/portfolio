@@ -1,9 +1,3 @@
-type ITEst = {
-    key: number
-}
-
-type T = ITEst['key']
-
 export class LocalStorage<T extends Record<string, any> = {}> {
     isForbidden: boolean = false
 
