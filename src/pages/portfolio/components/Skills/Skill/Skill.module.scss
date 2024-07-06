@@ -21,6 +21,18 @@ $skillIconSize: 70px;
     width: 510px;
   }
 
+  @media screen and (max-width: 600px) {
+    width: 450px;
+  }
+
+  @media screen and (max-width: 500px) {
+    width: 350px;
+  }
+
+  @media screen and (max-width: 400px) {
+    width: 250px;
+  }
+
   .skillContainer {
     font-family: var(--font-primary);
     @include flexCenter(flex-start);
