@@ -6,11 +6,12 @@ import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {FiLogIn} from "react-icons/fi";
-import {app, sections} from "../../../../../app/constants";
+import {app} from "../../../../../app/constants";
 import {setClasses} from "../../../../../common/utils/setClasses";
 import {routes} from "../../../../../common/constants/routes";
 import {observer} from "mobx-react-lite";
 import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
+import dict from './../../../../../app/infra/dictionary/en.json'
 
 type INava = {
     currentAnchor: string | undefined
@@ -31,48 +32,48 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
         <div className={styles.nava}>
             {/* Main */}
             <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === sections.main && styles.active)}
-                         onClick={() => scrollTo(sections.main)}
-                         to={`#${sections.main}`}>
+                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.main && styles.active)}
+                         onClick={() => scrollTo(dict.sections.main)}
+                         to={`#${dict.sections.main}`}>
                     {
                         appWidth < 1000 ?
                             <BsFileEarmarkPerson/> :
                             app.d.sections.main
                     }
                 </NavLink>
-                <div className={setClasses(styles.underMenu, currentAnchor === sections.main && styles.underActive)}/>
+                <div className={setClasses(styles.underMenu, currentAnchor === dict.sections.main && styles.underActive)}/>
             </div>
             {/* Skills */}
             <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === sections.skills && styles.active)}
-                         onClick={() => scrollTo(sections.skills)}
-                         to={`#${sections.skills}`}>
+                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.skills && styles.active)}
+                         onClick={() => scrollTo(dict.sections.skills)}
+                         to={`#${dict.sections.skills}`}>
                     {
                         appWidth < 1000 ?
                             <GiSkills/> : app.d.sections.skills
                     }
                 </NavLink>
                 <div
-                    className={setClasses(styles.underMenu, currentAnchor === sections.skills && styles.underActive)}/>
+                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.skills && styles.underActive)}/>
             </div>
             {/* Projects */}
             <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === sections.projects && styles.active)}
-                         onClick={() => scrollTo(sections.projects)}
-                         to={`#${sections.projects}`}>
+                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.projects && styles.active)}
+                         onClick={() => scrollTo(dict.sections.projects)}
+                         to={`#${dict.sections.projects}`}>
                     {
                         appWidth < 1000 ?
                             <AiOutlineFundProjectionScreen/> : app.d.sections.projects
                     }
                 </NavLink>
                 <div
-                    className={setClasses(styles.underMenu, currentAnchor === sections.projects && styles.underActive)}/>
+                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.projects && styles.underActive)}/>
             </div>
             {/* Contacts */}
             <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === sections.contacts && styles.active)}
-                         onClick={() => scrollTo(sections.contacts)}
-                         to={`#${sections.contacts}`}>
+                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.contacts && styles.active)}
+                         onClick={() => scrollTo(dict.sections.contacts)}
+                         to={`#${dict.sections.contacts}`}>
                     {
                         appWidth < 1000 ?
                             <AiOutlineContacts/> :
@@ -80,7 +81,7 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
                     }
                 </NavLink>
                 <div
-                    className={setClasses(styles.underMenu, currentAnchor === sections.contacts && styles.underActive)}/>
+                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.contacts && styles.underActive)}/>
             </div>
             {/* Login */}
             <div className={styles.linkContainer} onClick={() => goto(routes.auth)}>
@@ -105,7 +106,7 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
                         }
                     </NavLink>
                     <div
-                        className={setClasses(styles.underMenu, currentAnchor === sections.contacts && styles.underActive)}/>
+                        className={setClasses(styles.underMenu, currentAnchor === dict.sections.contacts && styles.underActive)}/>
                 </div>
             }
         </div>

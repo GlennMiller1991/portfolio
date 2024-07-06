@@ -1,9 +1,9 @@
-import {app, sections} from "../../../../app/constants";
 import {action, makeObservable} from "mobx";
+import en from '../../../../../src/app/infra/dictionary/en.json'
 
 export class HeaderController {
     isUpBtnShown = false
-    nearestSection: keyof typeof sections | undefined = sections.main
+    nearestSection: typeof en.sections[keyof typeof en.sections] | undefined = en.sections.main
 
     setIsUpBtnShown(value: typeof this.isUpBtnShown) {
         this.isUpBtnShown = value
@@ -40,7 +40,7 @@ export class HeaderController {
         let currentDistance: number
         let element: HTMLElement | null
         let nearestElement: string | undefined = undefined
-        for (let section of Object.entries(app.d.sections)) {
+        for (let section of Object.values(en.sections)) {
             element = document.getElementById(section as any)
             if (!element) continue
             currentDistance = Math.abs(element.getBoundingClientRect().top)
@@ -49,7 +49,6 @@ export class HeaderController {
                 topDistance = currentDistance
             }
         }
-        console.log(nearestElement)
         this.setNearestSection(nearestElement as typeof this.nearestSection)
     }
 

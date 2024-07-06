@@ -99,11 +99,3 @@ export const skillsEntities = [
     }
 
 ]
-
-export const sections = {
-    main: 'main',
-    skills: 'skills',
-    contacts: 'contacts',
-    projects: 'projects',
-    login: 'login'
-} as const

@@ -2,15 +2,15 @@ import React from 'react';
 import styles from './Main.module.scss'
 import commonStyles from '../../../../common/styles/common.module.scss'
 import {TypedString} from './typed-string/typed-string';
-import {sections} from "../../../../app/constants";
 import {useAppContext} from "../../../../app/app.context";
+import en from './../../../../app/infra/dictionary/en.json'
 
 export const Main = React.memo(() => {
         const appController = useAppContext()
         const appWidth = appController.appDomRect.width
 
         return (
-            <div id={sections.main} className={styles.main}>
+            <div id={en.sections.main} className={styles.main}>
                 <div className={commonStyles.container + ' ' + styles.container}>
                     <div className={styles.greeting}>
                         <h2 className={styles.rest}>Hi There! I am</h2>

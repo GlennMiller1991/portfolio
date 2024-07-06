@@ -17,9 +17,7 @@ export class ThemeChoiceController {
         let angle = Angle.toTurn(Math.atan2(y, x), AngleUnits.Rad)
         angle = Angle.toPositive(angle, AngleUnits.Turn)
         angle = Angle.normalize(angle, AngleUnits.Turn)
-        console.log('angle', angle)
         const color = app.theme.getColorAtAngle(angle)
-        console.log('angleafter', color && app.theme.getAngleByColor(color))
         color && app.theme.switchColor(color)
     }
 

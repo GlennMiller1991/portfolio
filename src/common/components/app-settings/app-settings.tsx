@@ -14,8 +14,7 @@ export const AppSettings: React.FC<IAppSettings> = React.memo(({
              style={{
                  transformOrigin: 'left',
                  transform: `scale(${factor})`
-             }}
-        >
+             }}>
             <ChoicePlace>
                 <LanguageChoice/>
             </ChoicePlace>

@@ -8,7 +8,7 @@ import {useFieldState} from '../../../../common/customHooks/useFieldState'
 import {messageAPI} from '../../../../common/api/messageAPI'
 import {tObjectValidators, Validator} from '../../../../common/validators/Validator'
 import {emailRegexp} from '../../../../common/constants/regexps'
-import {sections} from "../../../../app/constants";
+import en from './../../../../app/infra/dictionary/en.json'
 
 type tLoginParamType = {
     email: string,
@@ -61,7 +61,7 @@ export const Contacts = React.memo(() => {
 
 
     return (
-        <div id={sections.contacts} className={styles.wrapper}>
+        <div id={en.sections.contacts} className={styles.wrapper}>
             <div className={`${commonStyles.container} ${styles.container}`}>
                 <h2 className={commonStyles.title}>
                     <span className={commonStyles.upperThenHeader}>GET IN TOUCH</span>

@@ -9,7 +9,7 @@ import testJob from './../../../../assets/pic/testJob.png'
 import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.png'
 import map from './../../../../assets/pic/map.png'
 import graph from './../../../../assets/pic/graph.jpg'
-import {sections} from "../../../../app/constants";
+import en from './../../../../app/infra/dictionary/en.json'
 
 export const Projects = React.memo(() => {
     const projectEntities = useMemo(() => {
@@ -73,7 +73,7 @@ export const Projects = React.memo(() => {
         ]
     }, [])
     return (
-        <div id={sections.projects} className={styles.projects}>
+        <div id={en.sections.projects} className={styles.projects}>
             <div className={`${commonStyles.container} ${styles.container}`}>
                 <h2 className={commonStyles.title}>
                     <span className={commonStyles.upperThenHeader}>PROJECTS</span>
