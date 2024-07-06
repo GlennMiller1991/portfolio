@@ -6,7 +6,7 @@ import {Operator} from "../../../../../lib/math/operator";
 import {Caption, Choicer} from "../../shared/choicer";
 import {LanguageChoiceController} from "./language-choice.controller";
 import {Variant} from "../../shared/variant";
-import {AngleUnits} from "../../../../../lib/math/angle/angle";
+import {AngleUnits} from "../../../../../lib/math/angle";
 
 export const LanguageChoice: React.FC = observer(() => {
 

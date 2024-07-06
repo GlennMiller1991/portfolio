@@ -1,4 +1,4 @@
-import {toPositive} from "./utils"
+import {toPositive} from "./utils";
 
 export enum AngleUnits {
     Deg = 0,
@@ -39,7 +39,7 @@ export class Angle {
             case AngleUnits.Turn:
                 return angle * 360
             case AngleUnits.Rad:
-                return angle / 180 / Math.PI
+                return angle * 180 / Math.PI
         }
     }
 

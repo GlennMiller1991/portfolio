@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "../settings.module.scss";
 import {setClasses} from "../../../utils/setClasses";
-import {Angle, AngleUnits} from "../../../../lib/math/angle/angle";
+import {Angle, AngleUnits} from "../../../../lib/math/angle";
 
 type IChoicer = {
     angle: number,

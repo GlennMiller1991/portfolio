@@ -1,6 +1,6 @@
 import React, {MouseEventHandler, useState} from "react";
 import {observer} from "mobx-react-lite";
-import {AngleUnits} from "../../../../../lib/math/angle/angle";
+import {AngleUnits} from "../../../../../lib/math/angle";
 import {setClasses} from "../../../../utils/setClasses";
 import {Caption, Choicer} from "../../shared/choicer";
 import {ThemeChoiceController} from "./theme-choice.controller";
