@@ -28,12 +28,12 @@ export class ThemeChoiceController {
     }
 
     onPick = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!this.ctx) return
-        const canvas = this.canvas
+        const canvas = e.currentTarget
         const rect = canvas.getBoundingClientRect()
-        const center: IPoint2 = [rect.left + 35, rect.top + 35]
-        console.log(-center[1] + e.clientY, -center[0] + e.clientX)
-        let angle = Angle.toTurn(Math.atan2(-center[1] + e.clientY, -center[0] + e.clientX), AngleUnits.Rad)
+        const center: IPoint2 = [rect.left + rect.width / 2, rect.top + rect.height / 2]
+        const x = e.clientX - center[0]
+        const y = e.clientY - center[1]
+        let angle = Angle.toTurn(Math.atan2(y, x), AngleUnits.Rad)
         angle = Angle.toPositive(angle, AngleUnits.Turn)
         angle = Angle.normalize(angle, AngleUnits.Turn)
         const color = app.theme.getColorAtAngle(angle)

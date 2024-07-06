@@ -11,7 +11,6 @@ export const ThemeChoice: React.FC = observer(() => {
     const [controller] = useState(() => new ThemeChoiceController())
     const size = 70
 
-    const gradient = app.theme.toCSS()
     return (
         <>
             <Choicer angle={controller.angle} unit={AngleUnits.Turn}/>
@@ -23,42 +22,18 @@ export const ThemeChoice: React.FC = observer(() => {
             <div className={setClasses(s.abs, s.origin, s.transformToCenter, s.fullBordered)}>
                 <div
                     onClick={controller.onPick as MouseEventHandler}
-                    className={setClasses(
-                        s.abs,
-                        s.fullBordered,
-                        s.transformToCenter,
-                    )}
+                    className={setClasses(s.abs, s.fullBordered, s.transformToCenter)}
                     style={{
                         width: size,
                         height: size,
-                        background: gradient,
-                    }}>
-
-                </div>
-                <canvas width={size}
-                        onClick={controller.onPick as MouseEventHandler}
-                        ref={controller.init}
-                        className={setClasses(
-                            'abs',
-                            'fullBordered',
-                            'transformToCenter',
-                        )}
-                        height={size}
-                        style={{
-                            width: size,
-                            height: size,
-                        }}/>
-                <div className={setClasses(
-                    styles.canvasCircle,
-                    'transformToCenter',
-                    'fullBordered',
-                    'abs',
-                    'unobservable',
-                )}
-                     style={{
-                         width: size - 20,
-                         height: size - 20,
-                     }}/>
+                        background: app.theme.toCSS(),
+                    }}/>
+                <div
+                    className={setClasses(styles.canvasCircle, s.transformToCenter, s.fullBordered, s.abs, s.unobservable)}
+                    style={{
+                        width: size - 20,
+                        height: size - 20,
+                    }}/>
             </div>
         </>
     )
