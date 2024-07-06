@@ -14,7 +14,7 @@ import {
     SiRedux,
     SiStylelint
 } from "react-icons/si";
-import {AppController} from "./app.controller";
+import {AppController} from "./infra/app.controller";
 import styles from './../index.module.scss'
 
 export const s = styles

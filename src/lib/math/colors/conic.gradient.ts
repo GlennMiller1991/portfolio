@@ -61,10 +61,12 @@ export class ConicGradient {
                 ((greenDifColor >= 0 && greenDifColor <= greenDif) || (greenDifColor <= 0 && greenDifColor >= greenDif)) &&
                 ((blueDifColor >= 0 && blueDifColor <= blueDif) || (blueDifColor <= 0 && blueDifColor >= blueDif))
             ) {
-                const coef = ((color.red - prev.color.red) / (next.color.red - prev.color.red)) ||
-                    ((color.green - prev.color.green) / (next.color.green - prev.color.green)) ||
-                    ((color.blue - prev.color.blue) / (next.color.blue - prev.color.blue))
-                return (next.angle - prev.angle) * coef + prev.angle
+
+                const redCoef = ((color.red - prev.color.red) / (next.color.red - prev.color.red))
+                const greenCoef = ((color.green - prev.color.green) / (next.color.green - prev.color.green))
+                const blueCoef = ((color.blue - prev.color.blue) / (next.color.blue - prev.color.blue))
+                const coefs = [redCoef, greenCoef, blueCoef].filter(Boolean)
+                return (next.angle - prev.angle) * Math.min(...coefs) + prev.angle
             }
         }
         return undefined

@@ -14,11 +14,7 @@ export const ThemeChoice: React.FC = observer(() => {
     return (
         <>
             <Choicer angle={controller.angle} unit={AngleUnits.Turn}/>
-            <Caption>
-                {
-                    app.d.settings.theme
-                }
-            </Caption>
+            <Caption>{app.d.settings.theme}</Caption>
             <div className={setClasses(s.abs, s.origin, s.transformToCenter, s.fullBordered)}>
                 <div
                     onClick={controller.onPick as MouseEventHandler}

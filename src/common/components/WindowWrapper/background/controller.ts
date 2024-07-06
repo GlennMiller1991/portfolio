@@ -1,6 +1,6 @@
 import {AnimationQueue} from "../../../../lib/animation-queue";
-import {IPoint2, Point2} from "../../../../lib/math/figures/point";
-import {AppController} from "../../../../app/app.controller";
+import {IPoint2, Point2} from "../../../../lib/math/figures";
+import {AppController} from "../../../../app/infra/app.controller";
 
 export class Particle {
     velocity: IPoint2
