@@ -1,4 +1,4 @@
-import {toPositive} from "./utils";
+import {isCorrectNumber, toPositive} from "./utils";
 
 export enum AngleUnits {
     Deg = 0,
@@ -46,7 +46,6 @@ export class Angle {
     // endregion Converters
 
     static toPositive(angle: number, unit: AngleUnits) {
-        if (Math.sign(angle) > -1) return angle
         switch (unit) {
             case AngleUnits.Deg:
                 return toPositive(angle, 360)
@@ -73,6 +72,7 @@ export class Angle {
 
     // region representation
     static toCSS(angle: number, unit: AngleUnits) {
+        if (!isCorrectNumber(angle)) return ''
         return `rotate(${angle}${Angle.angleUnitCorrespondence[unit]})`
     }
 

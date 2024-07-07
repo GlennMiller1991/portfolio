@@ -2,11 +2,6 @@ import {ChangeEvent, useCallback, useState, FocusEvent, useEffect} from 'react'
 import {tValidator} from '../types/types'
 import {tObjectType, Validator} from '../validators/Validator'
 
-export type tKeys<T> = {
-    [Property in keyof T]: {
-        validators: Array<tValidator>
-    }
-}
 
 type tState<T> = {
     data: tObjectType<T>,

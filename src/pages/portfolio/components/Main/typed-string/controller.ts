@@ -1,7 +1,7 @@
 import {app} from "../../../../../app/constants";
-import {TypedStringController} from "../../../../../lib/typed-string.controller";
+import {TypedString} from "../../../../../lib/typed-string";
 
-export class TypedStringControllerPortfolio extends TypedStringController {
+export class TypedStringControllerPortfolio extends TypedString {
     strings = app.d.typedString
     stringIndex = 0
     timeoutId: any

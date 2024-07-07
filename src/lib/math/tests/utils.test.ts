@@ -1,4 +1,4 @@
-import {approximately, toPositive} from "../utils";
+import {approximately, isCorrectNumber, toPositive} from "../utils";
 
 test('approximately', () => {
     expect(approximately(0, 0)).toBe(true)
@@ -17,4 +17,18 @@ test('toPositive', () => {
     expect(toPositive(-720, 360)).toEqual(0)
     expect(toPositive(-721, 360)).toEqual(359)
     expect(toPositive(-0, 0)).toEqual(0)
+})
+
+test('isCorrectNumber', () => {
+    expect(isCorrectNumber(0)).toBe(true)
+    expect(isCorrectNumber('0')).toBe(true)
+    expect(isCorrectNumber('0e-08')).toBe(true)
+    expect(isCorrectNumber('0e -08')).toBe(false)
+    expect(isCorrectNumber({1: 2})).toBe(false)
+    expect(isCorrectNumber(null)).toBe(false)
+    expect(isCorrectNumber(undefined)).toBe(false)
+    expect(isCorrectNumber(Infinity)).toBe(false)
+    expect(isCorrectNumber(-Infinity)).toBe(false)
+    expect(isCorrectNumber(NaN)).toBe(false)
+    expect(isCorrectNumber('')).toBe(false)
 })

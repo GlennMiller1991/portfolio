@@ -1,6 +1,6 @@
 import {makeObservable, action} from "mobx";
 
-export class TypedStringController {
+export class TypedString {
     carriage: number = 0
     ltr = true
     typedString: string = ''
