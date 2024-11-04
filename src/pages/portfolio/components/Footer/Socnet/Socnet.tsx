@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./Socnet.module.scss";
-import {IoLogoJavascript} from "react-icons/io5";
 
 type SocnetPropsType = {
     icon: any,

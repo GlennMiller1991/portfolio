@@ -5,7 +5,7 @@ import {Dictionary} from "./dictionary/dictionary";
 import {Theme} from "./theme";
 import {Language} from "./language";
 import {LocalStorage} from "./local-storage";
-import {Color} from "../../lib/math/colors/color";
+import {Color} from "@fbltd/math";
 
 type ILanguages = 'en' | 'ru'
 
@@ -49,10 +49,6 @@ export class AppController {
 
     setWindowWidth = (rect: DOMRect) => {
         this.appDomRect = rect
-    }
-
-    setIsAuthenticated(value: boolean) {
-        this.isUserAuthenticated = value
     }
 
     get d() {
@@ -121,14 +117,14 @@ export class AppController {
 
     setTheme(color: Color) {
         this.theme.switchColor(color)
-        document.documentElement.style.setProperty('--color-theme', color.toCSS())
-        this.ls.setItem('theme', color.toCSS())
+        document.documentElement.style.setProperty('--color-theme', color.toString('rgba'))
+        this.ls.setItem('theme', color.toString('rgba'))
     }
 
 
     kickTheServer = async () => {
         const res = await commonServerAPI.serverAccess()
-            .then((res) => {
+            .then(() => {
                 return true
             })
             .catch((err) => {
@@ -139,9 +135,6 @@ export class AppController {
         this.setIsServerAvailable(res)
     }
 
-    dispose() {
-        // App will disappear from browser so there is no need to clear state or smth else
-    }
 
 }
 
@@ -149,14 +142,16 @@ function rgbToColor(s: string) {
     let r: number
     let g: number
     let b: number
+    let a: number
 
-    const res = s.match(/^rgb\((\d*)\s*,\s*(\d*)\s*,\s*(\d*)\)$/)
+    const res = s.match(/^rgba\((\d*)\s*,\s*(\d*)\s*,\s*(\d*),\s*(\d*)\)$/)
     if (res) {
         r = +res[1]
         g = +res[2]
         b = +res[3]
-        if (!isNaN(r) && !isNaN(g) && !isNaN(b)) {
-            return new Color(r, g, b)
+        a = +res[4] * 255
+        if (!isNaN(r) && !isNaN(g) && !isNaN(b) && !isNaN(a)) {
+            return new Color(r, g, b, a)
         }
     }
 

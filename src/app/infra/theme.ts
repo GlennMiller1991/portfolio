@@ -1,6 +1,5 @@
-import {ConicGradient} from "../../lib/math/colors/conic.gradient";
-import {Color} from "../../lib/math/colors/color";
 import {action, makeObservable} from "mobx";
+import {Color, ConicGradient} from "@fbltd/math";
 
 export class Theme extends ConicGradient {
     color: Color
