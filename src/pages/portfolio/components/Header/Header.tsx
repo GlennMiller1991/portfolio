@@ -6,10 +6,11 @@ import {setClasses} from "../../../../common/utils/setClasses";
 import {Up} from "../Up/Up";
 import {HeaderController} from "./header.controller";
 import {AppSettings} from "../../../../common/components/app-settings/app-settings";
-import {app} from "../../../../app/constants";
+import {useAppContext} from "../../../../app/app.context";
 
 export const Header: React.FC = observer(() => {
         const [controller] = useState(() => new HeaderController())
+        const app = useAppContext()
 
         useEffect(() => controller.dispose.bind(controller), [])
 

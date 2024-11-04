@@ -1,16 +1,19 @@
-import {app} from "../../../../../app/constants";
 import {Circle, StraightLine} from "@fbltd/math";
+import {Language} from "../../../../../app/infra/language";
 
 export class LanguageChoiceController {
     circle = new Circle([0, 0], 45)
     line = new StraightLine(this.circle.center, [this.circle.r, this.circle.center[0]])
 
-    switchVariant(variant: typeof app.lang.langs[number]) {
-        app.setLanguage(variant)
+    constructor(public language: Language) {
+    }
+
+    switchVariant(variant: typeof this.language.langs[number]) {
+        this.language.switch(variant)
     }
 
     get chosenIndex() {
-        return app.lang.langs.findIndex((lang) => lang === app.lang.currentLang)
+        return this.language.langs.findIndex((lang) => lang === this.language.currentLang)
     }
 
     get angleStep() {

@@ -1,10 +1,15 @@
-import {app} from "../../../../../app/constants";
 import React from "react";
 import {Angle, AngleUnits, IPoint2} from "@fbltd/math";
+import {Theme} from "../../../../../app/infra/theme";
 
 export class ThemeChoiceController {
+
+    constructor(public theme: Theme) {
+
+    }
+
     get angle() {
-        return app.theme.colorAngle || 0
+        return this.theme.colorAngle || 0
     }
 
     onPick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -16,8 +21,8 @@ export class ThemeChoiceController {
         let angle = Angle.toTurn(Math.atan2(y, x), AngleUnits.Rad)
         angle = Angle.toPositive(angle, AngleUnits.Turn)
         angle = Angle.normalize(angle, AngleUnits.Turn)
-        const color = app.theme.getColorAtAngle(angle)
-        color && app.setTheme(color)
+        const color = this.theme.getColorAtAngle(angle)
+        color && this.theme.switchColor(color)
     }
 
 }

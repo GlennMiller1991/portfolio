@@ -6,11 +6,8 @@ import {Skills} from "./components/Skills/Skills";
 import {Contacts} from "./components/Contacts/Contacts";
 import {Projects} from "./components/Projects/Projects";
 import {Footer} from "./components/Footer/Footer";
-import {Up} from "./components/Up/Up";
-import {useAppContext} from "../../app/app.context";
 
 export const Portfolio: React.FC = observer(() => {
-    const appController = useAppContext()
     return (
         <>
             <Header/>

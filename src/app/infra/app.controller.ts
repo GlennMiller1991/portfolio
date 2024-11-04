@@ -1,5 +1,5 @@
 import React from "react";
-import {makeAutoObservable} from "mobx";
+import {makeObservable, autorun} from "mobx";
 import {commonServerAPI} from "../../common/api/commonServerAPI";
 import {Dictionary} from "./dictionary/dictionary";
 import {Theme} from "./theme";
@@ -7,7 +7,7 @@ import {Language} from "./language";
 import {LocalStorage} from "./local-storage";
 import {Color} from "@fbltd/math";
 
-type ILanguages = 'en' | 'ru'
+export type ILanguages = 'en' | 'ru'
 
 type ILocalStorage = {
     theme: string,
@@ -27,7 +27,6 @@ export class AppController {
     isServerAvailable = false
     resizeObserver: ResizeObserver | undefined
     appDomRect = document.body.getBoundingClientRect()
-    isUserAuthenticated = false
     windowContent: React.ReactNode | undefined = undefined
     alertMessage: string | undefined = undefined
 
@@ -58,26 +57,28 @@ export class AppController {
     constructor() {
         this.init()
 
-        makeAutoObservable(this, {
+        makeObservable(this, {
             isServerAvailable: true,
             appDomRect: true,
-            isUserAuthenticated: true,
             windowContent: true,
             alertMessage: true,
         })
     }
 
-    async init() {
+    init() {
         this.initTheme()
         this.initLanguage()
+        this.subscribe()
+    }
 
-        setInterval(this.kickTheServer, 60000)
-        await this.kickTheServer()
-
-        document.title = this.d.title
+    subscribe() {
+        autorun(() => this.applyTheme(this.theme.color))
+        autorun(() => this.applyLanguage(this.lang.currentLang))
 
         this.resizeObserver = new ResizeObserver(this.onResize)
         this.resizeObserver.observe(document.body)
+
+        setInterval(this.kickTheServer, 60000)
     }
 
     onResize = () => {
@@ -85,41 +86,38 @@ export class AppController {
     }
 
 
+    // region Language
     initLanguage() {
         let lang = this.ls.getItem('language') as ILanguages
         if (lang && this.lang.langs.find((l) => l === lang)) {
-            this.setLanguage(lang)
+            this.lang.switch(lang)
         } else {
             lang = window.navigator.language as ILanguages
             lang = lang.includes('ru') ? 'ru' : 'en'
-            this.setLanguage('ru')
+            this.lang.switch(lang)
         }
     }
 
-    setLanguage(lang: ILanguages) {
-        this.lang.switch(lang)
+    applyLanguage(lang: ILanguages) {
         this.ls.setItem('language', lang)
     }
+    // endregion Language
 
+    // region Theme
     initTheme() {
         const theme = this.ls.getItem('theme')
-        if (!theme) {
-            this.setTheme(this.theme.color)
-        } else {
-            const color = rgbToColor(theme)
-            if (color && this.theme.isColorInRange(color)) {
-                this.setTheme(color)
-            } else {
-                this.setTheme(this.theme.color)
-            }
-        }
+        if (!theme) return
+
+        const color = rgbToColor(theme)
+        if (!color || !this.theme.isColorInRange(color)) return
+        this.theme.switchColor(color)
     }
 
-    setTheme(color: Color) {
-        this.theme.switchColor(color)
+    applyTheme(color: Color) {
         document.documentElement.style.setProperty('--color-theme', color.toString('rgba'))
         this.ls.setItem('theme', color.toString('rgba'))
     }
+    // endregion Theme
 
 
     kickTheServer = async () => {

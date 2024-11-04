@@ -1,15 +1,17 @@
 import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
 import {setClasses} from "../../../../utils/setClasses";
-import {app, s} from "../../../../../app/constants";
+import {s} from "../../../../../app/constants";
 import {Caption, Choicer} from "../../shared/choicer";
 import {LanguageChoiceController} from "./language-choice.controller";
 import {Variant} from "../../shared/variant";
 import {AngleUnits, Matrix2d} from "@fbltd/math";
+import {useAppContext} from "../../../../../app/app.context";
 
 export const LanguageChoice: React.FC = observer(() => {
 
-    const [controller] = useState(() => new LanguageChoiceController())
+    const app = useAppContext()
+    const [controller] = useState(() => new LanguageChoiceController(app.lang))
 
     return (
         <>

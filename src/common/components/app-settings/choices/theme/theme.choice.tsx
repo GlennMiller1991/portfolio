@@ -4,11 +4,13 @@ import {setClasses} from "../../../../utils/setClasses";
 import {Caption, Choicer} from "../../shared/choicer";
 import {ThemeChoiceController} from "./theme-choice.controller";
 import styles from './../../settings.module.scss'
-import {app, s} from "../../../../../app/constants";
+import {s} from "../../../../../app/constants";
 import {AngleUnits} from "@fbltd/math";
+import {useAppContext} from "../../../../../app/app.context";
 
 export const ThemeChoice: React.FC = observer(() => {
-    const [controller] = useState(() => new ThemeChoiceController())
+    const app = useAppContext()
+    const [controller] = useState(() => new ThemeChoiceController(app.theme))
     const size = 70
 
     return (
