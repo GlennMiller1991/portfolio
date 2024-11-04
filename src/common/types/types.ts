@@ -5,11 +5,6 @@ export type tMessage = {
     message: string,
 }
 
-export type tLoginParams = {
-    email: string,
-    password: string,
-}
-
 export type tErrors = {
     [key: string]: string
 } | undefined

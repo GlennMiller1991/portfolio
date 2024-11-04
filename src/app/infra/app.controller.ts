@@ -1,7 +1,6 @@
 import React from "react";
 import {makeAutoObservable} from "mobx";
 import {commonServerAPI} from "../../common/api/commonServerAPI";
-import {loginAPI} from "../../common/api/loginAPI";
 import {Dictionary} from "./dictionary/dictionary";
 import {Theme} from "./theme";
 import {Language} from "./language";
@@ -21,11 +20,8 @@ export class AppController {
     dict = new Dictionary()
     ls = new LocalStorage<ILocalStorage>()
 
-    server = process.env.NODE_ENV === 'development' ? 'http://localhost:5000' : 'https://railwayapp-production-3c99.up.railway.app'
+    server = 'http://localhost:5000'
 
-    get api() {
-        return `${this.server}/api/v1`
-    }
 
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
     isServerAvailable = false
@@ -81,7 +77,6 @@ export class AppController {
 
         setInterval(this.kickTheServer, 60000)
         await this.kickTheServer()
-        this.isServerAvailable && this.authenticate()
 
         document.title = this.d.title
 
@@ -142,16 +137,6 @@ export class AppController {
             })
 
         this.setIsServerAvailable(res)
-    }
-
-    authenticate = () => {
-        loginAPI.authenticate()
-            .then(() => {
-                this.setIsAuthenticated(true)
-            })
-            .catch(err => {
-                this.setIsAuthenticated(false)
-            })
     }
 
     dispose() {

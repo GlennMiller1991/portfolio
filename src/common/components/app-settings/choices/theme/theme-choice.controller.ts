@@ -1,7 +1,6 @@
 import {app} from "../../../../../app/constants";
 import React from "react";
-import {IPoint2} from "../../../../../lib/math/figures";
-import {Angle, AngleUnits} from "../../../../../lib/math/angle";
+import {Angle, AngleUnits, IPoint2} from "@fbltd/math";
 
 export class ThemeChoiceController {
     get angle() {

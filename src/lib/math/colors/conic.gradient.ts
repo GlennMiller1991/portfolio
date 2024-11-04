@@ -1,5 +1,5 @@
 import {Color} from "./color";
-import {IPoint2} from "../figures";
+import {IPoint2} from "@fbltd/math";
 
 export class ConicGradient {
     colors: { angle: number, color: Color }[]

@@ -1,6 +1,5 @@
-import {Circle} from "../../../../../lib/math/figures/circle";
-import {StraightLine} from "../../../../../lib/math/figures/straight-line";
 import {app} from "../../../../../app/constants";
+import {Circle, StraightLine} from "@fbltd/math";
 
 export class LanguageChoiceController {
     circle = new Circle([0, 0], 45)

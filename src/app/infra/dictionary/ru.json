@@ -1,8 +1,7 @@
 {
   "title": "React Developer",
   "pages": {
-    "main": "главная",
-    "login": "представиться"
+    "main": "главная"
   },
   "sections": {
     "main": "главная",

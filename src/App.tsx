@@ -5,7 +5,6 @@ import {Alert} from './common/components/Alert/Alert'
 import {observer} from "mobx-react-lite";
 import {Route, Routes} from "react-router-dom";
 import {Portfolio} from "./pages/portfolio/portfolio";
-import {Login} from "./pages/auth/Login/Login";
 import {AppContext} from "./app/app.context";
 import {app} from "./app/constants";
 
@@ -16,7 +15,6 @@ export const App = observer(() => {
         <AppContext.Provider value={app}>
             <div>
                 <Routes>
-                    <Route path={'/auth'} element={<Login/>}/>
                     <Route path={'/*'} element={<Portfolio/>}/>
                 </Routes>
                 {

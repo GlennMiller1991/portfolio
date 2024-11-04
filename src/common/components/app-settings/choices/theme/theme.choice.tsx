@@ -1,11 +1,11 @@
 import React, {MouseEventHandler, useState} from "react";
 import {observer} from "mobx-react-lite";
-import {AngleUnits} from "../../../../../lib/math/angle";
 import {setClasses} from "../../../../utils/setClasses";
 import {Caption, Choicer} from "../../shared/choicer";
 import {ThemeChoiceController} from "./theme-choice.controller";
 import styles from './../../settings.module.scss'
 import {app, s} from "../../../../../app/constants";
+import {AngleUnits} from "@fbltd/math";
 
 export const ThemeChoice: React.FC = observer(() => {
     const [controller] = useState(() => new ThemeChoiceController())

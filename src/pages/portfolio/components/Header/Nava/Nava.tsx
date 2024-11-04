@@ -1,14 +1,12 @@
 import React, {useCallback} from 'react';
 import styles from './Nava.module.scss'
-import {NavLink, useNavigate} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
-import {FiLogIn} from "react-icons/fi";
 import {app} from "../../../../../app/constants";
 import {setClasses} from "../../../../../common/utils/setClasses";
-import {routes} from "../../../../../common/constants/routes";
 import {observer} from "mobx-react-lite";
 import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
 import dict from './../../../../../app/infra/dictionary/en.json'
@@ -17,8 +15,6 @@ type INava = {
     currentAnchor: string | undefined
 }
 export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
-
-    const goto = useNavigate()
 
     const scrollTo = useCallback((elementId: string) => {
         const elem = document.getElementById(elementId)
@@ -41,7 +37,8 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
                             app.d.sections.main
                     }
                 </NavLink>
-                <div className={setClasses(styles.underMenu, currentAnchor === dict.sections.main && styles.underActive)}/>
+                <div
+                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.main && styles.underActive)}/>
             </div>
             {/* Skills */}
             <div className={styles.linkContainer}>
@@ -82,14 +79,6 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
                 </NavLink>
                 <div
                     className={setClasses(styles.underMenu, currentAnchor === dict.sections.contacts && styles.underActive)}/>
-            </div>
-            {/* Login */}
-            <div className={styles.linkContainer} onClick={() => goto(routes.auth)}>
-                <div className={styles.link}>
-                    {
-                        appWidth < 1000 ? <FiLogIn/> : app.d.pages.login
-                    }
-                </div>
             </div>
 
             {/* Settings */}

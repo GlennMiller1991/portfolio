@@ -1,6 +1,6 @@
 import {AnimationQueue} from "../../../../lib/animation-queue";
-import {IPoint2, Point2} from "../../../../lib/math/figures";
 import {AppController} from "../../../../app/infra/app.controller";
+import {IPoint2, Point} from "@fbltd/math";
 
 export class Particle {
     velocity: IPoint2
@@ -18,7 +18,7 @@ export class Particle {
 
     move() {
         this.radius *= this.coef
-        this.center = Point2.sum(this.center, Point2.scale(this.velocity, this.coef))
+        this.center = Point.sum(this.center, Point.scale(this.velocity, this.coef))
 
         this.coef *= 0.999999
     }
