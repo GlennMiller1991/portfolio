@@ -20,9 +20,6 @@ export class AppController {
     dict = new Dictionary()
     ls = new LocalStorage<ILocalStorage>()
 
-    server = 'http://localhost:5000'
-
-
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
     isServerAvailable = false
     resizeObserver: ResizeObserver | undefined
@@ -79,6 +76,7 @@ export class AppController {
         this.resizeObserver.observe(document.body)
 
         setInterval(this.kickTheServer, 60000)
+        this.kickTheServer()
     }
 
     onResize = () => {
@@ -122,15 +120,8 @@ export class AppController {
 
     kickTheServer = async () => {
         const res = await commonServerAPI.serverAccess()
-            .then(() => {
-                return true
-            })
-            .catch((err) => {
-                console.warn(err.message)
-                return false
-            })
 
-        this.setIsServerAvailable(res)
+        this.setIsServerAvailable(!!res.data)
     }
 
 

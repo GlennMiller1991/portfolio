@@ -1,12 +1,10 @@
-import {app} from "../../../../../app/constants";
 import {TypedString} from "../../../../../lib/typed-string";
 
 export class TypedStringControllerPortfolio extends TypedString {
-    strings = app.d.typedString
     stringIndex = 0
     timeoutId: any
 
-    constructor() {
+    constructor(public strings: string[]) {
         super()
         this.init()
     }

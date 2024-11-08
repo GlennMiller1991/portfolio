@@ -5,17 +5,18 @@ import {NavLink} from 'react-router-dom';
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
-import {app} from "../../../../../app/constants";
 import {setClasses} from "../../../../../common/utils/setClasses";
 import {observer} from "mobx-react-lite";
 import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
 import dict from './../../../../../app/infra/dictionary/en.json'
+import {useAppContext} from "../../../../../app/app.context";
 
 type INava = {
     currentAnchor: string | undefined
 }
 export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
+    const app = useAppContext()
     const scrollTo = useCallback((elementId: string) => {
         const elem = document.getElementById(elementId)
         elem && elem.scrollIntoView({

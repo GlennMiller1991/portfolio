@@ -14,12 +14,9 @@ import {
     SiRedux,
     SiStylelint
 } from "react-icons/si";
-import {AppController} from "./infra/app.controller";
 import styles from './../index.module.scss'
 
 export const s = styles
-
-export const app = new AppController()
 
 export const skillsEntities = [
     {
@@ -99,3 +96,14 @@ export const skillsEntities = [
     }
 
 ]
+
+export const endpoints = {
+    baseUrl: {
+        url: 'http://localhost:5056',
+        endpoints: [
+
+        ]
+    }
+}
+
+

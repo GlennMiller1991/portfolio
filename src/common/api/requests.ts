@@ -15,7 +15,7 @@ export const requests = {
         return fetch(url, {
             method: 'GET',
             credentials: 'include',
-            mode: 'cors',
+            mode: 'no-cors',
         })
             .then(checkResponse)
     }
@@ -28,3 +28,4 @@ export const checkResponse = (res: Response) => {
         throw new Error(`${res.url}, ${res.status}`)
     }
 }
+

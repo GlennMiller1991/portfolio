@@ -1,13 +1,13 @@
 export class LocalStorage<T extends Record<string, any> = {}> {
     isForbidden: boolean = false
 
-    getItem(key: keyof T) {
+    getItem<TKey extends keyof T>(key: TKey) {
         if (this.isForbidden) return undefined
         try {
             const s = localStorage.getItem(key as string)
             if (s) {
                 try {
-                    return JSON.parse(s) as T[typeof key]
+                    return JSON.parse(s) as T[TKey]
                 } catch (err) {
                 }
             }
