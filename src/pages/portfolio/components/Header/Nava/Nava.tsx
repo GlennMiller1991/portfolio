@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useState} from 'react';
 import styles from './Nava.module.scss'
 import {NavLink} from 'react-router-dom';
 
@@ -14,91 +14,102 @@ import {useAppContext} from "../../../../../app/app.context";
 type INava = {
     currentAnchor: string | undefined
 }
+
 export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
+    const [controller] = useState(() => {
+        class NavigationPanelController {
+            scrollTo = (elementId: string) => {
+                const elem = document.getElementById(elementId)
+                elem && elem.scrollIntoView({
+                    behavior: 'smooth'
+                })
+            }
+        }
+
+        return new NavigationPanelController()
+    })
     const app = useAppContext()
-    const scrollTo = useCallback((elementId: string) => {
-        const elem = document.getElementById(elementId)
-        elem && elem.scrollIntoView({
-            behavior: 'smooth'
-        })
-    }, [])
 
     const appWidth = app.appDomRect.width
+
     return (
         <div className={styles.nava}>
             {/* Main */}
-            <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.main && styles.active)}
-                         onClick={() => scrollTo(dict.sections.main)}
-                         to={`#${dict.sections.main}`}>
-                    {
-                        appWidth < 1000 ?
-                            <BsFileEarmarkPerson/> :
-                            app.d.sections.main
-                    }
-                </NavLink>
-                <div
-                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.main && styles.underActive)}/>
-            </div>
+            <LinkWrapper isActive={currentAnchor === dict.sections.main}
+                         onClick={() => controller.scrollTo(dict.sections.main)}>
+                {
+                    appWidth < 1000 ?
+                        <BsFileEarmarkPerson/> :
+                        app.d.sections.main
+                }
+            </LinkWrapper>
+
             {/* Skills */}
-            <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.skills && styles.active)}
-                         onClick={() => scrollTo(dict.sections.skills)}
-                         to={`#${dict.sections.skills}`}>
-                    {
-                        appWidth < 1000 ?
-                            <GiSkills/> : app.d.sections.skills
-                    }
-                </NavLink>
-                <div
-                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.skills && styles.underActive)}/>
-            </div>
+            <LinkWrapper isActive={currentAnchor === dict.sections.skills}
+                         onClick={() => controller.scrollTo(dict.sections.skills)}>
+                {
+                    appWidth < 1000 ?
+                        <GiSkills/> :
+                        app.d.sections.skills
+                }
+            </LinkWrapper>
+
             {/* Projects */}
-            <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.projects && styles.active)}
-                         onClick={() => scrollTo(dict.sections.projects)}
-                         to={`#${dict.sections.projects}`}>
-                    {
-                        appWidth < 1000 ?
-                            <AiOutlineFundProjectionScreen/> : app.d.sections.projects
-                    }
-                </NavLink>
-                <div
-                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.projects && styles.underActive)}/>
-            </div>
+            <LinkWrapper isActive={currentAnchor === dict.sections.projects}
+                         onClick={() => controller.scrollTo(dict.sections.projects)}>
+                {
+                    appWidth < 1000 ?
+                        <AiOutlineFundProjectionScreen/> :
+                        app.d.sections.projects
+                }
+            </LinkWrapper>
+
             {/* Contacts */}
-            <div className={styles.linkContainer}>
-                <NavLink className={setClasses(styles.link, currentAnchor === dict.sections.contacts && styles.active)}
-                         onClick={() => scrollTo(dict.sections.contacts)}
-                         to={`#${dict.sections.contacts}`}>
+            {
+                app.isServerAvailable &&
+                <LinkWrapper isActive={currentAnchor === dict.sections.contacts}
+                             onClick={() => controller.scrollTo(dict.sections.contacts)}>
                     {
                         appWidth < 1000 ?
                             <AiOutlineContacts/> :
                             app.d.sections.contacts
                     }
-                </NavLink>
-                <div
-                    className={setClasses(styles.underMenu, currentAnchor === dict.sections.contacts && styles.underActive)}/>
-            </div>
+                </LinkWrapper>
+            }
 
             {/* Settings */}
             {
                 app.appDomRect.width <= 1000 &&
-                <div className={styles.linkContainer}>
-                    <NavLink className={styles.link}
-                             onClick={() => app.setWindowContent(<AppSettings/>)}
-                             to={''}>
-                        {
-                            appWidth < 1000 ?
-                                <AiFillSetting/> :
-                                app.d.sections.settings
-                        }
-                    </NavLink>
-                    <div
-                        className={setClasses(styles.underMenu, currentAnchor === dict.sections.contacts && styles.underActive)}/>
-                </div>
+                <LinkWrapper onClick={() => app.setWindowContent(<AppSettings/>)}>
+                    <AiFillSetting/>
+                </LinkWrapper>
             }
+        </div>
+    )
+})
+
+type ILinkWrapper = {
+    isActive?: boolean,
+    onClick: () => void,
+}
+export const LinkWrapper: React.FC<React.PropsWithChildren<ILinkWrapper>> = React.memo(({
+                                                                                            isActive,
+                                                                                            onClick,
+                                                                                            children
+                                                                                        }) => {
+    return (
+        <div className={styles.linkContainer}>
+            <NavLink
+                className={setClasses(styles.link, isActive && styles.active)}
+                onClick={onClick}
+                to={`#${dict.sections.contacts}`}>
+                {
+                    children
+                }
+            </NavLink>
+            <div
+                className={setClasses(styles.underMenu, isActive && styles.underActive)}/>
         </div>
     )
 })

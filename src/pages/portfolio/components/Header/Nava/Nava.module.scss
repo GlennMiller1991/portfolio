@@ -1,7 +1,7 @@
 .nava {
   display: flex;
   flex-wrap: nowrap;
-  column-gap: 2%;
+  column-gap: 5%;
   justify-content: space-between;
   margin-right: 50px ;
   transition: .8s;
@@ -19,7 +19,7 @@
       cursor: pointer;
       font-weight: 400;
       letter-spacing: .1em;
-      font-family: var(--font-primary);
+      font-family: var(--font-secondary);
       font-size: 1.3em;
       text-decoration: none;
       line-height: 1.7;
