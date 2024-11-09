@@ -1,4 +1,4 @@
-import {METHODS, RESPONSE_HEADERS} from "./constants";
+import {METHODS, REQUEST_HEADERS, REQUEST_MODES} from "./constants";
 
 export type ISuccessResponse<T> = {
     data: T,
@@ -11,8 +11,14 @@ export type IErrorResponse = {
 export type IResponse<T> = ISuccessResponse<T> | IErrorResponse
 export type IRequestOptions = {
     method: keyof typeof METHODS,
-    mode: RequestMode,
+    mode: typeof REQUEST_MODES[keyof typeof REQUEST_MODES],
+    body: Record<string, any>,
+    headers: Partial<{
+        -readonly [Prop in keyof typeof REQUEST_HEADERS as typeof REQUEST_HEADERS[Prop]]: IRequestHeadersTypes[typeof REQUEST_HEADERS[Prop]]
+    }>
 }
-export type IResponseHeaders = {
-    [Key in keyof typeof RESPONSE_HEADERS]: typeof RESPONSE_HEADERS[Key]
+
+export type IRequestHeadersTypes = {
+    [REQUEST_HEADERS.CONTENT_TYPE]: 'application/json' | 'text/html' | 'multipart/form-data'
 }
+

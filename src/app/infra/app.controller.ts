@@ -99,6 +99,7 @@ export class AppController {
     applyLanguage(lang: ILanguages) {
         this.ls.setItem('language', lang)
     }
+
     // endregion Language
 
     // region Theme
@@ -115,12 +116,12 @@ export class AppController {
         document.documentElement.style.setProperty('--color-theme', color.toString('rgba'))
         this.ls.setItem('theme', color.toString('rgba'))
     }
+
     // endregion Theme
 
 
     kickTheServer = async () => {
         const res = await commonServerAPI.serverAccess()
-
         this.setIsServerAvailable(!!res.data)
     }
 

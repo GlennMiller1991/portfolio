@@ -57,6 +57,5 @@ export const useFieldState = <T>(validator: Validator<T>): [
         checkFields()
     }, [])
 
-    console.log(state, validator.getObject())
     return [state, onChange, clearState, onBlur]
 }

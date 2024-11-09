@@ -97,13 +97,14 @@ export const skillsEntities = [
 
 ]
 
-export const endpoints = {
-    baseUrl: {
-        url: 'http://localhost:5056',
-        endpoints: [
 
-        ]
+export const urls = {
+    bases: {
+        remote: 'http://localhost:5056/api/v1',
+    },
+    endpoints: {
+        messages: '/messages'
     }
-}
+} as const
 
 
