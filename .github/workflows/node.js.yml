@@ -24,8 +24,11 @@ jobs:
     - name: Checkout files
       run: ls -lh build
 
+    - name: Pack to tar
+      run: tar -czvf build.tar.gz build
+
     - name: Set permissions
-      run: chmod 644 build && chmod -R 644 build
+      run: chmod 644 build.tar.gz
 
     - name: Replace build on the VPS
       uses: appleboy/scp-action@v0.1.7
