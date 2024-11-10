@@ -23,3 +23,15 @@ jobs:
 
     - name: Checkout files
       run: ls -lh 'build'
+
+    - name: Set permissions
+      run: chmod 644 'build'
+
+    - name: Replace build on the VPS
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_HOST }}
+        username: ${{ secrets.VPS_USER }}
+        password: ${{ secrets.VPS_KEY }}
+        source: 'build'
+        target: ${{ secrets.VPS_HOME }}
