@@ -17,6 +17,10 @@ export async function request<T>(src: string, options?: Partial<IRequestOptions>
         })
 
         let contentType = response.headers.get(REQUEST_HEADERS.CONTENT_TYPE) || ''
+        if (response.status === 204) {
+            return {data: null as T} as ISuccessResponse<T>
+        }
+
         let methods = {
             json: 'json',
             text: 'text'
@@ -34,10 +38,13 @@ export async function request<T>(src: string, options?: Partial<IRequestOptions>
 
         if (!response.ok) {
             throw new Error(data.message)
+
         }
+
         return {
             data,
         } as ISuccessResponse<T>
+
     } catch (err: any) {
         return {
             error: err?.message || 'Something went wrong'

@@ -128,7 +128,7 @@ export class AppController {
 
     kickTheServer = async () => {
         const res = await commonServerAPI.serverAccess()
-        this.setIsServerAvailable(!!res.data)
+        this.setIsServerAvailable(!res.error)
     }
 
 
