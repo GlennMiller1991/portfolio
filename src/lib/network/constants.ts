@@ -15,3 +15,18 @@ export const REQUEST_MODES = {
 export const REQUEST_HEADERS = {
     CONTENT_TYPE: 'content-type'
 } as const
+
+export const CONTENT_TYPES = {
+    // types
+    application: {
+        json: 'application/json',
+    },
+    text: {
+        css: 'text/css',
+        csv: 'text/csv',
+        html: 'text/html',
+        javascript: 'text/javascript',
+        plain: 'text/plain',
+        xml: 'text/xml',
+    }
+}

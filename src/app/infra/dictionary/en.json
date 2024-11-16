@@ -1,4 +1,8 @@
 {
+  "messages": {
+    "delivered": "The message is delivered",
+    "notDelivered": "The message is not delivered"
+  },
   "pages": {
     "main": "main"
   },

@@ -15,9 +15,10 @@ export const Alert: React.FC<tAlert> = React.memo(({
 
     useEffect(() => {
         const id = setTimeout(() => {
-            appController.setAlertMessage(undefined)
+            appController.setNotification(undefined)
         }, 3000)
 
+        return () => clearTimeout(id)
     }, [])
 
     return (

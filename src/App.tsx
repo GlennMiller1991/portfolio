@@ -29,10 +29,10 @@ export const App = observer(() => {
                     </WindowWrapper>
                 }
                 {
-                    app.alertMessage &&
+                    app.notification &&
                     <Alert>
                         {
-                            app.alertMessage
+                            app.notification
                         }
                     </Alert>
                 }

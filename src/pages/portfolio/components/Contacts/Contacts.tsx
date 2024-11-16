@@ -1,32 +1,32 @@
-import React, {useMemo} from 'react';
+import React, {useMemo, useState} from 'react';
 import commonStyles from '../../../../common/styles/common.module.scss'
 import styles from './Contacts.module.scss'
 import {Input} from '../../../../common/components/Input/Input'
 import {setClasses} from '../../../../common/utils/setClasses'
 import {Button} from '../../../../common/components/Button/Button'
 import {useFieldState} from '../../../../common/customHooks/useFieldState'
-import {messageAPI} from '../../../../common/api/messageAPI'
 import {tObjectValidators, Validator} from '../../../../common/validators/Validator'
 import {emailRegexp} from '../../../../common/constants/regexps'
 import en from './../../../../app/infra/dictionary/en.json'
 
-type tLoginParamType = {
-    email: string,
-    name: string,
-    subject: string,
-    message: string,
-}
+import {IMessage} from "../../../../models/message.model";
+import {MessageService} from "../../../../services/message/message.service";
+import {useAppContext} from "../../../../app/app.context";
+
 
 export const Contacts = React.memo(() => {
+    const [service] = useState(() => new MessageService())
+
+    const app = useAppContext()
     const validator = useMemo(() => {
-        const loginParams: tLoginParamType = {
-            email: '',
-            name: '',
-            subject: '',
-            message: '',
+        const loginParams: IMessage = {
+            email: 'email@mail.ru',
+            author: 'author',
+            subject: 'subject',
+            body: 'body',
         }
-        const validator = new Validator<tLoginParamType>(loginParams)
-        const validators: tObjectValidators<tLoginParamType> = {
+        const validator = new Validator<IMessage>(loginParams)
+        const validators: tObjectValidators<IMessage> = {
             email: {
                 validators: [
                     validator.required(),
@@ -34,7 +34,7 @@ export const Contacts = React.memo(() => {
                     validator.checkTemplate(emailRegexp),
                 ]
             },
-            name: {
+            author: {
                 validators: [
                     validator.required(),
                     validator.checkMaxStringLength(20),
@@ -46,7 +46,7 @@ export const Contacts = React.memo(() => {
                     validator.checkMaxStringLength(150)
                 ]
             },
-            message: {
+            body: {
                 validators: [
                     validator.required(),
                     validator.checkMaxStringLength(1500)
@@ -57,7 +57,7 @@ export const Contacts = React.memo(() => {
         validator.updateValidators(validators)
         return validator
     }, [])
-    const [state, onChange, clearState, onBlur] = useFieldState<tLoginParamType>(validator)
+    const [state, onChange, clearState, onBlur] = useFieldState<IMessage>(validator)
 
 
     return (
@@ -71,8 +71,8 @@ export const Contacts = React.memo(() => {
                     <Input onChange={onChange}
                            containerClass={styles.name}
                            onBlur={onBlur}
-                           data-name={'name'}
-                           value={state.data.name}
+                           data-name={'author'}
+                           value={state.data.author}
                            name={'Name'}
                     />
                     <Input onChange={onChange}
@@ -93,15 +93,20 @@ export const Contacts = React.memo(() => {
                            containerClass={styles.message}
                            asTextArea
                            onBlur={onBlur}
-                           data-name={'message'}
-                           value={state.data.message}
+                           data-name={'body'}
+                           value={state.data.body}
                            name={'Message'}
                     />
                     <div className={setClasses(styles.submit, 'flex')}>
                         <Button text={state.resError || 'Send message'} disabled={!!state.resError}
-                                onClick={() => {
-                                    messageAPI.sendMessage(state.data)
-                                        .then(clearState)
+                                onClick={async () => {
+                                    try {
+                                        await service.create(state.data)
+                                        app.setNotification(app.dictionary.messages.delivered)
+                                        clearState()
+                                    } catch ({message}) {
+                                        app.setNotification(app.dictionary.messages.notDelivered)
+                                    }
                                 }}
                         />
                     </div>

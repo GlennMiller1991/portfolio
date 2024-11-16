@@ -1,5 +1,5 @@
 import React from "react";
-import {makeObservable, autorun} from "mobx";
+import {makeObservable, autorun, action} from "mobx";
 import {commonServerAPI} from "../../common/api/commonServerAPI";
 import {Dictionary} from "./dictionary/dictionary";
 import {Theme} from "./theme";
@@ -25,14 +25,18 @@ export class AppController {
     resizeObserver: ResizeObserver | undefined
     appDomRect = document.body.getBoundingClientRect()
     windowContent: React.ReactNode | undefined = undefined
-    alertMessage: string | undefined = undefined
+    notification: string | undefined = undefined
+
+    get dictionary() {
+        return this.dict.actual
+    }
 
     get isAppReady() {
         return !!this.appDomRect
     }
 
-    setAlertMessage(msg: typeof this.alertMessage) {
-        this.alertMessage = msg
+    setNotification(msg: typeof this.notification) {
+        this.notification = msg
     }
 
     setWindowContent(content: typeof this.windowContent) {
@@ -58,7 +62,9 @@ export class AppController {
             isServerAvailable: true,
             appDomRect: true,
             windowContent: true,
-            alertMessage: true,
+            notification: true,
+
+            setIsServerAvailable: action,
         })
     }
 
