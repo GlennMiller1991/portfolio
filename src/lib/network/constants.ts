@@ -13,11 +13,11 @@ export const REQUEST_MODES = {
 } as const
 
 export const REQUEST_HEADERS = {
-    CONTENT_TYPE: 'content-type'
+    CONTENT_TYPE: 'content-type',
+    LANGUAGE: 'language',
 } as const
 
 export const CONTENT_TYPES = {
-    // types
     application: {
         json: 'application/json',
     },
@@ -29,4 +29,4 @@ export const CONTENT_TYPES = {
         plain: 'text/plain',
         xml: 'text/xml',
     }
-}
+} as const

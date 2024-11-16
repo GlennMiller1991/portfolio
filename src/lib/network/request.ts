@@ -7,7 +7,7 @@ export async function request<T>(src: string, options?: Partial<IRequestOptions>
     options.mode = options.mode || REQUEST_MODES.CORS
     options.headers = options.headers || {}
     if (options.body && !options.headers[REQUEST_HEADERS.CONTENT_TYPE]) {
-        options.headers[REQUEST_HEADERS.CONTENT_TYPE] = 'application/json'
+        options.headers[REQUEST_HEADERS.CONTENT_TYPE] = CONTENT_TYPES.application.json
     }
 
     try {
@@ -17,13 +17,17 @@ export async function request<T>(src: string, options?: Partial<IRequestOptions>
         })
 
         let contentType = response.headers.get(REQUEST_HEADERS.CONTENT_TYPE) || ''
+        let methods = {
+            json: 'json',
+            text: 'text'
+        } as const
         let method: 'text' | 'json'
         if (contentType.includes(CONTENT_TYPES.application.json)) {
-            method = 'json'
+            method = methods.json
         } else if (contentType.includes(CONTENT_TYPES.text.plain)) {
-            method = 'text'
+            method = methods.text
         } else {
-            throw new Error('unrecognized content')
+            throw new Error()
         }
 
         let data = await response[method]()

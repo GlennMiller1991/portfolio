@@ -1,4 +1,4 @@
-import {METHODS, REQUEST_HEADERS, REQUEST_MODES} from "./constants";
+import {CONTENT_TYPES, METHODS, REQUEST_HEADERS, REQUEST_MODES} from "./constants";
 
 export type ISuccessResponse<T> = {
     data: T,
@@ -19,6 +19,7 @@ export type IRequestOptions = {
 }
 
 export type IRequestHeadersTypes = {
-    [REQUEST_HEADERS.CONTENT_TYPE]: 'application/json' | 'text/html' | 'multipart/form-data'
+    [REQUEST_HEADERS.CONTENT_TYPE]: typeof CONTENT_TYPES.application.json,
+    [REQUEST_HEADERS.LANGUAGE]: string
 }
 

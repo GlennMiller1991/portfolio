@@ -3,14 +3,22 @@ import {IMessage} from "../../models/message.model";
 import {request} from "../../lib/network/request";
 import {urls} from "../../app/constants";
 import {METHODS} from "../../lib/network/constants";
+import {Language} from "../../app/infra/language";
 
 export class MessageService {
     base = urls.bases.remote
 
+    constructor(private lang: Language) {
+
+    }
+
     async create(message: IMessage) {
         const response = await request<IMessageDto>(`${this.base}${urls.endpoints.messages}`, {
             method: METHODS.POST,
-            body: MessageService.toServer(message)
+            body: MessageService.toServer(message),
+            headers: {
+                language: this.lang.currentLang
+            }
         })
 
         if (response.data) {

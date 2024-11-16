@@ -15,9 +15,9 @@ import {useAppContext} from "../../../../app/app.context";
 
 
 export const Contacts = React.memo(() => {
-    const [service] = useState(() => new MessageService())
-
     const app = useAppContext()
+    const [service] = useState(() => new MessageService(app.lang))
+
     const validator = useMemo(() => {
         const loginParams: IMessage = {
             email: 'email@mail.ru',
