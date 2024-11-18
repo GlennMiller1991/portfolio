@@ -3,7 +3,7 @@ import styles from './Main.module.scss'
 import commonStyles from '../../../../common/styles/common.module.scss'
 import {TypedString} from './typed-string/typed-string';
 import {useAppContext} from "../../../../app/app.context";
-import en from './../../../../app/infra/dictionary/en.json'
+import en from '../../../../app/dictionary/en.json'
 
 export const Main = React.memo(() => {
         const appController = useAppContext()

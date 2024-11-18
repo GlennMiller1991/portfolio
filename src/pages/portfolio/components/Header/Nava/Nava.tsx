@@ -8,7 +8,7 @@ import {GiSkills} from "react-icons/gi";
 import {setClasses} from "../../../../../common/utils/setClasses";
 import {observer} from "mobx-react-lite";
 import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
-import dict from './../../../../../app/infra/dictionary/en.json'
+import dict from '../../../../../app/dictionary/en.json'
 import {useAppContext} from "../../../../../app/app.context";
 
 type INava = {

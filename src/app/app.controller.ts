@@ -1,11 +1,14 @@
 import React from "react";
 import {makeObservable, autorun, action} from "mobx";
-import {commonServerAPI} from "../../common/api/commonServerAPI";
 import {Dictionary} from "./dictionary/dictionary";
-import {Theme} from "./theme";
-import {Language} from "./language";
-import {LocalStorage} from "./local-storage";
+import {Theme} from "./theme/theme";
+import {Language} from "./language/language";
+import {LocalStorage} from "./local-storage/local-storage";
 import {Color} from "@fbltd/math";
+import {request} from "../lib/network/request";
+import {ServerService} from "../services/server.service";
+
+import {NotificationQueue} from "./notification/notification-queue";
 
 export type ILanguages = 'en' | 'ru'
 
@@ -15,6 +18,7 @@ type ILocalStorage = {
 }
 
 export class AppController {
+    serverService = new ServerService(this);
     lang = new Language<ILanguages>(['ru', 'en'])
     theme = new Theme()
     dict = new Dictionary()
@@ -25,7 +29,21 @@ export class AppController {
     resizeObserver: ResizeObserver | undefined
     appDomRect = document.body.getBoundingClientRect()
     windowContent: React.ReactNode | undefined = undefined
-    notification: string | undefined = undefined
+    notificationsQueue = new NotificationQueue()
+
+    constructor() {
+        makeObservable(this, {
+            isServerAvailable: true,
+            appDomRect: true,
+            windowContent: true,
+
+            setIsServerAvailable: action,
+            setAppDomRect: action,
+            setWindowContent: action,
+        })
+
+        this.init()
+    }
 
     get dictionary() {
         return this.dict.actual
@@ -35,8 +53,8 @@ export class AppController {
         return !!this.appDomRect
     }
 
-    setNotification(msg: typeof this.notification) {
-        this.notification = msg
+    setAppDomRect(appDomRect: DOMRect) {
+        this.appDomRect = appDomRect
     }
 
     setWindowContent(content: typeof this.windowContent) {
@@ -47,28 +65,11 @@ export class AppController {
         this.isServerAvailable = value
     }
 
-    setWindowWidth = (rect: DOMRect) => {
-        this.appDomRect = rect
-    }
-
     get d() {
         return this.dict[this.lang.currentLang]
     }
 
-    constructor() {
-        this.init()
-
-        makeObservable(this, {
-            isServerAvailable: true,
-            appDomRect: true,
-            windowContent: true,
-            notification: true,
-
-            setIsServerAvailable: action,
-        })
-    }
-
-    init() {
+    async init() {
         this.initTheme()
         this.initLanguage()
         this.subscribe()
@@ -86,7 +87,7 @@ export class AppController {
     }
 
     onResize = () => {
-        this.setWindowWidth(document.body.getBoundingClientRect())
+        this.setAppDomRect(document.body.getBoundingClientRect())
     }
 
 
@@ -124,11 +125,15 @@ export class AppController {
     }
 
     // endregion Theme
-
-
     kickTheServer = async () => {
-        const res = await commonServerAPI.serverAccess()
-        this.setIsServerAvailable(!res.error)
+        this.setIsServerAvailable(await this.serverService.isAvailable())
+    }
+
+    request: typeof request = (...[src, options]: Parameters<typeof request>) => {
+        options = options || {}
+        options.headers = options?.headers || {}
+        options.headers.language = this.lang.currentLang
+        return request(src, options)
     }
 
 

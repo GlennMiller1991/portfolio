@@ -83,4 +83,14 @@ export class Validator<T> implements iValidator<T> {
         }
         return resError
     }
+
+    checkEmptiness = (): boolean => {
+        let isFieldEmpty: boolean = true
+        const keys = Object.keys(this.obj) as Array<keyof T>
+        for (let key of keys) {
+            isFieldEmpty = this.obj[key] === undefined || this.obj[key] === null || this.obj[key] === ''
+            if (!isFieldEmpty) return false
+        }
+        return true
+    }
 }

@@ -1,44 +1,52 @@
-import {ChangeEvent, useCallback, useState, FocusEvent, useEffect} from 'react'
-import {tValidator} from '../types/types'
+import {ChangeEvent, useCallback, useState, FocusEvent} from 'react'
 import {tObjectType, Validator} from '../validators/Validator'
 
 
-type tState<T> = {
+type IState<T> = {
     data: tObjectType<T>,
-    resError: string | undefined
+    error: string,
+    touched: boolean,
+    empty: boolean,
 }
 export const useFieldState = <T>(validator: Validator<T>): [
-    tState<T>,
+    IState<T>,
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
     () => void,
     (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void,
 ] => {
-    const [state, setState] = useState<tState<T>>({
-        data: validator.getObject(),
-        resError: undefined
+    const [state, setState] = useState<IState<T>>(() => {
+        return {
+            data: validator.getObject(),
+            error: validator.checkObject() || '',
+            touched: false,
+            empty: validator.checkEmptiness()
+        }
     })
 
     const onChange = useCallback((event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const field = event.currentTarget.dataset.name as keyof T
         const value = event.currentTarget.value.trimStart()
         setState(prev => {
-            const newState = {...prev, data: {...prev.data, [field]: value}}
+            const newState = {
+                ...prev,
+                data: {...prev.data, [field]: value},
+                touched: true,
+                empty: validator.checkEmptiness()
+            }
             validator.updateObject(newState.data)
             return newState
         })
     }, [])
 
-    const checkFields = useCallback(() => {
+    const onBlur = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setState((prev) => {
             return {
                 ...prev,
-                resError: validator.checkObject()
+                error: validator.checkObject() || '',
+                touched: true,
+                empty: validator.checkEmptiness()
             }
         })
-        return validator.checkObject()
-    }, [])
-    const onBlur = useCallback((event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        checkFields()
     }, [])
 
     const clearState = useCallback(() => {
@@ -49,12 +57,13 @@ export const useFieldState = <T>(validator: Validator<T>): [
                 obj[key] = ''
             }
             validator.updateObject(obj)
-            return {data: obj, resError: undefined}
+            return {
+                data: obj,
+                error: validator.checkObject() || '',
+                touched: false,
+                empty: validator.checkEmptiness()
+            }
         })
-    }, [])
-
-    useEffect(() => {
-        checkFields()
     }, [])
 
     return [state, onChange, clearState, onBlur]

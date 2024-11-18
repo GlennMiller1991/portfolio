@@ -1,0 +1,1 @@
+export type INotificationType = 'warning' | 'error' | 'success'

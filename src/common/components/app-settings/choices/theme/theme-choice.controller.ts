@@ -1,6 +1,6 @@
 import React from "react";
 import {Angle, AngleUnits, IPoint2} from "@fbltd/math";
-import {Theme} from "../../../../../app/infra/theme";
+import {Theme} from "../../../../../app/theme/theme";
 
 export class ThemeChoiceController {
 

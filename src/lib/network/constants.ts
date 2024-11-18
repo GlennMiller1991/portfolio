@@ -14,7 +14,6 @@ export const REQUEST_MODES = {
 
 export const REQUEST_HEADERS = {
     CONTENT_TYPE: 'content-type',
-    LANGUAGE: 'language',
 } as const
 
 export const CONTENT_TYPES = {

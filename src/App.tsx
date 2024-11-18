@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
 import './index.css'
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
-import {Alert} from './common/components/Alert/Alert'
+import {NotificationContainer} from './common/components/notification/notification-container'
 import {observer} from "mobx-react-lite";
 import {Route, Routes} from "react-router-dom";
 import {Portfolio} from "./pages/portfolio/portfolio";
 import {AppContext} from "./app/app.context";
-import {AppController} from "./app/infra/app.controller";
+import {AppController} from "./app/app.controller";
 
 export const App = observer(() => {
 
@@ -28,14 +28,8 @@ export const App = observer(() => {
                         }
                     </WindowWrapper>
                 }
-                {
-                    app.notification &&
-                    <Alert>
-                        {
-                            app.notification
-                        }
-                    </Alert>
-                }
+
+                <NotificationContainer controller={app.notificationsQueue}/>
             </div>
         </AppContext.Provider>
     );

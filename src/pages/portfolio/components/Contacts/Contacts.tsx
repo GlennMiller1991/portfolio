@@ -3,27 +3,26 @@ import commonStyles from '../../../../common/styles/common.module.scss'
 import styles from './Contacts.module.scss'
 import {Input} from '../../../../common/components/Input/Input'
 import {setClasses} from '../../../../common/utils/setClasses'
-import {Button} from '../../../../common/components/Button/Button'
+import {Button} from '../../../../common/components/button/Button'
 import {useFieldState} from '../../../../common/customHooks/useFieldState'
 import {tObjectValidators, Validator} from '../../../../common/validators/Validator'
 import {emailRegexp} from '../../../../common/constants/regexps'
-import en from './../../../../app/infra/dictionary/en.json'
-
+import en from '../../../../app/dictionary/en.json'
 import {IMessage} from "../../../../models/message.model";
 import {MessageService} from "../../../../services/message/message.service";
 import {useAppContext} from "../../../../app/app.context";
-
+import {Notification} from "../../../../app/notification/notification";
 
 export const Contacts = React.memo(() => {
     const app = useAppContext()
-    const [service] = useState(() => new MessageService(app.lang))
+    const [service] = useState(() => new MessageService(app))
 
     const validator = useMemo(() => {
         const loginParams: IMessage = {
-            email: 'email@mail.ru',
-            author: 'author',
-            subject: 'subject',
-            body: 'body',
+            email: '',
+            author: '',
+            subject: '',
+            body: '',
         }
         const validator = new Validator<IMessage>(loginParams)
         const validators: tObjectValidators<IMessage> = {
@@ -58,7 +57,6 @@ export const Contacts = React.memo(() => {
         return validator
     }, [])
     const [state, onChange, clearState, onBlur] = useFieldState<IMessage>(validator)
-
 
     return (
         <div id={en.sections.contacts} className={styles.wrapper}>
@@ -98,15 +96,22 @@ export const Contacts = React.memo(() => {
                            name={'Message'}
                     />
                     <div className={setClasses(styles.submit, 'flex')}>
-                        <Button text={state.resError || 'Send message'} disabled={!!state.resError}
+                        <Button text={(state.touched && !state.empty && state.error) ? state.error : 'Send message'}
+                                disabled={!!state.error}
                                 onClick={async () => {
+                                    const notification = new Notification(new Date().valueOf())
+
                                     try {
                                         await service.create(state.data)
-                                        app.setNotification(app.dictionary.messages.delivered)
+                                        notification.message = app.dictionary.messages.delivered
+                                        notification.type = 'success'
                                         clearState()
                                     } catch ({message}) {
-                                        app.setNotification(app.dictionary.messages.notDelivered)
+                                        notification.message = app.dictionary.messages.notDelivered
+                                        notification.type = 'error'
                                     }
+
+                                    app.notificationsQueue.add(notification)
                                 }}
                         />
                     </div>

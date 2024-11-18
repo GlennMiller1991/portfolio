@@ -1,5 +1,5 @@
 import {Circle, StraightLine} from "@fbltd/math";
-import {Language} from "../../../../../app/infra/language";
+import {Language} from "../../../../../app/language/language";
 
 export class LanguageChoiceController {
     circle = new Circle([0, 0], 45)

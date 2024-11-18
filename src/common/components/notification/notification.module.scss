@@ -1,0 +1,52 @@
+.container {
+  pointer-events: none;
+  position: fixed;
+  background: transparent;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+}
+
+.notification {
+  position: absolute;
+  bottom: 0;
+  transform: none;
+  font-size: 1rem;
+  padding: 1rem;
+  color: var(--color-theme);
+  padding: 1rem;
+  font-family: var(--font-secondary);
+  background: var(--color-dark-primary);
+  height: max-content;
+  width: 100%;
+}
+
+.animatedAppearance {
+  animation: appear 200ms ease-out;
+}
+
+.animatedDisappearance {
+  animation: disappear 200ms ease-out;
+}
+
+.closeBtn {
+  position: absolute;
+  right: 0;
+  top: 0;
+  transform: translate(-50%, 50%);
+  background: inherit;
+}
+
+@keyframes appear {
+  from {
+    transform: translate(0, 100%);
+  }
+}
+
+@keyframes disappear {
+  to {
+    transform: translate(0, 100%);
+  }
+}

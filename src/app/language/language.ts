@@ -1,5 +1,5 @@
 import {action, makeObservable} from "mobx";
-import {ILanguages} from "./app.controller";
+import {ILanguages} from "../app.controller";
 
 export class Language<T extends string = ILanguages> {
     currentLang: T

@@ -1,5 +1,5 @@
 import {action, makeObservable} from "mobx";
-import en from '../../../../../src/app/infra/dictionary/en.json'
+import en from '../../../../app/dictionary/en.json'
 
 export class HeaderController {
     isUpBtnShown = false

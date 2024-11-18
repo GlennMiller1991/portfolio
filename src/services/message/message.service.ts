@@ -1,24 +1,20 @@
 import {IMessageDto} from "./contracts";
 import {IMessage} from "../../models/message.model";
-import {request} from "../../lib/network/request";
 import {urls} from "../../app/constants";
 import {METHODS} from "../../lib/network/constants";
-import {Language} from "../../app/infra/language";
+import {AppController} from "../../app/app.controller";
 
 export class MessageService {
     base = urls.bases.remote
 
-    constructor(private lang: Language) {
+    constructor(private app: AppController) {
 
     }
 
     async create(message: IMessage) {
-        const response = await request<IMessageDto>(`${this.base}${urls.endpoints.messages}`, {
+        const response = await this.app.request<IMessageDto>(`${this.base}${urls.endpoints.messages}`, {
             method: METHODS.POST,
             body: MessageService.toServer(message),
-            headers: {
-                language: this.lang.currentLang
-            }
         })
 
         if (response.data) {
@@ -40,7 +36,7 @@ export class MessageService {
 
     static toServer(obj: IMessage): IMessageDto {
         return {
-            Id: obj.id || new Date().toISOString(),
+            Id: obj.id,
             Author: obj.author,
             Subject: obj.subject,
             Body: obj.body,

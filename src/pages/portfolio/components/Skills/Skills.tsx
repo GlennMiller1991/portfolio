@@ -3,7 +3,7 @@ import styles from './Skills.module.scss'
 import commonStyles from '../../../../common/styles/common.module.scss'
 import {Skill} from "./Skill/Skill";
 import { skillsEntities} from "../../../../app/constants";
-import en from './../../../../app/infra/dictionary/en.json'
+import en from '../../../../app/dictionary/en.json'
 
 export const Skills = React.memo(() => {
     return (

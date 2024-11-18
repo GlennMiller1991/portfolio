@@ -9,7 +9,7 @@ import testJob from './../../../../assets/pic/testJob.png'
 import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.png'
 import map from './../../../../assets/pic/map.png'
 import graph from './../../../../assets/pic/graph.jpg'
-import en from './../../../../app/infra/dictionary/en.json'
+import en from '../../../../app/dictionary/en.json'
 
 export const Projects = React.memo(() => {
     const projectEntities = useMemo(() => {

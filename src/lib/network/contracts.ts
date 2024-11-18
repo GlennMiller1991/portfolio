@@ -15,11 +15,10 @@ export type IRequestOptions = {
     body: Record<string, any>,
     headers: Partial<{
         -readonly [Prop in keyof typeof REQUEST_HEADERS as typeof REQUEST_HEADERS[Prop]]: IRequestHeadersTypes[typeof REQUEST_HEADERS[Prop]]
-    }>
+    }> & Record<string, string>
 }
 
 export type IRequestHeadersTypes = {
     [REQUEST_HEADERS.CONTENT_TYPE]: typeof CONTENT_TYPES.application.json,
-    [REQUEST_HEADERS.LANGUAGE]: string
 }
 
