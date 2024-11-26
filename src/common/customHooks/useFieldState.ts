@@ -30,7 +30,6 @@ export const useFieldState = <T>(validator: Validator<T>): [
             const newState = {
                 ...prev,
                 data: {...prev.data, [field]: value},
-                touched: true,
                 empty: validator.checkEmptiness()
             }
             validator.updateObject(newState.data)

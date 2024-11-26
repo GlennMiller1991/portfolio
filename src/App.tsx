@@ -3,7 +3,6 @@ import './index.css'
 import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {NotificationContainer} from './common/components/notification/notification-container'
 import {observer} from "mobx-react-lite";
-import {Route, Routes} from "react-router-dom";
 import {Portfolio} from "./pages/portfolio/portfolio";
 import {AppContext} from "./app/app.context";
 import {AppController} from "./app/app.controller";
@@ -17,9 +16,7 @@ export const App = observer(() => {
     return (
         <AppContext.Provider value={app}>
             <div>
-                <Routes>
-                    <Route path={'/*'} element={<Portfolio/>}/>
-                </Routes>
+                <Portfolio/>
                 {
                     app.windowContent &&
                     <WindowWrapper>
