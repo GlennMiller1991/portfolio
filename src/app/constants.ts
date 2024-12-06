@@ -100,7 +100,7 @@ export const skillsEntities = [
 
 export const urls = {
     bases: {
-        remote: 'http://localhost:5056/api/v1',
+        remote: 'https://xn----7sbanedmtdn2babzy.xn--p1ai/api/v1',
     },
     endpoints: {
         messages: '/messages'

@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import styles from './Nava.module.scss'
-import {NavLink} from 'react-router-dom';
 
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
@@ -37,6 +36,7 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
         <div className={styles.nava}>
             {/* Main */}
             <LinkWrapper isActive={currentAnchor === dict.sections.main}
+                         anchor={dict.sections.main}
                          onClick={() => controller.scrollTo(dict.sections.main)}>
                 {
                     appWidth < 1000 ?
@@ -47,6 +47,7 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
             {/* Skills */}
             <LinkWrapper isActive={currentAnchor === dict.sections.skills}
+                         anchor={dict.sections.skills}
                          onClick={() => controller.scrollTo(dict.sections.skills)}>
                 {
                     appWidth < 1000 ?
@@ -57,6 +58,7 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
             {/* Projects */}
             <LinkWrapper isActive={currentAnchor === dict.sections.projects}
+                         anchor={dict.sections.projects}
                          onClick={() => controller.scrollTo(dict.sections.projects)}>
                 {
                     appWidth < 1000 ?
@@ -69,6 +71,7 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
             {
                 app.isServerAvailable &&
                 <LinkWrapper isActive={currentAnchor === dict.sections.contacts}
+                             anchor={dict.sections.contacts}
                              onClick={() => controller.scrollTo(dict.sections.contacts)}>
                     {
                         appWidth < 1000 ?
@@ -92,22 +95,25 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 type ILinkWrapper = {
     isActive?: boolean,
     onClick: () => void,
+    anchor?: string,
 }
 export const LinkWrapper: React.FC<React.PropsWithChildren<ILinkWrapper>> = React.memo(({
                                                                                             isActive,
                                                                                             onClick,
-                                                                                            children
+                                                                                            anchor,
+                                                                                            children,
                                                                                         }) => {
     return (
         <div className={styles.linkContainer}>
-            <NavLink
+            <a
                 className={setClasses(styles.link, isActive && styles.active)}
-                onClick={onClick}
-                to={`#${dict.sections.contacts}`}>
+                onClick={(event) => {
+                    onClick()
+                }}>
                 {
                     children
                 }
-            </NavLink>
+            </a>
             <div
                 className={setClasses(styles.underMenu, isActive && styles.underActive)}/>
         </div>

@@ -13,6 +13,7 @@ export const App = observer(() => {
 
 
     if (!app.isAppReady) return null
+
     return (
         <AppContext.Provider value={app}>
             <div>
