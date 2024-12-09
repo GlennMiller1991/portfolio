@@ -72,6 +72,7 @@ export class AppController {
     async init() {
         this.initTheme()
         this.initLanguage()
+        await this.initServerAccessibility()
         this.subscribe()
     }
 
@@ -81,9 +82,6 @@ export class AppController {
 
         this.resizeObserver = new ResizeObserver(this.onResize)
         this.resizeObserver.observe(document.body)
-
-        setInterval(this.kickTheServer, 60000)
-        this.kickTheServer()
     }
 
     onResize = () => {
@@ -119,13 +117,15 @@ export class AppController {
         this.theme.switchColor(color)
     }
 
+
     applyTheme(color: Color) {
         document.documentElement.style.setProperty('--color-theme', color.toString('rgba'))
         this.ls.setItem('theme', color.toString('rgba'))
     }
 
     // endregion Theme
-    kickTheServer = async () => {
+
+    async initServerAccessibility() {
         this.setIsServerAvailable(await this.serverService.isAvailable())
     }
 
