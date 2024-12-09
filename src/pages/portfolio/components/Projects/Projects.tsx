@@ -17,9 +17,9 @@ export const Projects = React.memo(() => {
             {
                 title: 'TypeScript Portfolio',
                 style: {backgroundImage: `url(${portfolioPic})`},
-                link: 'https://glennmiller1991.github.io/portfolio_ts/',
+                link: 'https://github.com/GlennMiller1991/portfolio',
                 tags: [
-                    'TypeScript', 'Redux', 'SCSS', 'HTML', 'CSS3', 'Hooks'
+                    'TypeScript', 'MobX', 'SCSS', 'HTML', 'CSS3', 'Hooks'
                 ],
             },
             {
