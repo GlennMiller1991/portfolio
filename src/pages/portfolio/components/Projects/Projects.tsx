@@ -8,7 +8,7 @@ import socnet from './../../../../assets/pic/socnet.png'
 import testJob from './../../../../assets/pic/testJob.png'
 import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.png'
 import map from './../../../../assets/pic/map.png'
-import graph from './../../../../assets/pic/graph.jpg'
+import graph from './../../../../assets/pic/graph.webp'
 import en from '../../../../app/dictionary/en.json'
 
 export const Projects = React.memo(() => {

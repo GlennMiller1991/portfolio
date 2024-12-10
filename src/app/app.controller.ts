@@ -72,7 +72,7 @@ export class AppController {
     async init() {
         this.initTheme()
         this.initLanguage()
-        await this.initServerAccessibility()
+        this.initServerAccessibility()
         this.subscribe()
     }
 

@@ -1,11 +1,11 @@
-import React, {useState} from 'react';
+import React, {Suspense, useState} from 'react';
 import './index.css'
-import {WindowWrapper} from './common/components/WindowWrapper/WindowWrapper'
 import {NotificationContainer} from './common/components/notification/notification-container'
 import {observer} from "mobx-react-lite";
 import {Portfolio} from "./pages/portfolio/portfolio";
 import {AppContext} from "./app/app.context";
 import {AppController} from "./app/app.controller";
+import {WindowWrapperLazy} from "./common/components/window-wrapper/window-wrapper-lazy";
 
 export const App = observer(() => {
 
@@ -20,11 +20,13 @@ export const App = observer(() => {
                 <Portfolio/>
                 {
                     app.windowContent &&
-                    <WindowWrapper>
-                        {
-                            app.windowContent
-                        }
-                    </WindowWrapper>
+                    <Suspense>
+                        <WindowWrapperLazy>
+                            {
+                                app.windowContent
+                            }
+                        </WindowWrapperLazy>
+                    </Suspense>
                 }
 
                 <NotificationContainer controller={app.notificationsQueue}/>
