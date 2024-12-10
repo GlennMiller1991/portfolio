@@ -7,7 +7,7 @@ import bookPic from './../../../../assets/pic/book.png'
 import socnet from './../../../../assets/pic/socnet.png'
 import testJob from './../../../../assets/pic/testJob.png'
 import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.png'
-import map from './../../../../assets/pic/map.png'
+import map from './../../../../assets/pic/map.webp'
 import graph from './../../../../assets/pic/graph.webp'
 import en from '../../../../app/dictionary/en.json'
 
