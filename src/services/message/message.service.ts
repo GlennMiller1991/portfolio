@@ -31,7 +31,8 @@ export class MessageService {
             subject: dto.Subject,
             body: dto.Body,
             email: dto.Email,
-        }
+            telegram: dto.Telegram,
+        } as IMessage;
     }
 
     static toServer(obj: IMessage): IMessageDto {
@@ -41,6 +42,7 @@ export class MessageService {
             Subject: obj.subject,
             Body: obj.body,
             Email: obj.email,
-        }
+            Telegram: obj.telegram,
+        } as IMessageDto
     }
 }

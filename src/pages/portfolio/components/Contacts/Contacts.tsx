@@ -13,23 +13,26 @@ import {MessageService} from "../../../../services/message/message.service";
 import {useAppContext} from "../../../../app/app.context";
 import {Notification} from "../../../../app/notification/notification";
 
+type IContactForm = Omit<IMessage, 'email' | 'telegram'> & {
+    backRoute: string
+}
 export const Contacts = React.memo(() => {
     const app = useAppContext()
     const [service] = useState(() => new MessageService(app))
 
     const validator = useMemo(() => {
-        const loginParams: IMessage = {
-            email: '',
+        const loginParams: IContactForm = {
             author: '',
             subject: '',
             body: '',
+            backRoute: '',
         }
-        const validator = new Validator<IMessage>(loginParams)
-        const validators: tObjectValidators<IMessage> = {
-            email: {
+        const validator = new Validator<IContactForm>(loginParams)
+        const validators: tObjectValidators<IContactForm> = {
+            backRoute: {
                 validators: [
                     validator.required(),
-                    validator.checkMaxStringLength(20),
+                    validator.checkMaxStringLength(40),
                     validator.checkTemplate(emailRegexp),
                 ]
             },
@@ -56,7 +59,7 @@ export const Contacts = React.memo(() => {
         validator.updateValidators(validators)
         return validator
     }, [])
-    const [state, onChange, clearState, onBlur] = useFieldState<IMessage>(validator)
+    const [state, onChange, clearState, onBlur] = useFieldState<IContactForm>(validator)
 
     return (
         <div id={en.sections.contacts} className={styles.wrapper}>
@@ -76,9 +79,9 @@ export const Contacts = React.memo(() => {
                     <Input onChange={onChange}
                            containerClass={styles.email}
                            onBlur={onBlur}
-                           data-name={'email'}
-                           value={state.data.email}
-                           name={'Email'}
+                           data-name={'backRoute'}
+                           value={state.data.backRoute}
+                           name={'Return address (email or telegram)'}
                     />
                     <Input onChange={onChange}
                            containerClass={styles.subject}
@@ -102,7 +105,7 @@ export const Contacts = React.memo(() => {
                                     const notification = new Notification(new Date().valueOf())
 
                                     try {
-                                        await service.create(state.data)
+                                        await service.create({...state.data, email: state.data.backRoute})
                                         notification.message = app.dictionary.messages.delivered
                                         notification.type = 'success'
                                         clearState()

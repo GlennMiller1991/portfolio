@@ -7,10 +7,8 @@ export type tObjectValidators<T> = {
     }
 }
 
-export interface iValidator<T> {
-}
 
-export class Validator<T> implements iValidator<T> {
+export class Validator<T> {
     constructor(private obj: tObjectType<T>, private validators?: tObjectValidators<T>) {
         this.obj = obj
         this.validators = validators

@@ -1,7 +1,4 @@
-export type IMessageDto = {
-    Id?: string,
-    Author: string,
-    Email: string,
-    Subject: string,
-    Body: string
-}
+import {IMessage} from "../../models/message.model";
+import {ICapitalizeObject} from "../../lib/utility-types";
+
+export type IMessageDto = ICapitalizeObject<IMessage>;
