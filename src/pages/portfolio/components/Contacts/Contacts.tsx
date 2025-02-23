@@ -12,11 +12,12 @@ import {MessageService} from "../../../../services/message/message.service";
 import {useAppContext} from "../../../../app/app.context";
 import {Notification} from "../../../../app/notification/notification";
 import {useFieldState} from "../../../../lib/form/use-field-state";
+import {observer} from "mobx-react-lite";
 
 type IContactForm = Omit<IMessage, 'email' | 'telegram'> & {
     backRoute: string
 }
-export const Contacts = React.memo(() => {
+export const Contacts = observer(() => {
     const app = useAppContext()
     const [service] = useState(() => new MessageService(app))
 

@@ -20,7 +20,7 @@ export const Footer = React.memo(() => {
                     <Socnet link={'https://wa.me/89150681485'} icon={SiWhatsapp}/>
                 </div>
                 <p className={styles.copyright}>
-                    2024© React Developer Resume. Developed and Designed by Alexandr Basalov
+                    2025© React Developer Resume. Developed and Designed by Alexandr Basalov
                 </p>
             </div>
         </div>
