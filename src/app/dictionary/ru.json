@@ -1,4 +1,11 @@
 {
+  "validatorMessage": {
+    "email": "Email: email@email.com",
+    "telegram": "tg: @aA1_",
+    "required": "Заполните необходимые поля",
+    "minLength": "Минимальное число символов",
+    "maxLength": "Максимальное число символов"
+  },
   "messages": {
     "delivered": "Сообщение доставлено",
     "notDelivered": "Сообщение не доставлено"
@@ -12,6 +19,11 @@
     "contacts": "контакты",
     "projects": "проекты",
     "settings": "настройки"
+  },
+  "contacts": {
+    "formFields": {
+      "name": "Имя"
+    }
   },
   "typedString": [
     "Frontend",

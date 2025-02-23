@@ -32,7 +32,7 @@ export const Contacts = observer(() => {
         const validators: tObjectValidators<IContactForm> = {
             backRoute: {
                 validators: [
-                    validator.required(),
+                    validator.required(app.dictionary.validatorMessage.required),
                     validator.checkMaxStringLength(40),
                     validator.checkCustom((value: string) => {
                         // TODO бэк не готов
@@ -40,28 +40,28 @@ export const Contacts = observer(() => {
                         // let isTelegramLink = value.startsWith('@');
                         let template = isTelegramLink ? telegramRegexp : emailRegexp
                         let isError = !!validator.checkTemplate(template)('backRoute')
-                        if (!isError) return
-                        return 'Email: email@email.com'
+                        if (!isError) return;
+                        return app.dictionary.validatorMessage.email;
                         // return 'Tg: @aA1_ ' + 'email: email@email.com'
                     })
                 ]
             },
             author: {
                 validators: [
-                    validator.required(),
-                    validator.checkMaxStringLength(20),
+                    validator.required(app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(20, `${app.dictionary.contacts.formFields.name}. ${app.dictionary.validatorMessage.maxLength}: ${20}`),
                 ]
             },
             subject: {
                 validators: [
-                    validator.required(),
-                    validator.checkMaxStringLength(150)
+                    validator.required(app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(150, `Subject. ${app.dictionary.validatorMessage.maxLength}: ${150}`)
                 ]
             },
             body: {
                 validators: [
-                    validator.required(),
-                    validator.checkMaxStringLength(1500)
+                    validator.required(app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(1500, `Body. ${app.dictionary.validatorMessage.maxLength}: ${1500}`)
                 ]
             }
 
@@ -84,7 +84,7 @@ export const Contacts = observer(() => {
                            onBlur={formState.onBlur}
                            data-name={'author'}
                            value={formState.data.author}
-                           name={'Name'}
+                           name={app.dictionary.contacts.formFields.name}
                     />
                     <Input onChange={formState.onChange}
                            containerClass={styles.email}
@@ -121,6 +121,7 @@ export const Contacts = observer(() => {
                                     notification.type = 'success'
                                     formState.clearState()
                                 } catch (err) {
+                                    console.log(app.dictionary.messages.notDelivered);
                                     notification.message = app.dictionary.messages.notDelivered
                                     notification.type = 'error'
                                 }
