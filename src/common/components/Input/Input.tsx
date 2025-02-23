@@ -1,5 +1,5 @@
 import React from 'react'
-import {setClasses} from '../../utils/setClasses'
+import {setClasses} from '../../../lib/common/set-classes'
 import styles from './Input.module.scss'
 
 type tInput = {

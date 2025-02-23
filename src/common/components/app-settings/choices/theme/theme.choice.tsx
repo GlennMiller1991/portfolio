@@ -1,6 +1,6 @@
 import React, {MouseEventHandler, useState} from "react";
 import {observer} from "mobx-react-lite";
-import {setClasses} from "../../../../utils/setClasses";
+import {setClasses} from "../../../../../lib/common/set-classes";
 import {Caption, Choicer} from "../../shared/choicer";
 import {ThemeChoiceController} from "./theme-choice.controller";
 import styles from './../../settings.module.scss'

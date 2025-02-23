@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "../settings.module.scss";
-import {setClasses} from "../../../utils/setClasses";
+import {setClasses} from "../../../../lib/common/set-classes";
 import {Angle, AngleUnits} from "@fbltd/math";
 
 type IChoicer = {

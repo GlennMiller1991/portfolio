@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import styles from './WindowWrapper.module.scss'
-import {setClasses} from '../../utils/setClasses'
+import {setClasses} from '../../../lib/common/set-classes'
 import {DistortedBackground} from "./background/view";
 import {IoCloseOutline} from "react-icons/io5";
 

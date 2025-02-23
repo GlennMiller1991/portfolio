@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './notification.module.scss'
-import {setClasses} from '../../utils/setClasses'
+import {setClasses} from '../../../lib/common/set-classes'
 import {observer} from "mobx-react-lite";
 import {CgClose} from "react-icons/cg";
 import {NotificationQueue} from "../../../app/notification/notification-queue";

@@ -1,6 +1,6 @@
 import React from 'react'
 import styles from './Row.module.scss'
-import {setClasses} from "../../utils/setClasses";
+import {setClasses} from "../../../lib/common/set-classes";
 
 type tRow = {
     children: React.ReactNode

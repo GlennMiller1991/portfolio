@@ -7,7 +7,6 @@ export type tObjectValidators<T> = {
     }
 }
 
-
 export class Validator<T> {
     constructor(private obj: tObjectType<T>, private validators?: tObjectValidators<T>) {
         this.obj = obj
@@ -62,7 +61,14 @@ export class Validator<T> {
         }
     }
 
-    checkField = (key: keyof T, message?: string, args?: any) => {
+    checkCustom(f: (value: string) => string | undefined) {
+        return (key: keyof T) => {
+            return f(this.obj[key])
+        }
+    }
+
+
+    private checkField = (key: keyof T, message?: string, args?: any) => {
         if (this.validators) {
             for (let i = 0; i < this.validators[key].validators.length; i++) {
                 const res = this.validators[key].validators[i](key, message, args)

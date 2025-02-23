@@ -4,7 +4,7 @@ import styles from './Nava.module.scss'
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
-import {setClasses} from "../../../../../common/utils/setClasses";
+import {setClasses} from "../../../../../lib/common/set-classes";
 import {observer} from "mobx-react-lite";
 import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
 import dict from '../../../../../app/dictionary/en.json'

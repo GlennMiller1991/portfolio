@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styles from './Header.module.scss'
 import {Nava} from "./Nava/Nava";
 import {observer} from "mobx-react-lite";
-import {setClasses} from "../../../../common/utils/setClasses";
+import {setClasses} from "../../../../lib/common/set-classes";
 import {Up} from "../Up/Up";
 import {HeaderController} from "./header.controller";
 import {AppSettings} from "../../../../common/components/app-settings/app-settings";

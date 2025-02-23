@@ -1,6 +1,6 @@
 import React from "react";
 import {observer} from "mobx-react-lite";
-import {setClasses} from "../../../utils/setClasses";
+import {setClasses} from "../../../../lib/common/set-classes";
 import styles from "../settings.module.scss";
 import {s} from "../../../../app/constants";
 import {IPoint2} from "@fbltd/math";

@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {observer} from "mobx-react-lite";
-import {setClasses} from "../../../../utils/setClasses";
+import {setClasses} from "../../../../../lib/common/set-classes";
 import {s} from "../../../../../app/constants";
 import {Caption, Choicer} from "../../shared/choicer";
 import {LanguageChoiceController} from "./language-choice.controller";

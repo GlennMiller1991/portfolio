@@ -2,16 +2,16 @@ import React, {useMemo, useState} from 'react';
 import commonStyles from '../../../../common/styles/common.module.scss'
 import styles from './Contacts.module.scss'
 import {Input} from '../../../../common/components/Input/Input'
-import {setClasses} from '../../../../common/utils/setClasses'
+import {setClasses} from '../../../../lib/common/set-classes'
 import {Button} from '../../../../common/components/button/Button'
-import {useFieldState} from '../../../../common/customHooks/useFieldState'
-import {tObjectValidators, Validator} from '../../../../common/validators/Validator'
-import {emailRegexp} from '../../../../common/constants/regexps'
+import {tObjectValidators, Validator} from '../../../../lib/form/validator'
+import {emailRegexp, telegramRegexp} from '../../../../lib/common/regexps'
 import en from '../../../../app/dictionary/en.json'
 import {IMessage} from "../../../../models/message.model";
 import {MessageService} from "../../../../services/message/message.service";
 import {useAppContext} from "../../../../app/app.context";
 import {Notification} from "../../../../app/notification/notification";
+import {useFieldState} from "../../../../lib/form/use-field-state";
 
 type IContactForm = Omit<IMessage, 'email' | 'telegram'> & {
     backRoute: string
@@ -33,7 +33,16 @@ export const Contacts = React.memo(() => {
                 validators: [
                     validator.required(),
                     validator.checkMaxStringLength(40),
-                    validator.checkTemplate(emailRegexp),
+                    validator.checkCustom((value: string) => {
+                        // TODO бэк не готов
+                        let isTelegramLink = false;
+                        // let isTelegramLink = value.startsWith('@');
+                        let template = isTelegramLink ? telegramRegexp : emailRegexp
+                        let isError = !!validator.checkTemplate(template)('backRoute')
+                        if (!isError) return
+                        return 'Email: email@email.com'
+                        // return 'Tg: @aA1_ ' + 'email: email@email.com'
+                    })
                 ]
             },
             author: {
@@ -59,7 +68,7 @@ export const Contacts = React.memo(() => {
         validator.updateValidators(validators)
         return validator
     }, [])
-    const [state, onChange, clearState, onBlur] = useFieldState<IContactForm>(validator)
+    const formState = useFieldState<IContactForm>(validator)
 
     return (
         <div id={en.sections.contacts} className={styles.wrapper}>
@@ -69,53 +78,54 @@ export const Contacts = React.memo(() => {
                     CONTACTS
                 </h2>
                 <div className={styles.inputs}>
-                    <Input onChange={onChange}
+                    <Input onChange={formState.onChange}
                            containerClass={styles.name}
-                           onBlur={onBlur}
+                           onBlur={formState.onBlur}
                            data-name={'author'}
-                           value={state.data.author}
+                           value={formState.data.author}
                            name={'Name'}
                     />
-                    <Input onChange={onChange}
+                    <Input onChange={formState.onChange}
                            containerClass={styles.email}
-                           onBlur={onBlur}
+                           onBlur={formState.onBlur}
                            data-name={'backRoute'}
-                           value={state.data.backRoute}
+                           value={formState.data.backRoute}
                            name={'Return address (email or telegram)'}
                     />
-                    <Input onChange={onChange}
+                    <Input onChange={formState.onChange}
                            containerClass={styles.subject}
-                           onBlur={onBlur}
+                           onBlur={formState.onBlur}
                            data-name={'subject'}
-                           value={state.data.subject}
+                           value={formState.data.subject}
                            name={'Subject'}
                     />
-                    <Input onChange={onChange}
+                    <Input onChange={formState.onChange}
                            containerClass={styles.message}
                            asTextArea
-                           onBlur={onBlur}
+                           onBlur={formState.onBlur}
                            data-name={'body'}
-                           value={state.data.body}
+                           value={formState.data.body}
                            name={'Message'}
                     />
                     <div className={setClasses(styles.submit, 'flex')}>
-                        <Button text={(state.touched && !state.empty && state.error) ? state.error : 'Send message'}
-                                disabled={!!state.error}
-                                onClick={async () => {
-                                    const notification = new Notification(new Date().valueOf())
+                        <Button
+                            text={(formState.isAllTouched && formState.error) ? formState.error : 'Send message'}
+                            disabled={!!formState.error}
+                            onClick={async () => {
+                                const notification = new Notification(new Date().valueOf())
 
-                                    try {
-                                        await service.create({...state.data, email: state.data.backRoute})
-                                        notification.message = app.dictionary.messages.delivered
-                                        notification.type = 'success'
-                                        clearState()
-                                    } catch ({message}) {
-                                        notification.message = app.dictionary.messages.notDelivered
-                                        notification.type = 'error'
-                                    }
+                                try {
+                                    await service.create({...formState.data, email: formState.data.backRoute})
+                                    notification.message = app.dictionary.messages.delivered
+                                    notification.type = 'success'
+                                    formState.clearState()
+                                } catch (err) {
+                                    notification.message = app.dictionary.messages.notDelivered
+                                    notification.type = 'error'
+                                }
 
-                                    app.notificationsQueue.add(notification)
-                                }}
+                                app.notificationsQueue.add(notification)
+                            }}
                         />
                     </div>
                 </div>
