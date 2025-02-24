@@ -1,3 +1,6 @@
+import {IValidatorMessage} from "./contracts";
+import {getMessage} from "./utils";
+
 export type tObjectType<T> = {
     [property in keyof T]: string
 }
@@ -25,10 +28,10 @@ export class Validator<T> {
         return this.obj
     }
 
-    required = (message?: string) => {
+    required = (message?: IValidatorMessage) => {
         return (key: keyof T) => {
             if (this.obj[key]) return undefined
-            return message || `${String(key)} is required field`
+            return getMessage(`${String(key)} is required field`, message)
         }
     }
 
@@ -39,10 +42,10 @@ export class Validator<T> {
         }
     }
 
-    checkMaxStringLength = (length: number, message?: string) => {
+    checkMaxStringLength = (length: number, message?: IValidatorMessage) => {
         return (key: keyof T) => {
             if (this.obj[key].length <= length) return undefined
-            return message || `Field ${String(key)} is exceed maximum length`
+            return getMessage(`Field ${String(key)} is exceed maximum length`, message)
         }
     }
 

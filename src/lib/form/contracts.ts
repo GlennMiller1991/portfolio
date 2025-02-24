@@ -1,0 +1,1 @@
+export type IValidatorMessage = string | (() => string) | undefined;

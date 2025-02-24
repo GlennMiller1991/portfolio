@@ -22,8 +22,15 @@
   },
   "contacts": {
     "formFields": {
-      "name": "Name"
-    }
+      "name": "Name",
+      "backRoute": "Return address (email or telegram)",
+      "subject": "Subject",
+      "body": "Message"
+    },
+    "sendMsg": "Send message"
+  },
+  "footer": {
+    "copyright": "2025© Frontend Developer portfolio. Developed and designed by me"
   },
   "typedString": [
     "Frontend",

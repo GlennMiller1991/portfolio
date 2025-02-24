@@ -22,8 +22,15 @@
   },
   "contacts": {
     "formFields": {
-      "name": "Имя"
-    }
+      "name": "Имя",
+      "backRoute": "Обратный адрес (email или telegram)",
+      "subject": "Тема",
+      "body": "Сообщение"
+    },
+    "sendMsg": "Отправить"
+  },
+  "footer": {
+    "copyright": "2025© Портфолию фронт-енд разработчика. Придумано и разработано мной"
   },
   "typedString": [
     "Frontend",

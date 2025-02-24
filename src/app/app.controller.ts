@@ -46,7 +46,7 @@ export class AppController {
     }
 
     get dictionary() {
-        return this.dict.actual
+        return this.dict[this.lang.currentLang]
     }
 
     get isAppReady() {

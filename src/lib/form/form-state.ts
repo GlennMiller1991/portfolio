@@ -55,6 +55,10 @@ export class FormState<T extends Record<string, string>> {
     }
 
     onBlur = (event: FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const field = event.currentTarget.dataset.name as keyof T;
+        const value = event.currentTarget.value.trimStart();
+        const oldObj = this.validator.getObject();
+        if (value === oldObj[field]) return
         this.dispatcher?.({formState: this});
     }
 
@@ -63,8 +67,7 @@ export class FormState<T extends Record<string, string>> {
         let obj: Partial<T> = {}
         const keys = Object.keys(this.data)
         for (let key of keys) {
-            // @ts-ignore
-            obj[key] = ''
+            obj[key as keyof T] = '' as T[keyof T]
             this.touchState[key as keyof typeof this.touchState] = false;
         }
     }

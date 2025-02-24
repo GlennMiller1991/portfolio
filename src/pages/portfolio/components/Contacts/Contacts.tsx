@@ -32,8 +32,8 @@ export const Contacts = observer(() => {
         const validators: tObjectValidators<IContactForm> = {
             backRoute: {
                 validators: [
-                    validator.required(app.dictionary.validatorMessage.required),
-                    validator.checkMaxStringLength(40),
+                    validator.required(() => app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(40, () => `${app.dictionary.contacts.formFields.backRoute}. ${app.dictionary.validatorMessage.maxLength}: 40`),
                     validator.checkCustom((value: string) => {
                         // TODO бэк не готов
                         let isTelegramLink = false;
@@ -48,20 +48,20 @@ export const Contacts = observer(() => {
             },
             author: {
                 validators: [
-                    validator.required(app.dictionary.validatorMessage.required),
-                    validator.checkMaxStringLength(20, `${app.dictionary.contacts.formFields.name}. ${app.dictionary.validatorMessage.maxLength}: ${20}`),
+                    validator.required(() => app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(20, () => `${app.dictionary.contacts.formFields.name}. ${app.dictionary.validatorMessage.maxLength}: ${20}`),
                 ]
             },
             subject: {
                 validators: [
-                    validator.required(app.dictionary.validatorMessage.required),
-                    validator.checkMaxStringLength(150, `Subject. ${app.dictionary.validatorMessage.maxLength}: ${150}`)
+                    validator.required(() => app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(150, () => `${app.dictionary.contacts.formFields.subject}. ${app.dictionary.validatorMessage.maxLength}: ${150}`)
                 ]
             },
             body: {
                 validators: [
-                    validator.required(app.dictionary.validatorMessage.required),
-                    validator.checkMaxStringLength(1500, `Body. ${app.dictionary.validatorMessage.maxLength}: ${1500}`)
+                    validator.required(() => app.dictionary.validatorMessage.required),
+                    validator.checkMaxStringLength(1500, () => `${app.dictionary.contacts.formFields.body}. ${app.dictionary.validatorMessage.maxLength}: ${1500}`)
                 ]
             }
 
@@ -91,14 +91,14 @@ export const Contacts = observer(() => {
                            onBlur={formState.onBlur}
                            data-name={'backRoute'}
                            value={formState.data.backRoute}
-                           name={'Return address (email or telegram)'}
+                           name={app.dictionary.contacts.formFields.backRoute}
                     />
                     <Input onChange={formState.onChange}
                            containerClass={styles.subject}
                            onBlur={formState.onBlur}
                            data-name={'subject'}
                            value={formState.data.subject}
-                           name={'Subject'}
+                           name={app.dictionary.contacts.formFields.subject}
                     />
                     <Input onChange={formState.onChange}
                            containerClass={styles.message}
@@ -106,12 +106,12 @@ export const Contacts = observer(() => {
                            onBlur={formState.onBlur}
                            data-name={'body'}
                            value={formState.data.body}
-                           name={'Message'}
+                           name={app.dictionary.contacts.formFields.body}
                     />
                     <div className={setClasses(styles.submit, 'flex')}>
                         <Button
-                            text={(formState.isAllTouched && formState.error) ? formState.error : 'Send message'}
-                            disabled={!!formState.error}
+                            text={(formState.isAllTouched && formState.error) ? formState.error : app.dictionary.contacts.sendMsg}
+                            disabled={!formState.isAllTouched && !!formState.error}
                             onClick={async () => {
                                 const notification = new Notification(new Date().valueOf())
 
@@ -121,7 +121,6 @@ export const Contacts = observer(() => {
                                     notification.type = 'success'
                                     formState.clearState()
                                 } catch (err) {
-                                    console.log(app.dictionary.messages.notDelivered);
                                     notification.message = app.dictionary.messages.notDelivered
                                     notification.type = 'error'
                                 }
