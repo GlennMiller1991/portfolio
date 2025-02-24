@@ -70,5 +70,6 @@ export class FormState<T extends Record<string, string>> {
             obj[key as keyof T] = '' as T[keyof T]
             this.touchState[key as keyof typeof this.touchState] = false;
         }
+        this.validator.updateObject(obj as T)
     }
 }

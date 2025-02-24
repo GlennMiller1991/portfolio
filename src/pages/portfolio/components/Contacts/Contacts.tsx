@@ -35,14 +35,13 @@ export const Contacts = observer(() => {
                     validator.required(() => app.dictionary.validatorMessage.required),
                     validator.checkMaxStringLength(40, () => `${app.dictionary.contacts.formFields.backRoute}. ${app.dictionary.validatorMessage.maxLength}: 40`),
                     validator.checkCustom((value: string) => {
-                        // TODO бэк не готов
-                        let isTelegramLink = false;
-                        // let isTelegramLink = value.startsWith('@');
+                        // let isTelegramLink = false;
+                        let isTelegramLink = value.startsWith('@');
                         let template = isTelegramLink ? telegramRegexp : emailRegexp
                         let isError = !!validator.checkTemplate(template)('backRoute')
                         if (!isError) return;
-                        return app.dictionary.validatorMessage.email;
-                        // return 'Tg: @aA1_ ' + 'email: email@email.com'
+                        // return app.dictionary.validatorMessage.email;
+                        return 'Tg: @aA1_ ' + 'email: email@email.com'
                     })
                 ]
             },
@@ -116,7 +115,15 @@ export const Contacts = observer(() => {
                                 const notification = new Notification(new Date().valueOf())
 
                                 try {
-                                    await service.create({...formState.data, email: formState.data.backRoute})
+                                    const isTelegramLink = formState.data.backRoute.startsWith('@');
+                                    const data = formState.data;
+                                    await service.create({
+                                        author: data.author,
+                                        subject: data.subject,
+                                        body: data.body,
+                                        email: isTelegramLink ? undefined : data.backRoute,
+                                        telegram: isTelegramLink ? data.backRoute : undefined,
+                                    } as IMessage)
                                     notification.message = app.dictionary.messages.delivered
                                     notification.type = 'success'
                                     formState.clearState()
