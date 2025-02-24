@@ -111,7 +111,7 @@ export const Contacts = observer(() => {
                     <div className={setClasses(styles.submit, 'flex')}>
                         <Button
                             text={(formState.isAllTouched && formState.error) ? formState.error : app.dictionary.contacts.sendMsg}
-                            disabled={!formState.isAllTouched && !!formState.error}
+                            disabled={!formState.isAllTouched || !!formState.error}
                             onClick={async () => {
                                 const notification = new Notification(new Date().valueOf())
 
