@@ -1,4 +1,4 @@
-@import 'src/common/styles/templates.module';
+@use '../../../../common/styles/templates.module';
 
 $squareSize: 16px;
 
@@ -38,7 +38,7 @@ $squareSize: 16px;
         font-weight: 100;
         position: relative;
         font-size: 45px;
-        @include flexCenter(center);
+        @include templates.flexCenter(center);
         border: 1px solid var(--color-light-primary);
         margin: 0;
         padding: 15px 0;
@@ -50,8 +50,8 @@ $squareSize: 16px;
           width: $squareSize;
           height: $squareSize;
           position: absolute;
-          bottom: -($squareSize / 2);
-          right: -($squareSize / 2);
+          bottom: calc($squareSize / -2);
+          right: calc($squareSize / -2);
         }
 
       }

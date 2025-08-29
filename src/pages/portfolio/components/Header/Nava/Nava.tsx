@@ -4,30 +4,28 @@ import styles from './Nava.module.scss'
 import {BsFileEarmarkPerson} from "react-icons/bs";
 import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
-import {setClasses} from "../../../../../lib/common/set-classes";
+import {setClasses} from "@src/lib/common/set-classes";
 import {observer} from "mobx-react-lite";
-import {AppSettings} from "../../../../../common/components/app-settings/app-settings";
+import {AppSettings} from "@src/common/components/app-settings/app-settings";
 import dict from '../../../../../app/dictionary/en.json'
-import {useAppContext} from "../../../../../app/app.context";
+import {useAppContext} from "@src/app/app.context";
 
 type INava = {
     currentAnchor: string | undefined
 }
 
+export class NavigationPanelController {
+    scrollTo = (elementId: string) => {
+        const elem = document.getElementById(elementId)
+        elem && elem.scrollIntoView({
+            behavior: 'smooth'
+        })
+    }
+}
+
 export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
-    const [controller] = useState(() => {
-        class NavigationPanelController {
-            scrollTo = (elementId: string) => {
-                const elem = document.getElementById(elementId)
-                elem && elem.scrollIntoView({
-                    behavior: 'smooth'
-                })
-            }
-        }
-
-        return new NavigationPanelController()
-    })
+    const [controller] = useState(() => new NavigationPanelController())
     const app = useAppContext()
 
     const appWidth = app.appDomRect.width
@@ -36,7 +34,6 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
         <div className={styles.nava}>
             {/* Main */}
             <LinkWrapper isActive={currentAnchor === dict.sections.main}
-                         anchor={dict.sections.main}
                          onClick={() => controller.scrollTo(dict.sections.main)}>
                 {
                     appWidth < 1000 ?
@@ -47,7 +44,6 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
             {/* Skills */}
             <LinkWrapper isActive={currentAnchor === dict.sections.skills}
-                         anchor={dict.sections.skills}
                          onClick={() => controller.scrollTo(dict.sections.skills)}>
                 {
                     appWidth < 1000 ?
@@ -58,7 +54,6 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 
             {/* Projects */}
             <LinkWrapper isActive={currentAnchor === dict.sections.projects}
-                         anchor={dict.sections.projects}
                          onClick={() => controller.scrollTo(dict.sections.projects)}>
                 {
                     appWidth < 1000 ?
@@ -71,7 +66,6 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
             {
                 app.isServerAvailable &&
                 <LinkWrapper isActive={currentAnchor === dict.sections.contacts}
-                             anchor={dict.sections.contacts}
                              onClick={() => controller.scrollTo(dict.sections.contacts)}>
                     {
                         appWidth < 1000 ?
@@ -95,21 +89,17 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
 type ILinkWrapper = {
     isActive?: boolean,
     onClick: () => void,
-    anchor?: string,
 }
 export const LinkWrapper: React.FC<React.PropsWithChildren<ILinkWrapper>> = React.memo(({
                                                                                             isActive,
                                                                                             onClick,
-                                                                                            anchor,
                                                                                             children,
                                                                                         }) => {
     return (
         <div className={styles.linkContainer}>
             <a
                 className={setClasses(styles.link, isActive && styles.active)}
-                onClick={(event) => {
-                    onClick()
-                }}>
+                onClick={onClick}>
                 {
                     children
                 }

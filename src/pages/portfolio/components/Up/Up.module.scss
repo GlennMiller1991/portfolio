@@ -1,8 +1,8 @@
-@import 'src/common/styles/templates.module';
+@use '../../../../common/styles/templates.module';
 
 .up {
     position: fixed;
-    @include flexCenter(center);
+    @include templates.flexCenter(center);
     background-color: var(--color-theme);
     width: 55px;
     height: 55px;

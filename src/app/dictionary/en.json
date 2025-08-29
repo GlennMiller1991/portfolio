@@ -1,6 +1,6 @@
 {
   "validatorMessage": {
-    "email": "email: email@email.com",
+    "email": "Email: email@email.com",
     "telegram": "tg: @aA1_",
     "required": "Fill required fields",
     "minLength": "Minimum string length",
@@ -34,8 +34,8 @@
   },
   "typedString": [
     "Frontend",
+    "C#",
     "React",
-    "Redux",
     "TypeScript",
     "JavaScript"
   ],

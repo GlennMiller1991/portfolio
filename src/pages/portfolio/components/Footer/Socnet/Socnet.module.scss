@@ -1,11 +1,11 @@
-@import 'src/common/styles/templates.module';
+@use '../../../../../common/styles/templates.module';
 $iconSquare: 50px;
 
 .icon {
     width: $iconSquare;
     height: $iconSquare;
     border: 1px solid #31383d;
-    @include flexCenter;
+    @include templates.flexCenter;
     font-size: 35px;
     transition: 0.5s;
     cursor: pointer;

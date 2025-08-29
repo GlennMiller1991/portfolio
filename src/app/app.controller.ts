@@ -1,5 +1,5 @@
 import React from "react";
-import {makeObservable, autorun, action} from "mobx";
+import {makeObservable, autorun, action, runInAction} from "mobx";
 import {Dictionary} from "./dictionary/dictionary";
 import {Theme} from "./theme/theme";
 import {Language} from "./language/language";
@@ -58,7 +58,7 @@ export class AppController {
     }
 
     setWindowContent(content: typeof this.windowContent) {
-        this.windowContent = content
+            this.windowContent = content
     }
 
     setIsServerAvailable = (value: boolean) => {

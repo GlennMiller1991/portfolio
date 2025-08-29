@@ -1,4 +1,4 @@
-@import 'src/common/styles/templates.module';
+@use '../../../common/styles/templates.module';
 
 $side: 70px;
 $letterSpacing: 3px;
@@ -52,7 +52,7 @@ $letterSpacing: 3px;
     text-transform: uppercase;
     height: 1rem;
     border-radius: 0;
-    @include flexCenter;
+    @include templates.flexCenter;
     letter-spacing: $letterSpacing;
   }
 
@@ -70,7 +70,7 @@ $letterSpacing: 3px;
 }
 
 .choiceCaption {
-  @include flexCenter(center, flex-start);
+  @include templates.flexCenter(center, flex-start);
   text-transform: uppercase;
   font: var(--font-secondary);
   outline: 2px solid gray;

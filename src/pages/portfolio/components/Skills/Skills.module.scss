@@ -1,11 +1,11 @@
-@import 'src/common/styles/templates.module';
+@use '../../../../common/styles/templates.module';
 
 .skills {
     min-height: 100vh;
     background-color: var(--color-dark-secondary);
     padding-bottom: 100px;
     .container {
-        @include flexCenter(flex-start);
+        @include templates.flexCenter(flex-start);
         flex-direction: column;
         .skillsContainer {
             width: 100%;

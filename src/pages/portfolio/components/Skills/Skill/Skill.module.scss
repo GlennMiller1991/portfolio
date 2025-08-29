@@ -1,10 +1,10 @@
-@import 'src/common/styles/templates.module';
+@use '../../../../../common/styles/templates.module';
 
 $skillIconSize: 70px;
 
 .skill {
   width: 320px;
-  @include flexCenter();
+  @include templates.flexCenter();
   align-items: flex-start;
   flex-direction: column;
   padding: 32px;
@@ -35,7 +35,7 @@ $skillIconSize: 70px;
 
   .skillContainer {
     font-family: var(--font-primary);
-    @include flexCenter(flex-start);
+    @include templates.flexCenter(flex-start);
     flex-direction: column;
     align-items: flex-start;
     height: 100%;
@@ -43,7 +43,7 @@ $skillIconSize: 70px;
     .icon {
       width: $skillIconSize;
       height: $skillIconSize;
-      @include flexCenter();
+      @include templates.flexCenter();
 
       * {
         color: var(--color-theme);

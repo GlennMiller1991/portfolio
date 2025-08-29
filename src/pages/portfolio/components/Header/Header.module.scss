@@ -1,4 +1,4 @@
-@import 'src/common/styles/templates.module';
+@use '../../../../common/styles/templates.module';
 
 .backgrounded {
   background-color: var(--color-dark-primary) !important;
@@ -8,7 +8,7 @@
   z-index: 2;
   height: 85px;
   background-color: transparent;
-  @include flexCenter(space-between);
+  @include templates.flexCenter(space-between);
   width: 100%;
   position: fixed;
   top: 0;
