@@ -1,9 +1,10 @@
 import type {Configuration} from "webpack";
 import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import {getPaths} from "./utils";
-import {htmlConfiguration} from "./plugins/html.plugin";
+import {HtmlPlugin} from "./plugins/html.plugin";
 import {baseWebpackConfig} from "./base.webpack.config";
 import {getCssLoader} from "./loaders/css.loader";
+import {getDotenvPlugin} from "./plugins/dotenv.plugin";
 
 const {modules} = getPaths(__dirname);
 
@@ -14,7 +15,8 @@ export const ProductionConfig: Configuration = {
     devtool: undefined,
     plugins: [
         new MiniCssExtractPlugin(),
-        htmlConfiguration,
+        HtmlPlugin,
+        getDotenvPlugin('production'),
     ],
     module: {
         rules: [

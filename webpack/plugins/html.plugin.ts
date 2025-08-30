@@ -3,6 +3,6 @@ import path from "path";
 import {getPaths} from "../utils";
 
 const {index} = getPaths(__dirname);
-export const htmlConfiguration = new HtmlWebpackPlugin({
+export const HtmlPlugin = new HtmlWebpackPlugin({
     template: index,
 });

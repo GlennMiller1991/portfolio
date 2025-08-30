@@ -1,4 +1,4 @@
-import {Configuration, ProvidePlugin} from "webpack";
+import {Configuration} from "webpack";
 import {getPaths} from "./utils";
 import {tsPathsConfiguration} from "./plugins/ts-paths.plugin";
 
@@ -13,5 +13,5 @@ export const baseWebpackConfig: Configuration = {
     resolve: {
         plugins: [tsPathsConfiguration,],
         extensions: [".js", ".ts", ".tsx"],
-    }
+    },
 }

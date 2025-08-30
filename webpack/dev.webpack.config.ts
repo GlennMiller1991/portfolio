@@ -1,9 +1,10 @@
-import {Configuration, ProvidePlugin} from "webpack";
+import {Configuration} from "webpack";
 import {getPaths} from "./utils";
-import {htmlConfiguration} from "./plugins/html.plugin";
+import {HtmlPlugin} from "./plugins/html.plugin";
 import {devServer} from "./plugins/dev-server.plugin";
 import {baseWebpackConfig} from "./base.webpack.config";
 import {getCssLoader} from "./loaders/css.loader";
+import {getDotenvPlugin} from "./plugins/dotenv.plugin";
 
 const {modules} = getPaths(__dirname);
 
@@ -16,10 +17,8 @@ export const DevelopmentConfig: Configuration = {
         filename: "main.js",
     },
     plugins: [
-        htmlConfiguration,
-        new ProvidePlugin({
-            process: 'process/browser.js',
-        }),
+        HtmlPlugin,
+        getDotenvPlugin('development'),
     ],
     devServer,
     module: {
