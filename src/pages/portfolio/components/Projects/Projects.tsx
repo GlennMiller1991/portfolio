@@ -1,5 +1,4 @@
 import React, {useMemo} from "react";
-import commonStyles from '../../../../common/styles/common.module.scss'
 import styles from './Projects.module.scss'
 import {Project} from "./Project/Project";
 import portfolioPic from './../../../../assets/pic/portfolio.png'
@@ -10,8 +9,11 @@ import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.webp'
 import map from './../../../../assets/pic/map.webp'
 import graph from './../../../../assets/pic/graph.webp'
 import en from '../../../../app/dictionary/en.json'
+import {Section} from "@src/pages/portfolio/components/Contacts/Contacts";
+import {useAppContext} from "@src/app/app.context";
+import {observer} from "mobx-react-lite";
 
-export const Projects = React.memo(() => {
+export const Projects = observer(() => {
     const projectEntities = useMemo(() => {
         return [
             {
@@ -72,20 +74,18 @@ export const Projects = React.memo(() => {
             }
         ]
     }, [])
+    const app = useAppContext();
     return (
-        <div id={en.sections.projects} className={styles.projects}>
-            <div className={`${commonStyles.container} ${styles.container}`}>
-                <h2 className={commonStyles.title}>
-                    <span className={commonStyles.upperThenHeader}>PROJECTS</span>
-                    PROJECTS</h2>
-                <div className={styles.projectsContainer}>
-                    {
-                        projectEntities.map((project, id) => {
-                            return <Project key={id} {...project}/>
-                        })
-                    }
-                </div>
+        <Section header={app.dictionary.sections.projects}
+                 containerClassName={styles.projects}
+                 id={en.sections.projects}>
+            <div className={styles.projectsContainer}>
+                {
+                    projectEntities.map((project, id) => {
+                        return <Project key={id} {...project}/>
+                    })
+                }
             </div>
-        </div>
+        </Section>
     )
 })

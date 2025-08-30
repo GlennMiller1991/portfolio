@@ -1,26 +1,26 @@
 import React from "react";
 import styles from './Skills.module.scss'
-import commonStyles from '../../../../common/styles/common.module.scss'
 import {Skill} from "./Skill/Skill";
-import { skillsEntities} from "../../../../app/constants";
+import { skillsEntities} from "@src/app/constants";
 import en from '../../../../app/dictionary/en.json'
+import {Section} from "@src/pages/portfolio/components/Contacts/Contacts";
+import {useAppContext} from "@src/app/app.context";
+import {observer} from "mobx-react-lite";
 
-export const Skills = React.memo(() => {
+export const Skills = observer(() => {
+    const app = useAppContext();
+
     return (
-        <div id={en.sections.skills} className={styles.skills}>
-            <div className={`${commonStyles.container} ${styles.container}`}>
-                <h2 className={commonStyles.title}>
-                    <span className={commonStyles.upperThenHeader}>EXPERIENCE</span>
-                    EXPERIENCE
-                </h2>
-                <div className={styles.skillsContainer}>
-                    {
-                        skillsEntities.map((skill, id) => {
-                            return <Skill key={id} {...skill}/>
-                        })
-                    }
-                </div>
+        <Section id={en.sections.skills}
+                 header={app.dictionary.sections.skills}
+                 containerClassName={styles.skills}>
+            <div className={styles.skillsContainer}>
+                {
+                    skillsEntities.map((skill, id) => {
+                        return <Skill key={id} {...skill}/>
+                    })
+                }
             </div>
-        </div>
+        </Section>
     )
 })

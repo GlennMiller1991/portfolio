@@ -1,18 +1,18 @@
 import React from "react";
 import styles from './Footer.module.scss'
-import commonStyles from "../../../../common/styles/common.module.scss";
 import {Socnet} from "./Socnet/Socnet";
 import {SlSocialVkontakte, SlPhone} from "react-icons/sl";
 import {SiGithub, SiTelegram, SiMaildotru, SiGooglemaps, SiWhatsapp} from "react-icons/si";
 import {observer} from "mobx-react-lite";
-import {useAppContext} from "../../../../app/app.context";
+import {useAppContext} from "@src/app/app.context";
+import {Section} from "@src/pages/portfolio/components/Contacts/Contacts";
 
 export const Footer = observer(() => {
     const app = useAppContext();
 
     return (
-        <div className={styles.footer}>
-            <div className={`${commonStyles.container} ${styles.container}`}>
+        <Section>
+            <div className={styles.container}>
                 <div className={styles.socnetsContainer}>
                     <Socnet link={'https://vk.com/id39116637'} icon={SlSocialVkontakte}/>
                     <Socnet link={'https://github.com/GlennMiller1991'} icon={SiGithub}/>
@@ -28,7 +28,7 @@ export const Footer = observer(() => {
                     }
                 </p>
             </div>
-        </div>
+        </Section>
     )
 })
 

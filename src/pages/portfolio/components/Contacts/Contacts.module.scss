@@ -1,6 +1,9 @@
 .wrapper {
     min-height: 60vh;
     background-color: #252b2f;
+    &>div {
+        flex-direction: column;
+    }
 }
 
 .container {

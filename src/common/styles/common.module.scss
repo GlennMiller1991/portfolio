@@ -2,14 +2,9 @@
 
 .container {
   height: 100%;
-  width: 80%;
-  margin: 0 auto;
+  margin: 0 max(100px, 10%);
   @include flexCenter(space-between);
   flex-wrap: wrap;
-
-  @media (max-width: 500px) {
-    width: 65%;
-  }
 }
 
 .upperThenHeader {
@@ -27,6 +22,10 @@
 }
 
 .title {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   letter-spacing: 1em;
   margin: 100px 0 40px;
   position: relative;
@@ -36,6 +35,7 @@
   color: var(--color-light-primary);
   font-family: var(--font-secondary);
   font-weight: 400;
+  text-transform: uppercase;
 }
 
 @media (max-width: 1250px) {

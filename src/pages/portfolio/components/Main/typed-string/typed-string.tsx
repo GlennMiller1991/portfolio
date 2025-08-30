@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import styles from '../Main.module.scss'
 import {observer} from "mobx-react-lite";
 import {TypedStringControllerPortfolio} from "./controller";
-import {useAppContext} from "../../../../../app/app.context";
+import {useAppContext} from "@src/app/app.context";
 
 export const TypedString = observer(() => {
     const app = useAppContext()
