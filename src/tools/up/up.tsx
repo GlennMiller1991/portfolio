@@ -1,6 +1,7 @@
 import React, {useCallback} from "react";
-import styles from './Up.module.scss';
 import {FaChevronUp} from "react-icons/fa";
+import {Caption} from "@src/common/components/app-settings/shared/choicer";
+import styles from './up.module.scss';
 
 export const Up = React.memo(() => {
     const scrollTo = useCallback(() => {
@@ -12,8 +13,11 @@ export const Up = React.memo(() => {
         }
     }, [])
     return (
-        <div className={styles.up} onClick={scrollTo}>
+        <div onClick={scrollTo} className={styles.up}>
             <FaChevronUp/>
+            <Caption>Up</Caption>
         </div>
+        // <div className={styles.up} onClick={scrollTo}>
+        // </div>
     )
 })

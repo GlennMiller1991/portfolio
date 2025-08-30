@@ -1,5 +1,5 @@
 import React from "react";
-import {setClasses} from "../../../lib/common/set-classes";
+import {setClasses} from "@src/lib/common/set-classes";
 import styles from "./settings.module.scss";
 
 export const ChoicePlace: React.FC<React.PropsWithChildren> = React.memo(({

@@ -2,11 +2,10 @@ import React, {useState} from 'react';
 import styles from './Nava.module.scss'
 
 import {BsFileEarmarkPerson} from "react-icons/bs";
-import {AiFillSetting, AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
+import {AiOutlineContacts, AiOutlineFundProjectionScreen} from "react-icons/ai";
 import {GiSkills} from "react-icons/gi";
 import {setClasses} from "@src/lib/common/set-classes";
 import {observer} from "mobx-react-lite";
-import {AppSettings} from "@src/common/components/app-settings/app-settings";
 import dict from '../../../../../app/dictionary/en.json'
 import {useAppContext} from "@src/app/app.context";
 
@@ -72,14 +71,6 @@ export const Nava: React.FC<INava> = observer(({currentAnchor}) => {
                             <AiOutlineContacts/> :
                             app.d.sections.contacts
                     }
-                </LinkWrapper>
-            }
-
-            {/* Settings */}
-            {
-                app.appDomRect.width <= 1000 &&
-                <LinkWrapper onClick={() => app.setWindowContent(<AppSettings/>)}>
-                    <AiFillSetting/>
                 </LinkWrapper>
             }
         </div>

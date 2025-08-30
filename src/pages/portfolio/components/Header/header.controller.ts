@@ -1,6 +1,40 @@
 import {action, makeObservable} from "mobx";
 import en from '../../../../app/dictionary/en.json'
 
+export class ScrollController {
+    _y = 0;
+
+    constructor() {
+        makeObservable(this, {
+            _y: true,
+            setY: action,
+        });
+
+        this.init();
+    }
+
+    init() {
+        document.addEventListener('scroll', this.onWindowScroll);
+        this.onWindowScroll();
+    }
+
+    private onWindowScroll = () => {
+        this.setY(document.documentElement.scrollTop);
+    }
+
+    setY(scroll: number) {
+        this._y = scroll;
+    }
+
+    getY() {
+        return this._y;
+    }
+
+    dispose() {
+        document.removeEventListener('scroll', this.onWindowScroll);
+    }
+}
+
 export class HeaderController {
     isUpBtnShown = false
     nearestSection: typeof en.sections[keyof typeof en.sections] | undefined = en.sections.main
@@ -26,7 +60,6 @@ export class HeaderController {
 
     private init() {
         document.addEventListener('scroll', this.onWindowScroll)
-
     }
 
     private onWindowScroll = () => {

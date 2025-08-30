@@ -2,15 +2,11 @@ import React, {useEffect, useState} from "react";
 import styles from './Header.module.scss'
 import {Nava} from "./Nava/Nava";
 import {observer} from "mobx-react-lite";
-import {setClasses} from "../../../../lib/common/set-classes";
-import {Up} from "../Up/Up";
+import {setClasses} from "@src/lib/common/set-classes";
 import {HeaderController} from "./header.controller";
-import {AppSettings} from "../../../../common/components/app-settings/app-settings";
-import {useAppContext} from "../../../../app/app.context";
 
 export const Header: React.FC = observer(() => {
-        const [controller] = useState(() => new HeaderController())
-        const app = useAppContext()
+        const [controller] = useState(() => new HeaderController());
 
         useEffect(() => controller.dispose.bind(controller), [])
 
@@ -18,15 +14,8 @@ export const Header: React.FC = observer(() => {
             <>
                 <div id={'header'}
                      className={setClasses(styles.header, controller.isUpBtnShown && styles.backgrounded)}>
-                    {
-                        app.appDomRect.width > 1000 &&
-                        <AppSettings factor={0.8}/>
-                    }
                     <Nava currentAnchor={controller.nearestSection}/>
                 </div>
-                {
-                    controller.isUpBtnShown && <Up/>
-                }
             </>
 
         )

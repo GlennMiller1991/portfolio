@@ -1,5 +1,5 @@
 import React from "react";
-import {makeObservable, autorun, action, runInAction} from "mobx";
+import {makeObservable, autorun, action} from "mobx";
 import {Dictionary} from "./dictionary/dictionary";
 import {Theme} from "./theme/theme";
 import {Language} from "./language/language";
@@ -9,6 +9,7 @@ import {request} from "../lib/network/request";
 import {ServerService} from "../services/server.service";
 
 import {NotificationQueue} from "./notification/notification-queue";
+import {ScrollController} from "@src/pages/portfolio/components/Header/header.controller";
 
 export type ILanguages = 'en' | 'ru'
 
@@ -20,9 +21,10 @@ type ILocalStorage = {
 export class AppController {
     serverService = new ServerService(this);
     lang = new Language<ILanguages>(['ru', 'en'])
-    theme = new Theme()
-    dict = new Dictionary()
-    ls = new LocalStorage<ILocalStorage>()
+    theme = new Theme();
+    dict = new Dictionary();
+    ls = new LocalStorage<ILocalStorage>();
+    scroll = new ScrollController();
 
     isMobile = window.ontouchstart || window.navigator.userAgent.toLowerCase().includes('mobi')
     isServerAvailable = false

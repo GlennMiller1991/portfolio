@@ -1,12 +1,12 @@
 import React, {MouseEventHandler, useState} from "react";
 import {observer} from "mobx-react-lite";
-import {setClasses} from "../../../../../lib/common/set-classes";
+import {setClasses} from "@src/lib/common/set-classes";
 import {Caption, Choicer} from "../../shared/choicer";
 import {ThemeChoiceController} from "./theme-choice.controller";
 import styles from './../../settings.module.scss'
-import {s} from "../../../../../app/constants";
+import {s} from "@src/app/constants";
 import {AngleUnits} from "@fbltd/math";
-import {useAppContext} from "../../../../../app/app.context";
+import {useAppContext} from "@src/app/app.context";
 
 export const ThemeChoice: React.FC = observer(() => {
     const app = useAppContext()

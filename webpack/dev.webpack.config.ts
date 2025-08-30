@@ -6,7 +6,7 @@ import {baseWebpackConfig} from "./base.webpack.config";
 import {getCssLoader} from "./loaders/css.loader";
 import {getDotenvPlugin} from "./plugins/dotenv.plugin";
 
-const {modules} = getPaths(__dirname);
+const {modules} = getPaths();
 
 export const DevelopmentConfig: Configuration = {
     ...baseWebpackConfig,

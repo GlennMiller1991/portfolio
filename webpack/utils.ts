@@ -1,6 +1,6 @@
 import path from "path";
 
-export function getPaths(dirname: string) {
+export function getPaths() {
     const root = path.join(__dirname, '..');
     const src = path.join(root, 'src');
     const pub = path.join(root, 'public');

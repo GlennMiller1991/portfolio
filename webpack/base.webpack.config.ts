@@ -2,7 +2,7 @@ import {Configuration} from "webpack";
 import {getPaths} from "./utils";
 import {tsPathsConfiguration} from "./plugins/ts-paths.plugin";
 
-const {appIndex} = getPaths(__dirname);
+const {appIndex} = getPaths();
 
 export const baseWebpackConfig: Configuration = {
     entry: appIndex,

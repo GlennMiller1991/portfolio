@@ -5,6 +5,7 @@ import {observer} from "mobx-react-lite";
 import {Portfolio} from "./pages/portfolio/portfolio";
 import {AppContext} from "./app/app.context";
 import {AppController} from "./app/app.controller";
+import {Tools} from "@src/tools/tools";
 
 export const App = observer(() => {
 
@@ -18,9 +19,10 @@ export const App = observer(() => {
             <div>
                 <Portfolio/>
                 <NotificationContainer controller={app.notificationsQueue}/>
+                <Tools/>
             </div>
         </AppContext.Provider>
     );
-})
+});
 
 
