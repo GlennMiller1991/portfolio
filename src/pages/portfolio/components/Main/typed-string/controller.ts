@@ -1,11 +1,12 @@
-import {TypedString} from "../../../../../lib/typed-string";
+import {TypedString} from "@src/lib/typed-string";
+
 
 export class TypedStringControllerPortfolio extends TypedString {
     stringIndex = 0
     timeoutId: any
 
     constructor(public strings: string[]) {
-        super()
+        super({forwardOnly: true})
         this.init()
     }
 
@@ -21,7 +22,7 @@ export class TypedStringControllerPortfolio extends TypedString {
                 this.replaceString(this.strings[(++this.stringIndex) % this.strings.length])
             }
             this.nextTick()
-        }, this.carriage === this.typedString.length ? 2000 : Math.random() * 300 + 100)
+        }, this.carriage === this.typedString.length ? 2000 : Math.min(30, Math.random() * 100))
     }
 
     dispose() {

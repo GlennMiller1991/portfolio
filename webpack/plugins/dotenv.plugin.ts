@@ -5,6 +5,6 @@ export function getDotenvPlugin(mode: IWebpackBuildMode) {
     return new Dotenv({
         path: '.env' + (mode === 'production' ? '.production' : '.development'),
         safe: true,
-        defaults: true,
+        defaults: false,
     });
 }

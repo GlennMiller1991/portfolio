@@ -1,8 +1,9 @@
 @use '../../../../../common/styles/templates.module';
 
-$skillIconSize: 70px;
 
 .skill {
+  --skill-icon-size: 70px;
+  --skill-header-font-size: 1.5rem;
   width: 320px;
   @include templates.flexCenter();
   align-items: flex-start;
@@ -26,11 +27,15 @@ $skillIconSize: 70px;
   }
 
   @media screen and (max-width: 500px) {
-    width: 350px;
-  }
-
-  @media screen and (max-width: 400px) {
-    width: 250px;
+    width: 100%;
+    --skill-icon-size: 50px;
+    --skill-header-font-size: 1rem;
+    padding: 0;
+    .skillContainer {
+      & > *:last-child {
+        display: none;
+      }
+    }
   }
 
   .skillContainer {
@@ -41,18 +46,18 @@ $skillIconSize: 70px;
     height: 100%;
 
     .icon {
-      width: $skillIconSize;
-      height: $skillIconSize;
+      width: var(--skill-icon-size);
+      height: var(--skill-icon-size);
       @include templates.flexCenter();
 
       * {
         color: var(--color-theme);
-        font-size: 70px;
+        font-size: var(--skill-icon-size);
       }
     }
 
     h3 {
-      font-size: 1.5em;
+      font-size: var(--skill-header-font-size);
       font-weight: 450;
       margin: 18px 0;
     }
