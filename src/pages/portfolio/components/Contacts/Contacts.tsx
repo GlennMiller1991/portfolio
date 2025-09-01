@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import commonStyles from '../../../../common/styles/common.module.scss'
 import styles from './Contacts.module.scss'
 import {Input} from '@src/common/components/Input/Input'
 import {setClasses} from '@src/lib/common/set-classes'
@@ -13,6 +12,7 @@ import {useAppContext} from "@src/app/app.context";
 import {Notification} from "@src/app/notification/notification";
 import {useFieldState} from "@src/lib/form/use-field-state";
 import {observer} from "mobx-react-lite";
+import {Section} from "@src/pages/portfolio/components/sections/section";
 
 type IContactForm = Omit<IMessage, 'email' | 'telegram'> & {
     backRoute: string
@@ -137,33 +137,4 @@ export const Contacts = observer(() => {
         </Section>
     )
 });
-
-type ISection = {
-    id?: string,
-    containerClassName?: string,
-    header?: string,
-}
-export const Section: React.FC<React.PropsWithChildren<ISection>> = (({
-                                                                                    children,
-                                                                                    id,
-                                                                                    containerClassName,
-                                                                                    header,
-                                                                      }) => {
-    return (
-        <div id={id} className={containerClassName}>
-            <div className={commonStyles.container}>
-                {
-                    header &&
-                    <h2 className={commonStyles.title}>
-                        <span className={commonStyles.upperThenHeader}>{header}</span>
-                        {header}
-                    </h2>
-                }
-                {
-                    children
-                }
-            </div>
-        </div>
-    )
-})
 

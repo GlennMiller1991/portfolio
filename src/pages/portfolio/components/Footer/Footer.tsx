@@ -5,7 +5,7 @@ import {SlSocialVkontakte, SlPhone} from "react-icons/sl";
 import {SiGithub, SiTelegram, SiMaildotru, SiGooglemaps, SiWhatsapp} from "react-icons/si";
 import {observer} from "mobx-react-lite";
 import {useAppContext} from "@src/app/app.context";
-import {Section} from "@src/pages/portfolio/components/Contacts/Contacts";
+import {Section} from "@src/pages/portfolio/components/sections/section";
 
 export const Footer = observer(() => {
     const app = useAppContext();

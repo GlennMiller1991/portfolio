@@ -9,9 +9,9 @@ import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.webp'
 import map from './../../../../assets/pic/map.webp'
 import graph from './../../../../assets/pic/graph.webp'
 import en from '../../../../app/dictionary/en.json'
-import {Section} from "@src/pages/portfolio/components/Contacts/Contacts";
 import {useAppContext} from "@src/app/app.context";
 import {observer} from "mobx-react-lite";
+import {Section} from "@src/pages/portfolio/components/sections/section";
 
 export const Projects = observer(() => {
     const projectEntities = useMemo(() => {
