@@ -4,9 +4,9 @@
 .skill {
   --skill-icon-size: 70px;
   --skill-header-font-size: 1.5rem;
+
   width: 320px;
-  @include templates.flexCenter();
-  align-items: flex-start;
+  @include templates.flexCenter(center, center);
   flex-direction: column;
   padding: 32px;
   @media screen and (max-width: 1280px) {
@@ -19,11 +19,14 @@
     width: 320px;
   }
   @media screen and (max-width: 840px) {
-    width: 510px;
+    width: 100%;
+    padding: 0;
+    --skill-align-items: center;
   }
 
   @media screen and (max-width: 600px) {
-    width: 450px;
+    width: 100%;
+    padding: 0;
   }
 
   @media screen and (max-width: 500px) {
@@ -31,6 +34,7 @@
     --skill-icon-size: 50px;
     --skill-header-font-size: 1rem;
     padding: 0;
+
     .skillContainer {
       & > *:last-child {
         display: none;
@@ -42,7 +46,6 @@
     font-family: var(--font-primary);
     @include templates.flexCenter(flex-start);
     flex-direction: column;
-    align-items: flex-start;
     height: 100%;
 
     .icon {
@@ -67,6 +70,11 @@
       color: var(--font-secondary);
       margin: 0;
     }
+  }
+
+  & > * {
+    text-align: center;
+    @include templates.flexCenter();
   }
 }
 
