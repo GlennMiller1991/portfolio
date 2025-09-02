@@ -11,11 +11,12 @@ $squareSize: 16px;
   background-size: cover;
 
 
-  span {
-    color: var(--color-light-secondary);
+  span:first-child {
+    color: var(--olor-light-secondary);
+    white-space: pre-line;
   }
 
-  .keyboardSpan {
+  span:nth-child(2) {
     color: var(--color-theme);
     animation: hideShow;
     animation-iteration-count: infinite;

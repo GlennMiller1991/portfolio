@@ -5,6 +5,7 @@ import {devServer} from "./plugins/dev-server.plugin";
 import {baseWebpackConfig} from "./base.webpack.config";
 import {getCssLoader} from "./loaders/css.loader";
 import {getDotenvPlugin} from "./plugins/dotenv.plugin";
+import {getNodeModuleReplacementPlugin} from "./plugins/module-replacement.plugin";
 
 const {modules} = getPaths();
 
@@ -19,6 +20,7 @@ export const DevelopmentConfig: Configuration = {
     plugins: [
         HtmlPlugin,
         getDotenvPlugin('development'),
+        getNodeModuleReplacementPlugin(),
     ],
     devServer,
     module: {

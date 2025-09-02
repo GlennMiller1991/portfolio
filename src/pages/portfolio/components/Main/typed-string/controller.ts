@@ -1,31 +1,38 @@
-import {TypedString} from "@src/lib/typed-string";
+import {TypedString, TypedStringEventEmitter} from "@src/lib/typed-string";
 
-
+let isEnd = false;
 export class TypedStringControllerPortfolio extends TypedString {
-    stringIndex = 0
     timeoutId: any
 
-    constructor(public strings: string[]) {
-        super({forwardOnly: true})
-        this.init()
+    constructor(public string: string, ee: TypedStringEventEmitter) {
+        super({forwardOnly: true, cmdEventEmitter: ee});
+        this.replaceString(this.string);
+        this.endProcessing();
     }
 
-    init() {
-        this.replaceString(this.strings[this.stringIndex])
-        this.nextTick()
+    endProcessing() {
+        if (isEnd) {
+            while (!this.isEnd) this.increment();
+        }
     }
 
     nextTick() {
+        isEnd = this.isEnd;
         this.timeoutId = setTimeout(() => {
             super.nextTick()
-            if (!this.carriage) {
-                this.replaceString(this.strings[(++this.stringIndex) % this.strings.length])
-            }
             this.nextTick()
         }, this.carriage === this.typedString.length ? 2000 : Math.min(30, Math.random() * 100))
     }
 
+    onRun(){
+        this.nextTick();
+    }
+
+    onStop() {
+        clearTimeout(this.timeoutId);
+    }
+
     dispose() {
-        clearTimeout(this.timeoutId)
+        this.onStop();
     }
 }

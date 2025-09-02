@@ -28,11 +28,11 @@ export const Section: React.FC<React.PropsWithChildren<ISection>> = observer(({
                         {header}
                     </h2>
                 }
-                <SectionVisibilityContext value={controller.context}>
+                <SectionVisibilityContext.Provider value={controller.context}>
                     {
                         children
                     }
-                </SectionVisibilityContext>
+                </SectionVisibilityContext.Provider>
             </div>
         </div>
     )

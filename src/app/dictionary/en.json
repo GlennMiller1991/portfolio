@@ -32,9 +32,7 @@
   "footer": {
     "copyright": "Frontend Developer portfolio. Developed and designed by me©"
   },
-  "typedString": [
-    "Heads up!\nYou are on the portfolio page of Alexandr Basalov, a webapp developer.\n\nSome sections might be outdated or incomplete, same as his code on GitHub, 'cause during work hours Sanya is busy working, not polishing his portfolio. Understand and forgive."
-  ],
+  "typedString": "Heads up!\nYou are on the portfolio page of Alexandr Basalov, a webapp developer.\n\nSome sections might be outdated or incomplete, same as his code on GitHub, 'cause during work hours Sanya is busy working, not polishing his portfolio. Understand and forgive.",
   "settings": {
     "language": "language",
     "theme": "theme"

@@ -5,6 +5,7 @@ import {HtmlPlugin} from "./plugins/html.plugin";
 import {baseWebpackConfig} from "./base.webpack.config";
 import {getCssLoader} from "./loaders/css.loader";
 import {getDotenvPlugin} from "./plugins/dotenv.plugin";
+import {getNodeModuleReplacementPlugin} from "./plugins/module-replacement.plugin";
 
 const {modules} = getPaths();
 
@@ -17,6 +18,7 @@ export const ProductionConfig: Configuration = {
         new MiniCssExtractPlugin(),
         HtmlPlugin,
         getDotenvPlugin('production'),
+        getNodeModuleReplacementPlugin(),
     ],
     module: {
         rules: [
