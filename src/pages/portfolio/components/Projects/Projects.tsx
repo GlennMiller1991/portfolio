@@ -1,10 +1,10 @@
 import React, {useMemo} from "react";
 import styles from './Projects.module.scss'
 import {Project} from "./Project/Project";
-import portfolioPic from './../../../../assets/pic/portfolio.png'
-import bookPic from './../../../../assets/pic/book.png'
-import socnet from './../../../../assets/pic/socnet.png'
-import testJob from './../../../../assets/pic/testJob.png'
+import portfolioPic from './../../../../assets/pic/portfolio.webp'
+import bookPic from './../../../../assets/pic/book.webp'
+import socnet from './../../../../assets/pic/socnet.webp'
+import testJob from './../../../../assets/pic/testJob.webp'
 import pythonPortfolio from './../../../../assets/pic/pythonPortfolio.webp'
 import map from './../../../../assets/pic/map.webp'
 import graph from './../../../../assets/pic/graph.webp'
