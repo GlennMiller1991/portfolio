@@ -36,9 +36,9 @@ export const ProductionConfig: Configuration = {
                 ],
             },
             {
-                test: /\.(png|webp)/,
+                test: /\.(png|webp|ico)/,
                 type: 'asset/resource'
-            }
+            },
         ]
     },
 };

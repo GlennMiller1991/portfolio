@@ -9,6 +9,7 @@ export const baseWebpackConfig: Configuration = {
     cache: false,
     output: {
         filename: "main.js",
+        clean: true,
     },
     resolve: {
         plugins: [tsPathsConfiguration,],

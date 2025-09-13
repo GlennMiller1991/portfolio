@@ -17,10 +17,10 @@ export const Portfolio: React.FC = observer(() => {
             <Main/>
             <Skills/>
             <Projects/>
-            {
-                app.isServerAvailable &&
-                <Contacts/>
-            }
+            {/*{*/}
+            {/*    app.isServerAvailable &&*/}
+            {/*    <Contacts/>*/}
+            {/*}*/}
             <Footer/>
         </>
     )
