@@ -7,7 +7,8 @@ import en from "@src/app/dictionary/en.json";
 import {Section} from "@src/pages/portfolio/components/sections/section";
 import {useSectionVisibility} from "@src/pages/portfolio/components/sections/section-visibility.context";
 import EventEmitter from "node:events";
-import {TypedStringEventEmitter} from "@src/lib/typed-string";
+
+import {TypedStringEventEmitter} from "@src/lib/typed-string/contracts";
 
 export const Main = React.memo(() => {
         return (
@@ -19,23 +20,23 @@ export const Main = React.memo(() => {
 )
 
 export const MainContent = observer(() => {
-    const [ee] = useState(() => new EventEmitter() as TypedStringEventEmitter);
+    const [eventEmitter] = useState(() => new EventEmitter() as TypedStringEventEmitter);
     const {isVisible} = useSectionVisibility();
     const app = useAppContext();
 
     useEffect(() => {
-        if (isVisible) ee.emit('run');
-        else ee.emit('stop');
+        if (isVisible) eventEmitter.emit('run');
+        else eventEmitter.emit('stop');
     }, [isVisible]);
 
     useEffect(() => {
-        isVisible && ee.emit('run');
+        isVisible && eventEmitter.emit('run');
     }, [app.lang.currentLang])
 
     return (
         <>
             <div className={styles.content}>
-                <TypedString key={app.lang.currentLang} eventEmitter={ee}/>
+                <TypedString key={app.lang.currentLang} eventEmitter={eventEmitter}/>
             </div>
             <div className={styles.photo}>{''}</div>
         </>

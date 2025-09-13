@@ -1,32 +1,17 @@
 import {action, makeObservable} from "mobx";
+import type {ITypedStringConfig} from "@src/lib/typed-string/contracts";
 import EventEmitter from "node:events";
 
-type ITypedStringCommand = 'run' | 'stop';
-
-type ITypedStringConfig = {
-    forwardOnly?: boolean,
-    cmdEventEmitter?: TypedStringEventEmitter,
-}
-
-export declare class TypedStringEventEmitter extends EventEmitter {
-    emit(eventName: ITypedStringCommand, ...args): boolean;
-}
-
 export abstract class TypedString {
-    carriage: number = 0
-    ltr = true
+    carriage: number = 0;
+    ltr = true;
     typedString: string = '';
-    get isEnd() {
-        return this._config.forwardOnly && this.carriage >= (this.typedString.length - 1)
-    }
-
-
-    private _config: Required<ITypedStringConfig>
+    private _config: Required<ITypedStringConfig>;
 
     constructor(config: ITypedStringConfig = {}) {
         this._config = {
             forwardOnly: config.forwardOnly ?? false,
-            cmdEventEmitter: config.cmdEventEmitter ?? new TypedStringEventEmitter(),
+            cmdEventEmitter: config.cmdEventEmitter ?? new EventEmitter(),
         }
 
         makeObservable(this, {
@@ -37,6 +22,10 @@ export abstract class TypedString {
 
         this.ee.on('run', this._onRun);
         this.ee.on('stop', this._onStop);
+    }
+
+    get isEnd() {
+        return this._config.forwardOnly && this.carriage >= (this.typedString.length - 1)
     }
 
     private _onRun = () => {
@@ -75,6 +64,7 @@ export abstract class TypedString {
     }
 
     increment() {
+        if (this.isEnd) return;
         this.carriage++
     }
 
@@ -83,7 +73,7 @@ export abstract class TypedString {
     }
 
     get currentPart() {
-        return this.typedString.slice(0, this.carriage)
+        return this.typedString.slice(0, this.carriage + 1)
     }
 
     dispose() {

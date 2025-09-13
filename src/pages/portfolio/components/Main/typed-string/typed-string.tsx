@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {TypedStringControllerPortfolio} from "./controller";
 import {useAppContext} from "@src/app/app.context";
 import {observer} from "mobx-react-lite";
-import {TypedStringEventEmitter} from "@src/lib/typed-string";
+import {TypedStringEventEmitter} from "@src/lib/typed-string/contracts";
 
 type ITypedString = {
     eventEmitter: TypedStringEventEmitter;
