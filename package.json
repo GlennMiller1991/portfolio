@@ -36,6 +36,6 @@
   "scripts": {
     "dev": "export NODE_ENV=development && webpack serve",
     "build": "export NODE_ENV=production && webpack",
-    "prod": "npm run build && cd dist && http-server -p=5002"
+    "prod": "npm run build && cd build && http-server -p=5002"
   }
 }
