@@ -11,7 +11,7 @@ export const Footer = observer(() => {
     const app = useAppContext();
 
     return (
-        <Section>
+        <Section containerClassName={styles.outerContainer}>
             <div className={styles.container}>
                 <div className={styles.socnetsContainer}>
                     <Socnet link={'https://vk.com/id39116637'} icon={SlSocialVkontakte}/>
