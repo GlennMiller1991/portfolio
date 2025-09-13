@@ -22,10 +22,10 @@ jobs:
     - run: npm run build
 
     - name: Checkout files
-      run: ls -lh dist
+      run: ls -lh build
 
     - name: Pack to tar
-      run: tar -czvf build.tar.gz dist
+      run: tar -czvf build.tar.gz build
 
     - name: Set permissions
       run: chmod 644 build.tar.gz
