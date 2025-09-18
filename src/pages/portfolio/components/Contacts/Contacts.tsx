@@ -106,27 +106,31 @@ export const Contacts = observer(() => {
                         />
                         <div className={setClasses(styles.submit, 'flex')}>
                             <Button
-                                text={(formState.isAllTouched && formState.error) ? formState.error : app.dictionary.contacts.sendMsg}
-                                disabled={!formState.isAllTouched || !!formState.error}
+                                text={app.dictionary.contacts.sendMsg}
+                                disabled={!formState.isAllTouched}
                                 onClick={async () => {
-                                    const notification = new Notification(new Date().valueOf())
-
-                                    try {
-                                        const isTelegramLink = formState.data.backRoute.startsWith('@');
-                                        const data = formState.data;
-                                        await service.create({
-                                            author: data.author,
-                                            subject: data.subject,
-                                            body: data.body,
-                                            email: isTelegramLink ? undefined : data.backRoute,
-                                            telegram: isTelegramLink ? data.backRoute : undefined,
-                                        } as IMessage)
-                                        notification.message = app.dictionary.messages.delivered
-                                        notification.type = 'success'
-                                        formState.clearState()
-                                    } catch (err) {
-                                        notification.message = app.dictionary.messages.notDelivered
-                                        notification.type = 'error'
+                                    const notification = new Notification(new Date().valueOf());
+                                    if (formState.error) {
+                                        notification.message = formState.error;
+                                        notification.type = 'error';
+                                    } else {
+                                        try {
+                                            const isTelegramLink = formState.data.backRoute.startsWith('@');
+                                            const data = formState.data;
+                                            await service.create({
+                                                author: data.author,
+                                                subject: data.subject,
+                                                body: data.body,
+                                                email: isTelegramLink ? undefined : data.backRoute,
+                                                telegram: isTelegramLink ? data.backRoute : undefined,
+                                            } as IMessage)
+                                            notification.message = app.dictionary.messages.delivered
+                                            notification.type = 'success'
+                                            formState.clearState()
+                                        } catch (err) {
+                                            notification.message = app.dictionary.messages.notDelivered
+                                            notification.type = 'error'
+                                        }
                                     }
 
                                     app.notificationsQueue.add(notification)
@@ -137,4 +141,3 @@ export const Contacts = observer(() => {
         </Section>
     )
 });
-

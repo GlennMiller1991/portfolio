@@ -23,7 +23,7 @@
   "contacts": {
     "formFields": {
       "name": "Name",
-      "backRoute": "Return address (email or telegram)",
+      "backRoute": "Email/Telegram",
       "subject": "Subject",
       "body": "Message"
     },

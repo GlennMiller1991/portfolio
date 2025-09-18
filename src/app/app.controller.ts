@@ -90,7 +90,6 @@ export class AppController {
         this.setAppDomRect(document.body.getBoundingClientRect())
     }
 
-
     // region Language
     initLanguage() {
         let lang = this.ls.getItem('language') as ILanguages
@@ -112,10 +111,10 @@ export class AppController {
     // region Theme
     initTheme() {
         const theme = this.ls.getItem('theme')
-        if (!theme) return
+        if (!theme) return;
 
         const color = rgbToColor(theme)
-        if (!color || !this.theme.isColorInRange(color)) return
+        if (!color || !this.theme.isColorInRange(color)) return;
         this.theme.switchColor(color)
     }
 
